@@ -10,20 +10,13 @@ navbarPage(title = "Bilan Prévisionnel 2017", id = "nav-id", theme = "css/custo
              )
            ), windowTitle = "antaresViz",
            tabPanel("Données",
-                    fluidRow(
-                      column(12,
-                             tabsetPanel(id = "tab_data",
-                                         source("src/ui/01_ui_import_data.R", local = T)$value,
-                                         source("src/ui/04_ui_analysis.R", local = T)$value
-                             )
-                      )
-                    )
+                    source("src/ui/04_ui_analysis.R", local = T)$value
            ),
            
            tabPanel("Synthèse",
                     fluidRow(
                       "TO DO"
-                      )
+                    )
            ),
            
            tabPanel("Hypothèses",
@@ -31,7 +24,7 @@ navbarPage(title = "Bilan Prévisionnel 2017", id = "nav-id", theme = "css/custo
                       "TO DO"
                     )
            ),
-             
+           
            source("src/ui/05_ui_prodstack.R", local = T)$value,
            
            source("src/ui/06_ui_exchange.R", local = T)$value,

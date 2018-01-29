@@ -9,32 +9,23 @@ output$info_list <- renderUI({
       study <- lapply(1:length(list_data), function(i) {
         study_name <- paste0("list_study_", i)
         div(
-          h4(textOutput(study_name)), style = 'height:24px', align = "center")
+          h4(textOutput(study_name)), style = 'height:24px', align = "left")
       })
       # checkbox de selection
       check_list <- lapply(1:length(list_data), function(i) {
         check_name <- paste0("list_study_check", i)
         div(
-          checkboxInput(check_name, "Include study in analysis", value = TRUE), align = "center")
+          checkboxInput(check_name, "Inclure l'étude dans l'analyse", value = TRUE), align = "left")
       })
-      # bouton pour afficher les parametres
-      params_list <- lapply(1:length(list_data), function(i) {
-        btn_name <- paste0("list_study_params", i)
-        div(
-          actionButton(btn_name, "View parameters"), align = "center")
-      })
-      # bouton pour supprimer les donnees
-      rm_list <- lapply(1:length(list_data), function(i) {
-        btn_name <- paste0("list_study_rm", i)
-        div(
-          actionButton(btn_name, "Remove study"), align = "center")
-      })
+
       # format et retour
+      ind_impair <- seq(1, length(list_data), by = 2)
+      ind_pair <- seq(2, length(list_data), by = 2)
       fluidRow(
-        column(3, do.call(tagList, study)),
-        column(3, do.call(tagList, params_list)),
-        column(3, do.call(tagList, check_list)),
-        column(3, do.call(tagList, rm_list))
+        column(3, offset = 1, do.call(tagList, study[ind_impair])),
+        column(2, do.call(tagList, check_list[ind_impair])),
+        column(3, do.call(tagList, study[ind_pair])),
+        column(2, do.call(tagList, check_list[ind_pair]))
       )
     })
   }else {
@@ -55,52 +46,10 @@ observe({
         study_name <- paste0("list_study_", i)
         study_params <- paste0("list_study_params", i)
         output[[study_name]] <- renderText({
-          paste0("Study : ", names(list_data_tmp)[i])
-        })
-        
-        output[[study_params]] <- renderPrint({
-          str(list_data_all$params[[i]])
+          paste0("Etude : ", names(list_data_tmp)[i])
         })
       })
     })
   }
 })
 
-# observe locaux pour l'affichage des parametres
-# et pour la suppression des etudes
-for(j in 1:16){
-  local({
-    l_j <- j
-    observe({
-      if(!is.null(input[[paste0("list_study_params", l_j)]])){
-        if(input[[paste0("list_study_params", l_j)]] > 0){
-          showModal(modalDialog(
-            easyClose = TRUE,
-            footer = NULL,
-            verbatimTextOutput(paste0("list_study_params", l_j))
-          ))
-        }
-      }
-    })
-    
-    observe({
-      if(!is.null(input[[paste0("list_study_rm", l_j)]])){
-        if(input[[paste0("list_study_rm", l_j)]] > 0){
-          isolate({
-            # print("remove")
-            # print(l_j)
-            # print(object_size(list_data_all$antaresDataList))
-            # print(object_size(list_data_all$antaresDataList[l_j]))
-            # print(mem_change(list_data_all$antaresDataList[l_j] <- NULL))
-            # print(object_size(list_data_all$antaresDataList))
-            # print(object_size(list_data_all$antaresDataList[l_j]))
-            list_data_all$antaresDataList[l_j] <- NULL
-            list_data_all$params[l_j] <- NULL
-            gc(reset = TRUE)
-            
-          })
-        }
-      }
-    })
-  })
-}

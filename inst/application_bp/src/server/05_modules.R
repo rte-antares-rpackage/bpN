@@ -22,11 +22,9 @@ observe({
             mwModuleUI(id = id_prodStack, height = "800px", fluidRow = TRUE)
           })
           
-          .compare <- input$sel_compare_prodstack
-          if(input$sel_compare_mcyear){
-            .compare <- unique(c(.compare, "mcYear"))
-          }
-          if(!is.null(.compare)){
+          .compare <- input$sel_compare
+
+          if(length(.compare) > 0 & input$use_compare){
             list_compare <- vector("list", length(.compare))
             names(list_compare) <- .compare
             # set main with study names
@@ -38,7 +36,7 @@ observe({
             .compare = NULL
           }
           mod_prodStack <- prodStack(list_data_all$antaresDataList[ind_areas], xyCompare = "union",
-                                         h5requestFiltering = list_data_all$params[ind_areas],
+                                         # h5requestFiltering = list_data_all$params[ind_areas],
                                          unit = "GWh", interactive = TRUE, .updateBtn = TRUE, 
                                          .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE)
           
@@ -58,11 +56,9 @@ observe({
             mwModuleUI(id = id_ts, height = "800px", fluidRow = TRUE)
           })
           
-          .compare <- input$sel_compare_tsPlot
-          if(input$sel_compare_mcyear){
-            .compare <- unique(c(.compare, "mcYear"))
-          }
-          if(!is.null(.compare)){
+          .compare <- setdiff(input$sel_compare, "areas")
+          
+          if(length(.compare) > 0 & input$use_compare){
             list_compare <- vector("list", length(.compare))
             names(list_compare) <- .compare
             # set main with study names
@@ -103,11 +99,9 @@ observe({
             mwModuleUI(id = id_exchangesStack, height = "800px", fluidRow = TRUE)
           })
           
-          .compare <- input$sel_compare_exchangesStack
-          if(input$sel_compare_mcyear){
-            .compare <- unique(c(.compare, "mcYear"))
-          }
-          if(!is.null(.compare)){
+          .compare <- gsub("^areas$", "area", input$sel_compare)
+
+          if(length(.compare) > 0 & input$use_compare){
             list_compare <- vector("list", length(.compare))
             names(list_compare) <- .compare
             # set main with study names

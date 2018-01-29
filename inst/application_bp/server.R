@@ -1,35 +1,27 @@
 function(input, output, session) {
 
   #----------------
-  # Write h5
-  #----------------
-  source("src/server/07_write_h5.R", local = T)
-  
-  #----------------
-  # set / read data
-  #----------------
-  source("src/server/01_set_read_data.R", local = T)
-  
-  #----------------
   # shared parameters
   #----------------
   
   modules <- reactiveValues(prodStack = NULL, exchangesStack = NULL, plotts = NULL, plotMap = NULL)
   
   # all data loaded by user, with informations
-  list_data_all <- reactiveValues(antaresDataList = list(), params = list(), 
-                                  have_links = c(), have_areas = c(), opts = list())
+  list_data_all <- reactiveValues(antaresDataList = .list_data_all$antaresDataList, 
+                                  params = .list_data_all$params, 
+                                  have_links = .list_data_all$have_links, 
+                                  have_areas = .list_data_all$have_areas, 
+                                  opts = .list_data_all$opts)
   
   # set of controls
   list_data_controls <- reactiveValues(have_links = FALSE, have_areas = FALSE, 
                                        n_links = -1, n_areas = -1, n_maps = -1)
   
-  
-  #-----------------
-  # Importation de nouvelles donnees
-  #-----------------
-  
-  source("src/server/02_load_data.R", local = T)
+  # control : have data
+  output$have_data <- reactive({
+    length(list_data_all$antaresDataList) > 0
+  })
+  outputOptions(output, "have_data", suspendWhenHidden = FALSE)
   
   #----------------
   # Dataset selection

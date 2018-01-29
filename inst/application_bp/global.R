@@ -5,12 +5,38 @@ require(manipulateWidget)
 require(data.table)
 
 
-# choose a directory
-source("src/scripts/directoryInput.R")
+# get h5 data
+h5_dir <- "/home/benoit/bp2017"
+
+h5_files <- list.files(h5_dir, full.names = FALSE, pattern = ".h5$")
+
+.list_data_all <- list(antaresDataList = list(), params = list(), 
+                                have_links = c(), have_areas = c(), opts = list())
+
+add_h5_file <- lapply(1:length(h5_files), function(x){
+  params <- list(
+    areas = "all", links = "all", 
+    clusters = "all", districts = "all",
+    select = NULL
+  )
+  
+  # a .h5 file, so return opts...
+  opts <- setSimulationPath(paste0(h5_dir, "/", h5_files[x]))
+  .list_data_all$antaresDataList[[x]] <<- opts
+  .list_data_all$params[[x]] <<- params
+  .list_data_all$opts[[x]] <<- opts
+  
+  .list_data_all$have_links[x] <<- TRUE
+  .list_data_all$have_areas[x] <<- TRUE
+
+  names(.list_data_all$antaresDataList)[[x]] <<- h5_files[x]
+  invisible()
+})
+
 
 # shared inputs
 .is_shared_input <- TRUE
-.ram_limit <- 2
+.ram_limit <- 10
 antaresRead::setRam(.ram_limit)
 
 .data_module <- 200
@@ -59,6 +85,8 @@ bpNumerique2018::limitSizeGraph(.data_module)
 #------------
 # compare
 #-----------
+
+.global_compare <- c("mcYear", "areas")
 
 .global_compare_prodstack <- c("mcYear", "main", "unit", "areas", "legend", 
                        "stack", "stepPlot", "drawPoints")

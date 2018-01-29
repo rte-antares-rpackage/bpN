@@ -88,11 +88,9 @@ observe({
               mwModuleUI(id = id_plotMap, height = "800px", fluidRow = TRUE)
             })
             
-            .compare <- input$sel_compare_plotMap
-            if(input$sel_compare_mcyear){
-              .compare <- unique(c(.compare, "mcYear"))
-            }
-            if(!is.null(.compare)){
+            .compare <- setdiff(input$sel_compare, "areas")
+            
+            if(length(.compare) > 0 & input$use_compare){
               list_compare <- vector("list", length(.compare))
               names(list_compare) <- .compare
               # set main with study names
