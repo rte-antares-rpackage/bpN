@@ -19,7 +19,7 @@ observe({
           input_data$data[grepl("^prodStack", input_id), input_id := paste0(id_prodStack, "-shared_", input)]
           
           output[["prodStack_ui"]] <- renderUI({
-            mwModuleUI(id = id_prodStack, height = "800px", fluidRow = TRUE)
+            mwModuleUI(id = id_prodStack, height = "800px")
           })
           
           .compare <- input$sel_compare
@@ -53,7 +53,7 @@ observe({
           input_data$data[grepl("^plotts", input_id), input_id := paste0(id_ts, "-shared_", input)]
 
           output[["plotts_ui"]] <- renderUI({
-            mwModuleUI(id = id_ts, height = "800px", fluidRow = TRUE)
+            mwModuleUI(id = id_ts, height = "800px")
           })
           
           .compare <- setdiff(input$sel_compare, "areas")
@@ -96,7 +96,7 @@ observe({
           input_data$data[grepl("^exchangesStack", input_id), input_id := paste0(id_exchangesStack, "-shared_", input)]
           
           output[["exchangesStack_ui"]] <- renderUI({
-            mwModuleUI(id = id_exchangesStack, height = "800px", fluidRow = TRUE)
+            mwModuleUI(id = id_exchangesStack, height = "800px")
           })
           
           .compare <- gsub("^areas$", "area", input$sel_compare)

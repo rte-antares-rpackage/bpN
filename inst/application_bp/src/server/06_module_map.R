@@ -85,7 +85,7 @@ observe({
             input_data$data[grepl("^plotMap", input_id), input_id := paste0(id_plotMap, "-shared_", input)]
         
             output[["plotMap_ui"]] <- renderUI({
-              mwModuleUI(id = id_plotMap, height = "800px", fluidRow = TRUE)
+              mwModuleUI(id = id_plotMap, height = "800px")
             })
             
             .compare <- setdiff(input$sel_compare, "areas")
