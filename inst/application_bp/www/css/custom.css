@@ -47,13 +47,13 @@
 
 
 .ribbon {
-    position: absolute;
+    position: fixed;
     right: 0;
     top: 0;
     z-index: 1000;
     margin-right: 2cm;
     display: block;
     height: 50px;
-    text-indent: -999em;
     text-decoration: none;
+    overflow-x: hidden;
 }
