@@ -155,7 +155,8 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
                     timeSteph5 = "hourly",
                     mcYearh5 = NULL,
                     tablesh5 = c("areas", "links"),
-                    sizeMiniPlot = FALSE,...) {
+                    sizeMiniPlot = FALSE,language = "en", 
+                    hidden = NULL, ...) {
   
   
   if(!is.null(compare) && !interactive){
@@ -164,6 +165,16 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
   
   Column <- optionsT <- NULL
   tpMap <- plotMapOptions()
+  
+  # Check language
+  if(!language %in% availableLanguages){
+    stop("Invalid 'language' argument. Must be in : ", paste(availableLanguages, collapse = ", "))  
+  }
+  
+  # Check hidden
+  .validHidden(hidden, c("H5request", "timeSteph5", "tables", "mcYearH5", "mcYear", "dateRange", "Areas", "colAreaVar", 
+                         "sizeAreaVars", "miniPlot", "areaChartType", "sizeMiniPlot", "uniqueScale", "showLabels",
+                         "popupAreaVars", "labelAreaVar", "Links", "colLinkVar", "sizeLinkVar", "popupLinkVars"))
   
   #Check compare
   .validCompare(compare,  c("mcYear", "type", "colAreaVar", "sizeAreaVars", "areaChartType", "showLabels",
@@ -258,7 +269,7 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       }
       
       
-      }
+    }
     
     # Keep only links and areas present in the data
     if (areas) {
@@ -490,21 +501,37 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       paramsH5List
     }),
     H5request = mwGroup(
-      timeSteph5 = mwSelect(choices = paramsH5$timeStepS, 
-                            value =  paramsH5$timeStepS[1], 
-                            label = "timeStep", 
-                            multiple = FALSE),
-      tables = mwSelect(choices = paramsH5[["tabl"]][paramsH5[["tabl"]] %in% c("areas", "links")], 
-                        value = {
-                          if(.initial) {paramsH5[["tabl"]][paramsH5[["tabl"]] %in% c("areas", "links")]} else {NULL}
-                        }, 
-                        label = "table", multiple = TRUE),
+      label = .getLabelLanguage("H5request", language),
+      timeSteph5 = mwSelect(
+        {
+          choices = paramsH5$timeStepS
+          names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
+          choices
+        }, 
+        value =  paramsH5$timeStepS[1], 
+        label = .getLabelLanguage("timeStep", language), 
+        multiple = FALSE, .display = !"timeSteph5" %in% hidden
+      ),
+      tables = mwSelect( 
+        {
+          choices = paramsH5[["tabl"]][paramsH5[["tabl"]] %in% c("areas", "links")]
+          names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
+          choices
+        },
+        value = {
+          if(.initial) {paramsH5[["tabl"]][paramsH5[["tabl"]] %in% c("areas", "links")]} else {NULL}
+        }, 
+        label = .getLabelLanguage("table", language), multiple = TRUE, 
+        .display = !"tables" %in% hidden
+      ),
       mcYearH5 = mwSelect(choices = c(paramsH5[["mcYearS"]]), 
                           value = {
                             if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
                           }, 
-                          label = "mcYear", multiple = TRUE),
-      .display = {any(unlist(lapply(x_in, .isSimOpts)))}
+                          label = .getLabelLanguage("mcYear", language), multiple = TRUE, 
+                          .display = !"mcYearH5" %in% hidden
+      ),
+      .display = {any(unlist(lapply(x_in, .isSimOpts))) &  !"H5request" %in% hidden}
     ),
     sharerequest = mwSharedValue({
       list(timeSteph5_l = timeSteph5, mcYearh_l = mcYearH5, tables_l = tables)
@@ -516,44 +543,61 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
     }),
     
     ##Stop h5
-    mcYear = mwSelect({
-      c("average", as.character(.compareOperation(lapply(params$x, function(vv){
-        unique(vv$x[[1]]$mcYear)
-      }), xyCompare)))
-    }, 
-    value = { if(.initial) mcYear else NULL}, 
-    .display = any(unlist(lapply(params$x, function(X){X$showMcYear})))
+    mcYear = mwSelect(
+      {
+        allMcY <- c("average",  .compareOperation(lapply(params$x, function(vv){
+          unique(vv$x$mcYear)
+        }), xyCompare))
+        names(allMcY) <- c(.getLabelLanguage("average", language), allMcY[-1])
+        allMcY
+      }, 
+      value = { if(.initial) mcYear else NULL}, 
+      .display = any(unlist(lapply(params$x, function(X){X$showMcYear}))) & !"mcYear" %in% hidden, 
+      label = .getLabelLanguage("mcYear", language)
     ),
-    type = mwRadio(list("By time id"="detail", "Average" = "avg"), value = type),
+    type = mwRadio(
+      {
+        choices <- c("detail", "avg")
+        names(choices) <- c(.getLabelLanguage("By time id", language), .getLabelLanguage("Average", language))
+        choices
+      },
+      value = type, 
+      label = .getLabelLanguage("type", language), 
+      .display = !"type" %in% hidden
+    ),
     dateRange = mwDateRange(
       value = {
         if(.initial) params$x[[1]]$dateRange
         else NULL
       },
       min = params$x[[1]]$dateRange[1], 
-      max = params$x[[1]]$dateRange[2],label = "Daterange"
+      max = params$x[[1]]$dateRange[2], 
+      label = .getLabelLanguage("dateRange", language), 
+      .display = !"dateRange" %in% hidden
     ),
     
     Areas = mwGroup(
+      label = .getLabelLanguage("Areas", language),
       colAreaVar = mwSelect(
         choices = {
           if (mcYear == "average") {
-            c("none",
-              as.character(.compareOperation(lapply(params$x, function(vv){
-                unique(vv$areaValColumnsSynt)
-              }), xyCompare))
-            )
+            tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
+              unique(vv$areaValColumnsSynt)
+            }), xyCompare)))
           }else{
-            c("none", as.character(.compareOperation(lapply(params$x, function(vv){
+            tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
               unique(vv$areaValColumns)
             }), xyCompare)))
           }
+          names(tmp) <- c(.getLabelLanguage("none", language), tmp[-1])
+          tmp
         },
         value = {
           if(.initial) colAreaVar
           else NULL
         },
-        label = "Color"
+        label = .getLabelLanguage("Color", language), 
+        .display = !"colAreaVar" %in% hidden
       ),
       sizeAreaVars = mwSelect(
         {
@@ -564,98 +608,127 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
         value = {
           if(.initial) sizeAreaVars
           else NULL
-        }, label = "Size", multiple = TRUE),
+        }, 
+        label = .getLabelLanguage("Size", language), 
+        multiple = TRUE, .display = !"sizeAreaVars" %in% hidden
+      ),
       miniPlot = mwGroup(
-        areaChartType = mwSelect(list("bar chart" = "bar", 
-                                      "pie chart" = "pie",
-                                      "polar (area)" = "polar-area",
-                                      "polar (radius)" = "polar-radius"),
-                                 value = {
-                                   if(.initial) areaChartType
-                                   else NULL
-                                 }),
-        sizeMiniPlot = mwCheckbox(FALSE),
-        .display = length(sizeAreaVars) >= 2),
-      uniqueScale = mwCheckbox(uniqueScale, label = "Unique scale", 
-                               .display = length(sizeAreaVars) >= 2 && areaChartType != "pie"),
-      showLabels = mwCheckbox(showLabels, label = "Show labels", 
-                              .display = length(sizeAreaVars) >= 2),
+        label = .getLabelLanguage("miniPlot", language),
+        areaChartType = mwSelect(
+          {
+            choices <- c("bar", "pie", "polar-area", "polar-radius")
+            names(choices) <- c(.getLabelLanguage("bar chart", language), 
+                                .getLabelLanguage("pie chart", language), 
+                                .getLabelLanguage("polar (area)", language),
+                                .getLabelLanguage("polar (radius)", language))
+            choices
+          },
+          value = {
+            if(.initial) areaChartType
+            else NULL
+          }, label = .getLabelLanguage("areaChartType", language), 
+          .display = !"areaChartType" %in% hidden
+        ),
+        sizeMiniPlot = mwCheckbox(FALSE, label = .getLabelLanguage("sizeMiniPlot", language)),
+        .display = length(sizeAreaVars) >= 2 & !"miniPlot" %in% hidden
+      ),
+      uniqueScale = mwCheckbox(uniqueScale, label = .getLabelLanguage("Unique scale", language), 
+                               .display = length(sizeAreaVars) >= 2 && areaChartType != "pie" & !"uniqueScale" %in% hidden
+      ),
+      showLabels = mwCheckbox(showLabels, label = .getLabelLanguage("Show labels", language), 
+                              .display = length(sizeAreaVars) >= 2 & !"showLabels" %in% hidden
+      ),
       popupAreaVars = mwSelect(
         choices = 
         {
           if (mcYear == "average") {
-            c("none",
-              as.character(.compareOperation(lapply(params$x, function(vv){
-                unique(vv$areaValColumnsSynt)
-              }), xyCompare))
+            tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
+              unique(vv$areaValColumnsSynt)
+            }), xyCompare))
             )
           }else{
-            c("none", as.character(.compareOperation(lapply(params$x, function(vv){
+            tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
               unique(vv$areaValColumns)
             }), xyCompare)))
           }
+          names(tmp) <- c(.getLabelLanguage("none", language), tmp[-1])
+          tmp
         }, 
         value = {
           if(.initial) popupAreaVars
           else NULL
         }, 
-        label = "Popup", 
-        multiple = TRUE
+        label = .getLabelLanguage("Popup", language), 
+        multiple = TRUE, .display = !"popupAreaVars" %in% hidden
       ),
       labelAreaVar = mwSelect(
-        choices =     {
+        choices = {
           if (mcYear == "average") {
-            c("none",
-              as.character(.compareOperation(lapply(params$x, function(vv){
-                unique(vv$areaValColumnsSynt)
-              }), xyCompare))
+            tmp <- c("none",
+                     as.character(.compareOperation(lapply(params$x, function(vv){
+                       unique(vv$areaValColumnsSynt)
+                     }), xyCompare))
             )
           }else{
-            c("none", as.character(.compareOperation(lapply(params$x, function(vv){
+            tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
               unique(vv$areaValColumns)
             }), xyCompare)))
           }
+          names(tmp) <- c(.getLabelLanguage("none", language), tmp[-1])
+          tmp
         }, 
         value = {
           if(.initial) labelAreaVar
           else NULL
-        }, label = "Label", 
-        .display = length(sizeAreaVars) < 2
+        }, label = .getLabelLanguage("Label", language), 
+        .display = length(sizeAreaVars) < 2 & !"labelAreaVar" %in% hidden
       ),
-      .display = any(sapply(params$x, function(p) {"areas" %in% names(p$x)}))
+      .display = any(sapply(params$x, function(p) {"areas" %in% names(p$x)})) & !"Areas" %in% hidden
     ),
     
     Links = mwGroup(
+      label = .getLabelLanguage("Links", language),
       colLinkVar = mwSelect(
         {
-          c("none", 
-            as.character(.compareOperation(lapply(params$x, function(vv){
-              unique(vv$linkValColums)
-            }), xyCompare)))
+          tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
+            unique(vv$linkValColums)
+          }), xyCompare)))
+          names(tmp) <- c(.getLabelLanguage("none", language), tmp[-1])
+          tmp
+          
         }, 
         value = {
           if(.initial) colLinkVar
           else NULL
-        }, label = "Color"),
-      sizeLinkVar = mwSelect({c("none",
-                                as.character(.compareOperation(lapply(params$x, function(vv){
-                                  unique(vv$linkNumValColumns)
-                                }), xyCompare))
-      )}, 
-      value = {
-        if(.initial) sizeLinkVar
-        else NULL
-      }, label = "Width"),
-      popupLinkVars = mwSelect(  { c("none", 
-                                     as.character(.compareOperation(lapply(params$x, function(vv){
-                                       unique(vv$linkValColums)
-                                     }), xyCompare)))
-      },
-      value = {
-        if(.initial) popupLinkVars
-        else NULL
-      }, label = "Popup", multiple = TRUE),
-      .display = any(sapply(params$x, function(p) {"links" %in% names(p$x)}))
+        }, label = .getLabelLanguage("Color", language), .display = !"colLinkVar" %in% hidden
+      ),
+      sizeLinkVar = mwSelect(
+        {
+          tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
+            unique(vv$linkNumValColumns)
+          }), xyCompare)))
+          names(tmp) <- c(.getLabelLanguage("none", language), tmp[-1])
+          tmp
+        }, 
+        value = {
+          if(.initial) sizeLinkVar
+          else NULL
+        }, label = .getLabelLanguage("Width", language), .display = !"sizeLinkVar" %in% hidden
+      ),
+      popupLinkVars = mwSelect(
+        {
+          tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
+            unique(vv$linkValColums)
+          }), xyCompare)))
+          names(tmp) <- c(.getLabelLanguage("none", language), tmp[-1])
+          tmp
+        },
+        value = {
+          if(.initial) popupLinkVars
+          else NULL
+        }, label = .getLabelLanguage("Popup", language), multiple = TRUE, .display = !"popupLinkVars" %in% hidden
+      ),
+      .display = any(sapply(params$x, function(p) {"links" %in% names(p$x)})) & !"Links" %in% hidden
     ),
     mapLayout = mwSharedValue(mapLayout),
     params = mwSharedValue({

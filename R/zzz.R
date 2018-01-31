@@ -47,7 +47,7 @@ pkgEnv <- antaresRead:::pkgEnv
 #
 # The definition of the variables used in aliases is stored in file 
 # "GraphicalCharter.csv"
-graphicalCharter <- fread(input=system.file("GraphicalCharter.csv", package = "antaresViz"))
+graphicalCharter <- fread(input=system.file("GraphicalCharter.csv", package = "bpNumerique2018"))
 
 formulas <- lapply(graphicalCharter$formula, function(s) parse(text = s))
 names(formulas) <- graphicalCharter$name
@@ -117,10 +117,27 @@ pkgEnv$prodStackAliases <- list(
 rm(graphicalCharter, formulas, colors)
 
 
-colorsVars <- fread(input=system.file("color.csv", package = "antaresViz"))
+colorsVars <- fread(input=system.file("color.csv", package = "bpNumerique2018"))
 colorsVars$colors <- rgb(colorsVars$red, colorsVars$green, colorsVars$blue, maxColorValue = 255)
 
 
 # message limit size
 antaresVizSizeGraphError = "Too much data, please reduce selection. If you work with hourly data, you can reduce dateRange selection. 
 You can also use 'limitSizeGraph' function in R or 'Memory Controls' panel in shiny to update this."
+
+# language for labels
+language_labels <- fread(input=system.file("language_labels.csv", package = "bpNumerique2018"), encoding = "UTF-8")
+
+availableLanguages <- colnames(language_labels)
+
+.getLabelLanguage <- function(label, language = "en"){
+  if(language %in% colnames(language_labels)){
+    up_label <- language_labels[en %in% label, get(language)]
+    if(length(up_label) == 0){
+      up_label <- label
+    }
+  } else {
+    up_label <- label
+  }
+  up_label
+}

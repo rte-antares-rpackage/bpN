@@ -65,23 +65,31 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
                            stepPlot = FALSE, drawPoints = FALSE,  
                            timeSteph5 = "hourly",
                            mcYearh5 = NULL,
-                           tablesh5 = c("areas", "links"), ...) {
+                           tablesh5 = c("areas", "links"), language = "en", 
+                           hidden = NULL, ...) {
   
   
   if(!is.null(compare) && !interactive){
     stop("You can't use compare in no interactive mode")
   }
   
+  # Check language
+  if(!language %in% availableLanguages){
+    stop("Invalid 'language' argument. Must be in : ", paste(availableLanguages, collapse = ", "))  
+  }
   
+  # Check hidden
+  .validHidden(hidden, c("H5request", "timeSteph5", "mcYearhH5", "mcYear", "main", 
+                         "dateRange", "unit", "area", "legend", "stepPlot", "drawPoints"))
   
   #Check compare
   .validCompare(compare,  c("mcYear", "main", "unit", "area", "legend", "stepPlot", "drawPoints"))
-
+  
   unit <- match.arg(unit)
   if (is.null(mcYear)) mcYear <- "average"
   
   init_area <- area
-
+  
   xyCompare <- match.arg(xyCompare)
   
   init_dateRange <- dateRange
@@ -93,7 +101,7 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
     x <- list(x, x)
   }
   # .testXclassAndInteractive(x, interactive)
-
+  
   
   h5requestFiltering <- .convertH5Filtering(h5requestFiltering = h5requestFiltering, x = x)
   
@@ -165,7 +173,7 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
         if (!is.null(row)) row <- row[mcYear == mcy, .(area, link, timeId, flow, to, direction)]
       }else{
         .printWarningMcYear()
-        }
+      }
       
       dt <- merge(dt[as.Date(.timeIdToDate(timeId, timeStep, simOptions(x))) %between% dateRange,
                      .(link, timeId, flow = `FLOW LIN.`)],
@@ -261,20 +269,26 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
     }),
     
     H5request = mwGroup(
-      timeSteph5 = mwSelect(choices = paramsH5$timeStepS, 
-                            value =  paramsH5$timeStepS[1], 
-                            label = "timeStep", 
-                            multiple = FALSE
+      label = .getLabelLanguage("H5request", language),
+      timeSteph5 = mwSelect(
+        {
+          choices = paramsH5$timeStepS
+          names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
+          choices
+        }, 
+        value =  paramsH5$timeStepS[1], 
+        label = .getLabelLanguage("timeStep", language),
+        multiple = FALSE, .display = !"timeSteph5" %in% hidden
       ),
       mcYearH5 = mwSelect(choices = c(paramsH5[["mcYearS"]]), 
-                         value = {
-                           if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
-                         }, 
-                         label = "mcYear", 
-                         multiple = TRUE
+                          value = {
+                            if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
+                          }, 
+                          label = .getLabelLanguage("mcYear", language),
+                          multiple = TRUE, .display = !"timeSteph5" %in% hidden
       ),
       .display = {
-        any(unlist(lapply(x_in, .isSimOpts)))
+        any(unlist(lapply(x_in, .isSimOpts))) & !"H5request" %in% hidden
       }
     ),
     
@@ -282,7 +296,7 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
       list(timeSteph5_l = timeSteph5, mcYearh_l = mcYearH5, tables_l = NULL)
     }),
     
-
+    
     x_tranform = mwSharedValue({
       areas = "all"
       links = "all"
@@ -296,11 +310,12 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
     }),
     
     mcYear = mwSelect({
-     allMcY <-  c("average", if(!is.null(params)){
+      allMcY <-  c("average", if(!is.null(params)){
         as.character(.compareOperation(lapply(params$x, function(vv){
           unique(vv$x$mcYear)
         }), xyCompare))})
-     allMcY
+      names(allMcY) <- c(.getLabelLanguage("average", language), allMcY[-1])
+      allMcY
     }, 
     value = {
       if(.initial) mcYear
@@ -310,19 +325,22 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
       length(c("average", if(!is.null(params)){
         as.character(.compareOperation(lapply(params$x, function(vv){
           unique(vv$x$mcYear)
-        }), xyCompare))})) != 1}
+        }), xyCompare))})) != 1 & !"mcYear" %in% hidden
+    },
+    label = .getLabelLanguage("mcYear", language)
     ),
     
     area = mwSelect({
       if(!is.null(params)){
         as.character(.compareOperation(lapply(params$x, function(vv){
           unique(vv$areaList)
-        }), xyCompare))}
+        }), xyCompare))
+      }
     }, 
     value = {
       if(.initial) area
       else NULL
-    }),
+    }, label = .getLabelLanguage("area", language), .display = !"area" %in% hidden),
     
     dateRange = mwDateRange(value = {
       if(.initial){
@@ -331,17 +349,15 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
           res <- c(.dateRangeJoin(params = params, xyCompare = xyCompare, "min", tabl = NULL),
                    .dateRangeJoin(params = params, xyCompare = xyCompare, "max", tabl = NULL))
         }
-
+        
         ##Lock 7 days for hourly data
-        if(!is.null(attributes(params$x[[1]]$x)$timeStep))
-        {
-        if(attributes(params$x[[1]]$x)$timeStep == "hourly"){
-          if(params$x[[1]]$dateRange[2] - params$x[[1]]$dateRange[1]>7){
-            res[1] <- params$x[[1]]$dateRange[2] - 7
+        if(!is.null(attributes(params$x[[1]]$x)$timeStep)){
+          if(attributes(params$x[[1]]$x)$timeStep == "hourly"){
+            if(params$x[[1]]$dateRange[2] - params$x[[1]]$dateRange[1]>7){
+              res[1] <- params$x[[1]]$dateRange[2] - 7
+            }
           }
         }
-        }
-        
         res
       }else{NULL}
     }, 
@@ -355,19 +371,25 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
         .dateRangeJoin(params = params, xyCompare = xyCompare, "max", tabl = NULL)
       }
     },
-    .display = timeStepdataload != "annual"
+    .display = timeStepdataload != "annual" & !"timeSteph5" %in% hidden,
+    label = .getLabelLanguage("dateRange", language)
     ),
     
-    unit = mwSelect(c("MWh", "GWh", "TWh"), unit),
+    unit = mwSelect(c("MWh", "GWh", "TWh"), unit, label = .getLabelLanguage("unit", language), 
+                    .display = !"unit" %in% hidden),
     
-    legend = mwCheckbox(legend),
-    stepPlot = mwCheckbox(stepPlot),
-    drawPoints = mwCheckbox(drawPoints), 
+    legend = mwCheckbox(legend, label = .getLabelLanguage("legend", language), 
+                        .display = !"legend" %in% hidden),
+    stepPlot = mwCheckbox(stepPlot, label = .getLabelLanguage("stepPlot", language), 
+                          .display = !"stepPlot" %in% hidden),
+    drawPoints = mwCheckbox(drawPoints, label = .getLabelLanguage("drawPoints", language),
+                            .display = !"drawPoints" %in% hidden), 
     timeStepdataload = mwSharedValue({
       attributes(x_tranform[[1]])$timeStep
     }),
     
-    main = mwText(main, label = "title"),
+    main = mwText(main, label = .getLabelLanguage("title", language), 
+                  .display = !"main" %in% hidden),
     
     params = mwSharedValue({
       .getDataForComp(x_tranform, NULL, compare, compareOpts, 

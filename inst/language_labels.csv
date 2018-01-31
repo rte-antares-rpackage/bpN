@@ -1,0 +1,62 @@
+en;fr
+timeStep;Pas de temps
+mcYear;Tirage
+H5request;Données
+area;Zone
+Areas;Zones
+areas;Zones
+dateRange;Période
+unit;Unité
+legend;Légende
+stepPlot;stepPlot
+drawPoints;Afficher les points
+title;Titre
+main;Titre
+table;Table
+stack;Empilement
+variable;Variable
+secondAxis;2nd axe
+Variables 2nd axis;2nd axe : variable
+type;type
+confidence interval;Interval de confiance
+min value;Valeur min.
+max value;Valeur max.
+elements;Elements
+aggregate;Agrégation
+none;sans
+mean;moyenne
+sum;somme
+mean by areas;moyenne par zone
+sum by areas;somme par zone
+highlight;Surbrillance
+Color;Couleur
+Size;Taille
+miniPlot;Mini-graphs
+sizeMiniPlot;Taille prop.
+Unique scale;Echelle unique
+Show labels;Voir les labels
+Popup;Popup
+Label;Label
+Links;Liens
+links;Liens
+districts;Districts
+Width;Epaisseur
+By time id;Par pas de temps
+Average;Moyen
+areaChartType;Graphique
+bar chart;Diagramme en barres
+pie chart;Camembert
+polar (area);Polaire (aire)
+polar (radius);Polaire (rayon)
+average;moyenne
+hourly;Horaire
+daily;Journalier
+weekly;Hebdomadaire
+monthly;Mensuel
+annual;Annuel
+time series;Séries temporelles
+barplot;Diagramme en barres
+monotone;Monotone
+density;Densité
+cdf;Cdf
+heatmap;Heatmap

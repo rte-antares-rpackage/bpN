@@ -95,6 +95,8 @@
 #' @param timeSteph5 \code{character} timeStep to read in h5 file. Only for Non interactive mode.
 #' @param mcYearh5 \code{numeric} mcYear to read for h5. Only for Non interactive mode.
 #' @param tablesh5 \code{character} tables for h5 ("areas" "links", "clusters" or "disticts"). Only for Non interactive mode.
+#' @param language \code{character} language use for label. Defaut to 'en'. Can be 'fr'.
+#' @param hidden \code{logical} Names of input to hide. Defaut to NULL
 #' @param ... Other arguments for \code{\link{manipulateWidget}}
 #'  
 #' @return 
@@ -207,15 +209,24 @@ prodStack <- function(x,
                       h5requestFiltering = list(), stepPlot = FALSE, drawPoints = FALSE,
                       timeSteph5 = "hourly",
                       mcYearh5 = NULL,
-                      tablesh5 = c("areas", "links"),...) {
+                      tablesh5 = c("areas", "links"), language = "en", 
+                      hidden = NULL, ...) {
   
   if(!is.null(compare) && !interactive){
     stop("You can't use compare in no interactive mode")
   }
   
-  #Check compare
+  # Check language
+  if(!language %in% availableLanguages){
+    stop("Invalid 'language' argument. Must be in : ", paste(availableLanguages, collapse = ", "))  
+  }
+  
+  # Check hidden
+  .validHidden(hidden, c("H5request", "timeSteph5", "tables", "mcYearhH5", "mcYear", "main", "dateRange", 
+                         "stack", "unit", "areas", "legend", "stepPlot", "drawPoints"))
+  # Check compare
   .validCompare(compare,  c("mcYear", "main", "unit", "areas", "legend", "stack", "stepPlot", "drawPoints"))
-
+  
   xyCompare <- match.arg(xyCompare)
   unit <- match.arg(unit)
   if (is.null(mcYear)) mcYear <- "average"
@@ -385,27 +396,38 @@ prodStack <- function(x,
       tmp
     }),
     H5request = mwGroup(
-      timeSteph5 = mwSelect(choices = paramsH5$timeStepS, 
-                            value =  paramsH5$timeStepS[1], 
-                            label = "timeStep", 
-                            multiple = FALSE
+      label = .getLabelLanguage("H5request", language),
+      timeSteph5 = mwSelect(
+        {
+          choices = paramsH5$timeStepS
+          names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
+          choices
+        }, 
+        value =  paramsH5$timeStepS[1], 
+        label = .getLabelLanguage("timeStep", language), 
+        multiple = FALSE, .display = !"timeSteph5" %in% hidden
       ),
-      tables = mwSelect(choices = paramsH5[["tabl"]][paramsH5[["tabl"]]%in%c("areas", "districts")], 
-                        value = {
-                          if(.initial) {paramsH5[["tabl"]][paramsH5[["tabl"]]%in%c("areas", "districts")][1]}else{NULL}
-                        }, 
-                        label = "table", 
-                        multiple = FALSE
+      tables = mwSelect(
+        {
+          choices = paramsH5[["tabl"]][paramsH5[["tabl"]]%in%c("areas", "districts")]
+          names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
+          choices
+        },
+        value = {
+          if(.initial) {paramsH5[["tabl"]][paramsH5[["tabl"]]%in%c("areas", "districts")][1]}else{NULL}
+        }, 
+        label = .getLabelLanguage("table", language), 
+        multiple = FALSE, .display = !"tables" %in% hidden
       ),
       mcYearhH5 = mwSelect(choices = c(paramsH5[["mcYearS"]]), 
-                         value = {
-                           if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
-                         }, 
-                         label = "mcYear", 
-                         multiple = TRUE
+                           value = {
+                             if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
+                           }, 
+                           label = .getLabelLanguage("mcYear", language), 
+                           multiple = TRUE, .display = !"mcYearhH5" %in% hidden
       ),
       .display = {
-        any(unlist(lapply(x_in, .isSimOpts)))
+        any(unlist(lapply(x_in, .isSimOpts))) & !"H5request" %in% hidden
       }
     ),
     
@@ -413,7 +435,7 @@ prodStack <- function(x,
       list(timeSteph5_l = timeSteph5, mcYearh_l = mcYearhH5, tables_l = tables)
     }),
     
-
+    
     
     x_tranform = mwSharedValue({
       
@@ -430,7 +452,7 @@ prodStack <- function(x,
           }
         }
       }
-
+      
       sapply(1:length(x_in),function(zz){
         .loadH5Data(sharerequest, x_in[[zz]], h5requestFilter = h5requestFilteringTp[[zz]])
       }, simplify = FALSE)
@@ -444,12 +466,14 @@ prodStack <- function(x,
     
     ##End h5
     mcYear = mwSelect({
-      c("average",  .compareOperation(lapply(params$x, function(vv){
+      allMcY <- c("average",  .compareOperation(lapply(params$x, function(vv){
         unique(vv$x$mcYear)
       }), xyCompare))
-    }),
+      names(allMcY) <- c(.getLabelLanguage("average", language), allMcY[-1])
+      allMcY
+    }, label = .getLabelLanguage("mcYear", language), .display = !"mcYear" %in% hidden),
     
-    main = mwText(main, label = "title"),
+    main = mwText(main, label = .getLabelLanguage("title", language), .display = !"main" %in% hidden),
     
     dateRange = mwDateRange(value = {
       if(.initial){
@@ -461,14 +485,9 @@ prodStack <- function(x,
           if(params$x[[1]]$timeStep == "hourly"){
             if(params$x[[1]]$dateRange[2] - params$x[[1]]$dateRange[1]>7){
               res[1] <- params$x[[1]]$dateRange[2] - 7
+            }
           }
-          
-          
         }
-        }
-        
-        
-        
         res
       }else{NULL}
     }, 
@@ -481,14 +500,18 @@ prodStack <- function(x,
       if(!is.null(params)){
         .dateRangeJoin(params = params, xyCompare = xyCompare, "max", tabl = table)
       }
-    }
+    }, 
+    label = .getLabelLanguage("dateRange", language), 
+    .display = !"dateRange" %in% hidden
     ),
     
     
     
-    stack = mwSelect(names(pkgEnv$prodStackAliases), stack),
+    stack = mwSelect(names(pkgEnv$prodStackAliases), stack, 
+                     label = .getLabelLanguage("stack", language), .display = !"stack" %in% hidden),
     
-    unit = mwSelect(c("MWh", "GWh", "TWh"), unit),
+    unit = mwSelect(c("MWh", "GWh", "TWh"), unit, 
+                    label = .getLabelLanguage("unit", language), .display = !"unit" %in% hidden),
     
     areas = mwSelect({
       as.character(.compareOperation(lapply(params$x, function(vv){
@@ -502,12 +525,17 @@ prodStack <- function(x,
         }), xyCompare))[1]
       }
       else{NULL}},
-    multiple = TRUE
+    multiple = TRUE, 
+    label = .getLabelLanguage("areas", language),
+    .display = !"areas" %in% hidden
     ),
     
-    legend = mwCheckbox(legend),
-    stepPlot = mwCheckbox(stepPlot),
-    drawPoints = mwCheckbox(drawPoints),
+    legend = mwCheckbox(legend, label = .getLabelLanguage("legend", language),
+                        .display = !"legend" %in% hidden),
+    stepPlot = mwCheckbox(stepPlot, label = .getLabelLanguage("stepPlot", language),
+                          .display = !"stepPlot" %in% hidden),
+    drawPoints = mwCheckbox(drawPoints, label = .getLabelLanguage("drawPoints", language),
+                            .display = !"drawPoints" %in% hidden),
     .compare = {
       compare
     },

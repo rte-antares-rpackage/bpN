@@ -132,3 +132,18 @@
   }
   invisible(TRUE)
 }
+
+.validHidden <- function(hidden, values){
+  if(!is.null(hidden)){
+    if(!is.vector(hidden)){
+      stop("'hidden' must be a vector")
+    } else {
+      if(!all(hidden %in% values)){
+        invalid <- hidden[!hidden %in% values]
+          stop(paste0("Invalid arguments for 'hidden' : '", paste0(invalid, collapse = "', '"),
+                  "'. Possible values : '", paste0(values, collapse = "', '"), "'."))
+      }
+    }
+  }
+  invisible(TRUE)
+}
