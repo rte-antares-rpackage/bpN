@@ -40,7 +40,12 @@
     tpl <- rbindlist(listVar)
     elements <- as.vector(sapply(elements, function(X){paste(X, "__", variable)}))
   }else{
-    tpl <- listVar[[1]]
+    if(aggregate %in% c("mean by areas", "sum by areas")){
+      tpl <- listVar[[1]][,element := paste(element, '__' , names(listVar)[1])]
+      elements <- paste(elements, "__", variable)
+    } else {
+      tpl <- listVar[[1]]
+    }
   }
   
   # Filtering data if required
