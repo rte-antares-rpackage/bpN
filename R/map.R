@@ -192,8 +192,11 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
     raw <- colorsVars[Column == colAreaVar]
     options <- plotMapOptions(areaColorScaleOpts = colorScaleOptions(
       negCol = "#FFFFFF",
-      zeroCol = rgb(raw$red, raw$green, raw$blue,  maxColorValue = 255),
-      posCol = rgb(raw$red/2, raw$green/2, raw$blue/2, maxColorValue = 255)))
+      # zeroCol = rgb(raw$red, raw$green, raw$blue,  maxColorValue = 255),
+      # posCol = rgb(raw$red/2, raw$green/2, raw$blue/2, maxColorValue = 255)),
+      # BP 2017
+      zeroCol = "#FFFFFF", # BP 2017
+      posCol = rgb(raw$red, raw$green, raw$blue, maxColorValue = 255)))
     
   }
   if (is.null(mcYear)) mcYear <- "average"
@@ -486,8 +489,11 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
         raw <- colorsVars[Column == colAreaVar]
         plotMapOptions(areaColorScaleOpts = colorScaleOptions(
           negCol = "#FFFFFF",
-          zeroCol = rgb(raw$red, raw$green, raw$blue,  maxColorValue = 255),
-          posCol = rgb(raw$red/2, raw$green/2, raw$blue/2, maxColorValue = 255))
+          # zeroCol = rgb(raw$red, raw$green, raw$blue,  maxColorValue = 255),
+          # posCol = rgb(raw$red/2, raw$green/2, raw$blue/2, maxColorValue = 255)),
+          # BP 2017
+          zeroCol = "#FFFFFF", # BP 2017
+          posCol = rgb(raw$red, raw$green, raw$blue, maxColorValue = 255))
         )
       }else{
         options
