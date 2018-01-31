@@ -21,7 +21,7 @@ layout <- reactive({
 
 ml <- reactiveVal()
 # module for set and save layout
-ml_builder <- callModule(antaresViz:::changeCoordsServer, "ml", layout, 
+ml_builder <- callModule(bpNumerique2018:::changeCoordsServer, "ml", layout, 
                          what = reactive("areas"), stopApp = FALSE)
 
 observe({

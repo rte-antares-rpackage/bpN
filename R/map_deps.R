@@ -5,14 +5,14 @@ requireDep <- function(map, deps) {
      shadows = htmlDependency(
        "shadows",
        "1.0",
-       src = system.file("leafletPlugins", package = "antaresViz"),
+       src = system.file("leafletPlugins", package = "bpNumerique2018"),
        script = "svgShadows.js"
      ),
      
      antaresLegend = htmlDependency(
        "antaresLegend",
        "1.0",
-       src = system.file("leafletPlugins", package = "antaresViz"),
+       src = system.file("leafletPlugins", package = "bpNumerique2018"),
        script = "antaresLegend.js",
        stylesheet = "antaresLegend.css"
      )

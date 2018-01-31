@@ -8,7 +8,7 @@
 #' @importFrom shiny runApp
 #' @export
 runAppAntaresViz <- function() {
-  ctrl <- shiny::runApp(system.file("application", package = "antaresViz") , launch.browser = TRUE)
+  ctrl <- shiny::runApp(system.file("application", package = "bpNumerique2018") , launch.browser = TRUE)
   suppressWarnings(try(rm(list = c("directoryInput", "readDirectoryInput", 
                                    "updateDirectoryInput"), envir = .GlobalEnv), silent = TRUE))
   gc(reset = TRUE)

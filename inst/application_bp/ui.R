@@ -1,4 +1,4 @@
-# Define UI for antaresViz app
+# Define UI for bpNumerique2018 app
 navbarPage(title = "Bilan Prévisionnel 2017", id = "nav-id", theme = "css/custom.css", collapsible = TRUE, position = "fixed-top",
            header = fluidRow(
              column(12, 
@@ -8,7 +8,7 @@ navbarPage(title = "Bilan Prévisionnel 2017", id = "nav-id", theme = "css/custo
                     div(id = "import_busy", tags$img(src= "spinner.gif", height = 100, 
                                                      style = "position: fixed;top: 50%;z-index:10;left: 48%;"))
              )
-           ), windowTitle = "antaresViz",
+           ), windowTitle = "BP 2017",
            tabPanel("Données",
                     source("src/ui/04_ui_analysis.R", local = T)$value
            ),

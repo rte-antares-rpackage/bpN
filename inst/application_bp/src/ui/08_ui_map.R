@@ -4,7 +4,7 @@ navbarMenu("Carte",
                       column(12,
                              conditionalPanel(condition = "output.have_data",
                                               conditionalPanel(condition = "output.have_data_links || output.have_data_areas",
-                                                               antaresViz:::changeCoordsUI("ml")
+                                                               bpNumerique2018:::changeCoordsUI("ml")
                                               ),
                                               conditionalPanel(condition = "output.have_data_links === false && output.have_data_areas === false",
                                                                h3("No data imported")
