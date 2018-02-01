@@ -635,7 +635,7 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
           }, label = .getLabelLanguage("areaChartType", language), 
           .display = !"areaChartType" %in% hidden
         ),
-        sizeMiniPlot = mwCheckbox(FALSE, label = .getLabelLanguage("sizeMiniPlot", language)),
+        sizeMiniPlot = mwCheckbox(sizeMiniPlot, label = .getLabelLanguage("sizeMiniPlot", language)),
         .display = length(sizeAreaVars) >= 2 & !"miniPlot" %in% hidden
       ),
       uniqueScale = mwCheckbox(uniqueScale, label = .getLabelLanguage("Unique scale", language), 

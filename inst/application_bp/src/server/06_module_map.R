@@ -1,49 +1,4 @@
-# list of opts for set layout
-layout <- reactive({
-  ind_keep_list_data <- ind_keep_list_data()
-  isolate({
-    if(!is.null(ind_keep_list_data)){
-      ind_map <- unique(sort(c(ind_keep_list_data$ind_areas, ind_keep_list_data$ind_links)))
-      if(length(ind_map) > 0){
-        if(packageVersion("antaresRead") <= '2.0.0'){
-          readLayout(opts = list_data_all$opts[ind_map][[1]])
-        } else {
-          readLayout(opts = list_data_all$opts[ind_map])
-        }
-      }else{
-        NULL
-      }
-    } else {
-      NULL
-    }
-  })
-})
-
-ml <- reactiveVal()
-# module for set and save layout
-ml_builder <- callModule(bpNumerique2018:::changeCoordsServer, "ml", layout, 
-                         what = reactive("areas"), stopApp = FALSE)
-
-observe({
-  ml(ml_builder())
-})
-
-observe({
-  ml_file <- input$import_layout
-  if (!is.null(ml_file)){
-    tmp_ml <- try(readRDS(ml_file$datapath), silent = TRUE)
-    if("mapLayout" %in% class(tmp_ml)){
-      ml(tmp_ml)
-    } else {
-      showModal(modalDialog(
-        title = "Invalid map layout file",
-        easyClose = TRUE,
-        footer = NULL,
-        "Must be a valid .RDS file (class 'mapLayout')"
-      ))
-    }
-  }
-})
+ml <- reactiveVal(ml_data)
 
 # control : have a not null layout, and so print map module ?
 print_map <- reactiveValues(value = FALSE)
@@ -56,12 +11,6 @@ observe({
   }
 })
 
-
-output$current_layout <- renderLeafletDragPoints({
-  if(!is.null(ml())){
-    plotMapLayout(ml())
-  }
-})
 
 output$must_print_map <- reactive({
   print_map$value
@@ -120,23 +69,4 @@ observe({
       }
     }
   })
-})
-
-# download layout
-output$download_layout <- downloadHandler(
-  filename = function() {
-    paste('mapLayout-', Sys.Date(), '.RDS', sep='')
-  },
-  content = function(con) {
-    saveRDS(ml(), file = con)
-  }
-)
-
-# change page
-observe({
-  if(!is.null(input[['ml-done']])){
-    if(input[['ml-done']] > 0){
-      updateNavbarPage(session, inputId = "nav-id", selected = "Map")
-    }
-  }
 })
