@@ -523,9 +523,11 @@ prodStack <- function(x,
     label = .getLabelLanguage("dateRange", language), 
     .display = !"dateRange" %in% hidden
     ),
-    stack = mwSelect(names(pkgEnv$prodStackAliases), stack, 
+    # stack = mwSelect(names(pkgEnv$prodStackAliases), stack, 
+    #                  label = .getLabelLanguage("stack", language), .display = !"stack" %in% hidden),
+    # BP 17
+    stack = mwSelect(c("eco2mix", "thermalFirst"), stack, 
                      label = .getLabelLanguage("stack", language), .display = !"stack" %in% hidden),
-    
     unit = mwSelect(c("MWh", "GWh", "TWh"), unit, 
                     label = .getLabelLanguage("unit", language), .display = !"unit" %in% hidden),
     
