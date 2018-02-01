@@ -164,9 +164,9 @@ outputOptions(output, "have_data_areas", suspendWhenHidden = FALSE)
 observe({
   if(input$update_module > 0){
     if(list_data_controls$have_areas & list_data_controls$n_areas >= 1){
-      updateNavbarPage(session, inputId = "nav-id", selected = "prodStack")
+      updateNavbarPage(session, inputId = "nav-id", selected = "Production")
     } else if(list_data_controls$have_links & list_data_controls$n_links >= 1){
-      updateNavbarPage(session, inputId = "nav-id", selected = "exchangesStack")
+      updateNavbarPage(session, inputId = "nav-id", selected = "Echanges")
     }
   }
 })

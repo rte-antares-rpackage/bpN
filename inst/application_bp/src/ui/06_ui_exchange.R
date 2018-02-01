@@ -6,11 +6,11 @@ tabPanel("Echanges",
                                                     uiOutput("exchangesStack_ui")
                                    ),
                                    conditionalPanel(condition = "output.have_data_links === false",
-                                                    h3("No links imported")
+                                                    h3("Pas de liens présents dans les données.")
                                    )
                   ),
                   conditionalPanel(condition = "output.have_data === false",
-                                   h3("No data imported")
+                                   h3("Pas de données importées depuis l'onglet 'Données'.")
                   )
            )
          )
