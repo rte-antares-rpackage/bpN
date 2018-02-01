@@ -4,6 +4,59 @@ require(bpNumerique2018)
 require(manipulateWidget)
 require(data.table)
 
+# change eco2mix alias
+setProdStackAlias(
+  name = "eco2mix",
+  variables = alist(
+    "Pompage/turbinage" = PSP,
+    "Import/export" = -(BALANCE + `ROW BAL.`),
+    "Autre renouvelable" = `MISC. NDG`,
+    "Eolien" = WIND,
+    "Solaire" = SOLAR,
+    "Nucléaire" = NUCLEAR,
+    "Hydraulique" = `H. ROR` + `H. STOR`,
+    "Gaz" = GAS,
+    "Charbon" = COAL,
+    "Lignite" = LIGNITE,
+    "Fioul" = OIL,
+    "Défaillance" = `UNSP. ENRG`,
+    "Déversement" = `SPIL. ENRG`,
+    "Effacement" = `MISC. DTG` + `MIX. FUEL`
+  ),
+  colors = c("#1147B9", "#969696", "#166A57", "#74CDB9", "#F27406", "#F5B300", "#2772B2", "#F30A0A", "#AC8C35", 
+             "#B4822B", "#8356A2", "#DBA9A9",  "#FCD8B9", "#ADFF2F"),
+  lines = alist(
+    "Consommation" = LOAD + `SPIL. ENRG`,
+    "Production" = NUCLEAR + LIGNITE + COAL + GAS + OIL + `MIX. FUEL` + `MISC. DTG` + WIND + SOLAR + `H. ROR` + `H. STOR` + `MISC. NDG` + pmax(0, PSP) + `UNSP. ENRG`
+  ),
+  lineColors = c("#875627", "#EB9BA6"),
+  lineWidth = 2
+)
+
+setProdStackAlias(
+  name = "thermalFirst",
+  variables = alist(
+    "Pompage/turbinage" = PSP,
+    "import/export" = -(BALANCE + `ROW BAL.`),
+    "Nucléaire" = NUCLEAR,
+    "Lignite" = LIGNITE,
+    "Charbon" = COAL,
+    "Gaz" = GAS,
+    "Fioul" = OIL,
+    "Autre thermique" = `MIX. FUEL`,
+    "Effacement" = `MISC. DTG`,
+    "Autre renouvelable" = `MISC. NDG`,
+    "Eolien" = WIND,
+    "Solaire" = SOLAR,
+    "Hydraulique fil" = `H. ROR`,
+    "Hydraulique lac" = `H. STOR`
+  ),
+  colors = c("#1147B9", "#969696", "#F5B300", "#B4822B", "#AC8C35", "#F30A0A", "#8356A2", "#7F549C", "#ADFF2F", "#166A57", "#74CDB9", "#F27406", "#3D607D", "#5497D0")
+)
+
+
+# map layout
+ml_data <- tryCatch(readRDS("/home/benoit/bp2017/mapLayout-2018-01-19.RDS"), error = function(e) {NULL})
 
 # get h5 data
 h5_dir <- "/home/benoit/bp2017"
