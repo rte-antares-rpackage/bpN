@@ -484,7 +484,10 @@ prodStack <- function(x,
         names(allMcY) <- .getLabelLanguage("average", language)
       }
       allMcY
-    }, value = mcYear, label = .getLabelLanguage("mcYear", language), .display = !"mcYear" %in% hidden),
+    }, value = {
+      if(.initial) mcYear
+      else NULL
+    }, label = .getLabelLanguage("mcYear", language), .display = !"mcYear" %in% hidden),
     
     main = mwText(main, label = .getLabelLanguage("title", language), .display = !"main" %in% hidden),
     
@@ -529,16 +532,9 @@ prodStack <- function(x,
       }), xyCompare))
     },
     value = {
-      if(.initial){
-        if(is.null(areas)){
-          as.character(.compareOperation(lapply(params$x, function(vv){
-            unique(vv$x$area)
-          }), xyCompare))[1]
-        } else {
-          areas
-        }
-      }
-      else{NULL}},
+      if(.initial) areas
+      else NULL
+    },
     multiple = TRUE, 
     label = .getLabelLanguage("areas", language),
     .display = !"areas" %in% hidden

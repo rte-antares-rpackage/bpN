@@ -117,6 +117,8 @@ observe({
           mod_exchangesStack <- exchangesStack(list_data_all$antaresDataList[ind_links], xyCompare = "union",
                                                h5requestFiltering = list_data_all$params[ind_links],
                                                interactive = TRUE, .updateBtn = TRUE, 
+                                               mcYear = "1", main = "Echanges", unit = "MWh", area = "fr",
+                                               stepPlot = TRUE, language = "fr",
                                                .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE)
           
           if("MWController" %in% class(modules$exchangesStack)){

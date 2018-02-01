@@ -310,11 +310,20 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
     }),
     
     mcYear = mwSelect({
-      allMcY <-  c("average", if(!is.null(params)){
-        as.character(.compareOperation(lapply(params$x, function(vv){
-          unique(vv$x$mcYear)
-        }), xyCompare))})
-      names(allMcY) <- c(.getLabelLanguage("average", language), allMcY[-1])
+      # allMcY <- c("average",  .compareOperation(lapply(params$x, function(vv){
+      #   unique(vv$x$mcYear)
+      # }), xyCompare))
+      # names(allMcY) <- c(.getLabelLanguage("average", language), allMcY[-1])
+      
+      # BP 2017
+      allMcY <- .compareOperation(lapply(params$x, function(vv){
+        unique(vv$x$mcYear)
+      }), xyCompare)
+      names(allMcY) <- allMcY
+      if(is.null(allMcY)){
+        allMcY <- "average"
+        names(allMcY) <- .getLabelLanguage("average", language)
+      }
       allMcY
     }, 
     value = {
