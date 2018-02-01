@@ -69,7 +69,8 @@ needed <- strsplit(needed, ",")
     variables = formulas[var],
     colors = unname(colors[var]),
     lines = formulas[lines],
-    lineColors = unname(colors[lines]) 
+    lineColors = unname(colors[lines]),
+    lineWidth = 3
   )
 }
 

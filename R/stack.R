@@ -41,7 +41,7 @@
 #' next series is drawn from 0.
 #' 
 #' @noRd
-.plotStack <- function(x, timeStep, opts, colors, lines = NULL, lineColors = NULL, 
+.plotStack <- function(x, timeStep, opts, colors, lines = NULL, lineColors = NULL, lineWidth = NULL,
                        legendId = "", groupId = legendId, main = "", ylab = "",
                        width = NULL, height = NULL, dateRange = NULL, stepPlot = FALSE, drawPoints = FALSE) {
   
@@ -129,7 +129,7 @@
       g <- g %>% dySeries(name = paste0("opp", lines[i]), color = lineColors[i], 
                           fillGraph = FALSE, strokeWidth = 0)
       g <- g %>% dySeries(name = lines[i], color = lineColors[i], 
-                          fillGraph = FALSE, strokeWidth = 3)
+                          fillGraph = FALSE, strokeWidth = lineWidth[i])
     }
   }
   

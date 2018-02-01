@@ -81,6 +81,8 @@
 #'   Vector of colors with same length as parameter \code{lines}. This argument
 #'   should be \code{NULL} if there is no curve to trace or if parameter
 #'   \code{variables} is an alias.
+#' @param lineWidth
+#'   Optionnal. Defaut to 3. Vector of width with same length as parameter \code{lines} (or only one value).
 #' @param description
 #'   Description of the stack. It is displayed by function 
 #'   \code{prodStackAliases}.
@@ -306,6 +308,7 @@ prodStack <- function(x,
                               stackOpts$colors,
                               stackOpts$lines,
                               stackOpts$lineColors,
+                              stackOpts$lineWidth,
                               main = main,
                               unit = unit,
                               legendId = legendId + id - 1,
@@ -614,7 +617,7 @@ prodStack <- function(x,
 #' next series is drawn from 0.
 #' 
 #' @noRd
-.plotProdStack <- function(x, variables, colors, lines, lineColors, 
+.plotProdStack <- function(x, variables, colors, lines, lineColors, lineWidth,
                            main = NULL, unit = "MWh", legendId = "",
                            groupId = legendId,
                            width = NULL, height = NULL, dateRange = NULL, stepPlot = FALSE, drawPoints = FALSE) {
@@ -629,7 +632,7 @@ prodStack <- function(x,
   for (n in names(formulas)) {
     dt[,c(n) := x[, eval(formulas[[n]]) / switch(unit, MWh = 1, GWh = 1e3, TWh = 1e6)]]
   }
-  .plotStack(dt, timeStep, simOptions(x), colors, lines, lineColors, legendId,
+  .plotStack(dt, timeStep, simOptions(x), colors, lines, lineColors, lineWidth, legendId,
              groupId,
              main = main, ylab = sprintf("Production (%s)", unit), 
              width = width, height = height, dateRange = dateRange, stepPlot = stepPlot, drawPoints = drawPoints)
