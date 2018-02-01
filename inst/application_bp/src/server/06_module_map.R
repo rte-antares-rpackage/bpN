@@ -32,7 +32,7 @@ observe({
             
             # update shared input table
             input_data$data[grepl("^plotMap", input_id), input_id := paste0(id_plotMap, "-shared_", input)]
-        
+            
             output[["plotMap_ui"]] <- renderUI({
               mwModuleUI(id = id_plotMap, height = "800px")
             })
@@ -52,10 +52,15 @@ observe({
             }
             
             mod_plotMap <- plotMap(list_data_all$antaresDataList[ind_map], ml, 
-                                       interactive = TRUE, .updateBtn = TRUE, 
-                                        .updateBtnInit = TRUE, compare = .compare,
-                                       h5requestFiltering = list_data_all$params[ind_map],
-                                       xyCompare = "union", .runApp = FALSE)
+                                   interactive = TRUE, .updateBtn = TRUE, 
+                                   .updateBtnInit = TRUE, compare = .compare,
+                                   h5requestFiltering = list_data_all$params[ind_map],
+                                   language = "fr", 
+                                   hidden = c("showLabels", "popupLinkVars", "uniqueScale", "showLabels"),
+                                   # colAreaVar ="LOAD", areaChartType = "pie", sizeMiniPlot = TRUE,
+                                   # sizeAreaVars = c("NUCLEAR", "LIGNITE", "COAL", "GAS", "OIL", "MIX. FUEL", "MISC. DTG", "H. STOR", "WIND", "SOLAR", "H. ROR", "MISC. NDG"),
+                                   # colLinkVar = "CONG. FEE (ABS.)", sizeLinkVar = "FLOW LIN.",
+                                   xyCompare = "union", .runApp = FALSE)
             
             if("MWController" %in% class(modules$plotMap)){
               modules$plotMap$clear()

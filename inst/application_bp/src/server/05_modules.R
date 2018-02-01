@@ -73,7 +73,7 @@ observe({
           }
           mod_plotts <- plot(list_data_all$antaresDataList[ind_areas], xyCompare = "union",
                              h5requestFiltering = list_data_all$params[ind_areas],
-                             interactive = TRUE, .updateBtn = TRUE, 
+                             interactive = TRUE, .updateBtn = TRUE, language = "fr",
                              .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE)
           
           if("MWController" %in% class(modules$plotts)){
