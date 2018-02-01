@@ -23,7 +23,7 @@ observe({
           })
           
           .compare <- input$sel_compare
-
+          
           if(length(.compare) > 0 & input$use_compare){
             list_compare <- vector("list", length(.compare))
             names(list_compare) <- .compare
@@ -36,9 +36,11 @@ observe({
             .compare = NULL
           }
           mod_prodStack <- prodStack(list_data_all$antaresDataList[ind_areas], xyCompare = "union",
-                                         # h5requestFiltering = list_data_all$params[ind_areas],
-                                         unit = "GWh", interactive = TRUE, .updateBtn = TRUE, 
-                                         .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE)
+                                     # h5requestFiltering = list_data_all$params[ind_areas],
+                                     unit = "MWh", main = "Production", areas = "fr", mcYear = "1",
+                                     interactive = TRUE, .updateBtn = TRUE, 
+                                     .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE, 
+                                     language = "fr", hidden = c("stepPlot", "drawPoints"))
           
           if("MWController" %in% class(modules$prodStack)){
             modules$prodStack$clear()
@@ -51,7 +53,7 @@ observe({
           
           # update shared input table
           input_data$data[grepl("^plotts", input_id), input_id := paste0(id_ts, "-shared_", input)]
-
+          
           output[["plotts_ui"]] <- renderUI({
             mwModuleUI(id = id_ts, height = "800px")
           })
@@ -70,9 +72,9 @@ observe({
             .compare = NULL
           }
           mod_plotts <- plot(list_data_all$antaresDataList[ind_areas], xyCompare = "union",
-                                 h5requestFiltering = list_data_all$params[ind_areas],
-                                 interactive = TRUE, .updateBtn = TRUE, 
-                                 .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE)
+                             h5requestFiltering = list_data_all$params[ind_areas],
+                             interactive = TRUE, .updateBtn = TRUE, 
+                             .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE)
           
           if("MWController" %in% class(modules$plotts)){
             modules$plotts$clear()
@@ -100,7 +102,7 @@ observe({
           })
           
           .compare <- gsub("^areas$", "area", input$sel_compare)
-
+          
           if(length(.compare) > 0 & input$use_compare){
             list_compare <- vector("list", length(.compare))
             names(list_compare) <- .compare
@@ -113,9 +115,9 @@ observe({
             .compare = NULL
           }
           mod_exchangesStack <- exchangesStack(list_data_all$antaresDataList[ind_links], xyCompare = "union",
-                                                   h5requestFiltering = list_data_all$params[ind_links],
-                                                   interactive = TRUE, .updateBtn = TRUE, 
-                                                   .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE)
+                                               h5requestFiltering = list_data_all$params[ind_links],
+                                               interactive = TRUE, .updateBtn = TRUE, 
+                                               .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE)
           
           if("MWController" %in% class(modules$exchangesStack)){
             modules$exchangesStack$clear()

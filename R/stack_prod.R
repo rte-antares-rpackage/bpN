@@ -283,6 +283,9 @@ prodStack <- function(x,
       stackOpts <- .aliasToStackOptions(stack)
       dt <- x[area %in% areas]
       
+      if(length(mcYear) == 0){
+        mcYear <- "average"
+      }
       if (mcYear == "average") dt <- synthesize(dt)
       else if ("mcYear" %in% names(dt)) {
         mcy <- mcYear
@@ -466,12 +469,22 @@ prodStack <- function(x,
     
     ##End h5
     mcYear = mwSelect({
-      allMcY <- c("average",  .compareOperation(lapply(params$x, function(vv){
+      # allMcY <- c("average",  .compareOperation(lapply(params$x, function(vv){
+      #   unique(vv$x$mcYear)
+      # }), xyCompare))
+      # names(allMcY) <- c(.getLabelLanguage("average", language), allMcY[-1])
+      
+      # BP 2017
+      allMcY <- .compareOperation(lapply(params$x, function(vv){
         unique(vv$x$mcYear)
-      }), xyCompare))
-      names(allMcY) <- c(.getLabelLanguage("average", language), allMcY[-1])
+      }), xyCompare)
+      names(allMcY) <- allMcY
+      if(is.null(allMcY)){
+        allMcY <- "average"
+        names(allMcY) <- .getLabelLanguage("average", language)
+      }
       allMcY
-    }, label = .getLabelLanguage("mcYear", language), .display = !"mcYear" %in% hidden),
+    }, value = mcYear, label = .getLabelLanguage("mcYear", language), .display = !"mcYear" %in% hidden),
     
     main = mwText(main, label = .getLabelLanguage("title", language), .display = !"main" %in% hidden),
     
@@ -504,9 +517,6 @@ prodStack <- function(x,
     label = .getLabelLanguage("dateRange", language), 
     .display = !"dateRange" %in% hidden
     ),
-    
-    
-    
     stack = mwSelect(names(pkgEnv$prodStackAliases), stack, 
                      label = .getLabelLanguage("stack", language), .display = !"stack" %in% hidden),
     
@@ -520,9 +530,13 @@ prodStack <- function(x,
     },
     value = {
       if(.initial){
-        as.character(.compareOperation(lapply(params$x, function(vv){
-          unique(vv$x$area)
-        }), xyCompare))[1]
+        if(is.null(areas)){
+          as.character(.compareOperation(lapply(params$x, function(vv){
+            unique(vv$x$area)
+          }), xyCompare))[1]
+        } else {
+          areas
+        }
       }
       else{NULL}},
     multiple = TRUE, 
