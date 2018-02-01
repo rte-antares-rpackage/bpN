@@ -71,7 +71,7 @@ tsLegend <- function(labels, colors, types = "line", legendItemsPerRow = 5, lege
   )
   
   tags$div(
-    style=sprintf("position:relative;height:%spx", max(i * 20, 40)),
+    style=sprintf("position:relative;height:%spx", max(i * 20 + 20, 40)),
     tags$div(
       style = "position:absolute;top:0;bottom:0;width:100px;
 ",
@@ -80,6 +80,7 @@ tsLegend <- function(labels, colors, types = "line", legendItemsPerRow = 5, lege
         id = paste0("date", legendId)
       )
     ),
+    tags$br(),
     legendItems
   )
 }
