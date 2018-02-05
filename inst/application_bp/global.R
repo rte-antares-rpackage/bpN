@@ -177,12 +177,22 @@ hyp_prod <- data.table(read.table("/home/benoit/bp2017/BP2017_production_global.
 hyp_prod$filiere2 <- as.character(hyp_prod$filiere2)
 Encoding(hyp_prod$filiere2) <- "latin1"
 
-getProductionHypothesis <- function(data, nodes = NULL){
+getProductionHypothesis <- function(data, nodes = NULL, enr = NULL, thermal = NULL){
+  
+  if(is.null(enr)){
+    enr <- hyp_prod[filiere1 %in% "enr", as.character(unique(trajectoire))]
+  }
+  
+  if(is.null(thermal)){
+    thermal <- hyp_prod[filiere1 %in% "thermal", as.character(unique(trajectoire))]
+  }
+  
+  v_trajectoire <- c(enr, thermal)
   
   if(is.null(nodes)){
-    res <- data[, list(capa = sum(capacite)), by = list(date, filiere2)]
+    res <- data[trajectoire %in% v_trajectoire, list(capa = sum(capacite)), by = list(date, filiere2)]
   } else {
-    res <- data[node %in% nodes, list(capa = sum(capacite)), by = list(date, filiere2)]
+    res <- data[node %in% nodes & trajectoire %in% v_trajectoire, list(capa = sum(capacite)), by = list(date, filiere2)]
   }
   
   res <- data.frame(dcast(res, date ~ filiere2, fun=sum, value.var = "capa"))
