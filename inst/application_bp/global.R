@@ -6,6 +6,8 @@ require(data.table)
 require(RColorBrewer)
 require(rAmCharts)
 
+# manipulateWidget:::mwDebug()
+
 # change eco2mix alias
 setProdStackAlias(
   name = "eco2mix",

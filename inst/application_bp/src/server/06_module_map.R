@@ -56,7 +56,7 @@ observe({
                                    .updateBtnInit = TRUE, compare = .compare,
                                    h5requestFiltering = list_data_all$params[ind_map],
                                    language = "fr", 
-                                   hidden = c("showLabels", "popupLinkVars", "uniqueScale", "showLabels"),
+                                   # hidden = c("showLabels", "popupLinkVars", "uniqueScale", "showLabels"),
                                    # colAreaVar ="LOAD", areaChartType = "pie", sizeMiniPlot = TRUE,
                                    # sizeAreaVars = c("NUCLEAR", "LIGNITE", "COAL", "GAS", "OIL", "MIX. FUEL", "MISC. DTG", "H. STOR", "WIND", "SOLAR", "H. ROR", "MISC. NDG"),
                                    # colLinkVar = "CONG. FEE (ABS.)", sizeLinkVar = "FLOW LIN.",
@@ -66,7 +66,10 @@ observe({
               modules$plotMap$clear()
             }
             
-            modules$plotMap <- mwModule(id = id_plotMap,  mod_plotMap)
+            modules$plotMap <- mod_plotMap
+            modules$id_plotMap <- id_plotMap
+            modules$init_plotMap <- TRUE
+            
             # save data and params
             list_data_controls$n_maps <- length(ind_map)
           }
@@ -74,4 +77,16 @@ observe({
       }
     }
   })
+})
+
+
+observe({
+  if(input[['nav-id']] == "Carte"){
+    isolate({
+      if("MWController" %in% class(modules$plotMap) & modules$init_plotMap){
+        modules$plotMap <- mwModule(id = modules$id_plotMap,  modules$plotMap)
+        modules$init_plotMap <- FALSE
+      }
+    })
+  }
 })

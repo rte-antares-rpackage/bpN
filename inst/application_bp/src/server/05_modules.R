@@ -46,7 +46,9 @@ observe({
             modules$prodStack$clear()
           }
           
-          modules$prodStack <- mwModule(id = id_prodStack,  mod_prodStack)
+          modules$prodStack <- mod_prodStack
+          modules$id_prodStack <- id_prodStack
+          modules$init_prodStack <- TRUE
           
           # init / re-init module plotts
           id_ts <- paste0("plotts_", round(runif(1, 1, 100000000)))
@@ -80,7 +82,9 @@ observe({
             modules$plotts$clear()
           }
           
-          modules$plotts <- mwModule(id = id_ts,  mod_plotts)
+          modules$plotts <- mod_plotts
+          modules$id_plotts <- id_ts
+          modules$init_plotts <- TRUE
           
           list_data_controls$n_areas <- length(ind_areas)
           list_data_controls$have_areas <- TRUE
@@ -125,7 +129,9 @@ observe({
             modules$exchangesStack$clear()
           }
           
-          modules$exchangesStack <- mwModule(id = id_exchangesStack,  mod_exchangesStack)
+          modules$exchangesStack <- mod_exchangesStack
+          modules$id_exchangesStack <- id_exchangesStack
+          modules$init_exchangesStack <- TRUE
           
           # save data and params
           list_data_controls$n_links <- length(ind_links)
@@ -147,6 +153,43 @@ observe({
     input_data$cpt <- isolate(input_data$cpt) +1
   })
 })
+
+# call module when click on tab if needed
+observe({
+  if(input[['nav-id']] == "Production"){
+    isolate({
+      if("MWController" %in% class(modules$prodStack) & modules$init_prodStack){
+        modules$prodStack <- mwModule(id = modules$id_prodStack,  modules$prodStack)
+        modules$init_prodStack <- FALSE
+      }
+    })
+  }
+})
+
+observe({
+  if(input[['nav-id']] == "Chroniques"){
+    isolate({
+      if("MWController" %in% class(modules$plotts) & modules$init_plotts){
+        modules$plotts <- mwModule(id = modules$id_plotts,  modules$plotts)
+        modules$init_plotts <- FALSE
+      }
+    })
+  }
+})
+
+observe({
+  if(input[['nav-id']] == "Echanges"){
+    isolate({
+      if("MWController" %in% class(modules$exchangesStack) & modules$init_exchangesStack){
+        modules$exchangesStack <- mwModule(id = modules$id_exchangesStack,  modules$exchangesStack)
+        modules$init_exchangesStack <- FALSE
+      }
+    })
+  }
+})
+
+
+
 
 # control : have link in data
 output$have_data_links <- reactive({
