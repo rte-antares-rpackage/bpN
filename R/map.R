@@ -191,7 +191,7 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
   {
     raw <- colorsVars[Column == colAreaVar]
     options <- plotMapOptions(areaColorScaleOpts = colorScaleOptions(
-      negCol = "#FFFFFF",
+      negCol = "#FF0000",
       # zeroCol = rgb(raw$red, raw$green, raw$blue,  maxColorValue = 255),
       # posCol = rgb(raw$red/2, raw$green/2, raw$blue/2, maxColorValue = 255)),
       # BP 2017
@@ -488,7 +488,7 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       if(colAreaVar %in% colorsVars$Column & runScale){
         raw <- colorsVars[Column == colAreaVar]
         plotMapOptions(areaColorScaleOpts = colorScaleOptions(
-          negCol = "#FFFFFF",
+          negCol = "#FF0000",
           # zeroCol = rgb(raw$red, raw$green, raw$blue,  maxColorValue = 255),
           # posCol = rgb(raw$red/2, raw$green/2, raw$blue/2, maxColorValue = 255)),
           # BP 2017
