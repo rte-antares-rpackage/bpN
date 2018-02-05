@@ -514,7 +514,9 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
           names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
           choices
         }, 
-        value =  paramsH5$timeStepS[1], 
+        # value =  paramsH5$timeStepS[1], 
+        # BP 17
+        value =  "daily", 
         label = .getLabelLanguage("timeStep", language), 
         multiple = FALSE, .display = !"timeSteph5" %in% hidden
       ),
@@ -586,17 +588,21 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       label = .getLabelLanguage("Areas", language),
       colAreaVar = mwSelect(
         choices = {
-          if (mcYear == "average") {
-            tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
-              unique(vv$areaValColumnsSynt)
-            }), xyCompare)))
-          }else{
-            tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
-              unique(vv$areaValColumns)
-            }), xyCompare)))
+          if(length(params) > 0){
+            if (mcYear == "average") {
+              tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
+                unique(vv$areaValColumnsSynt)
+              }), xyCompare)))
+            }else{
+              tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
+                unique(vv$areaValColumns)
+              }), xyCompare)))
+            }
+            names(tmp) <- c(.getLabelLanguage("none", language), tmp[-1])
+            tmp
+          } else {
+            NULL
           }
-          names(tmp) <- c(.getLabelLanguage("none", language), tmp[-1])
-          tmp
         },
         value = {
           if(.initial) colAreaVar
@@ -607,9 +613,13 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       ),
       sizeAreaVars = mwSelect(
         {
-          as.character(.compareOperation(lapply(params$x, function(vv){
-            unique(vv$areaNumValColumns)
-          }), xyCompare))
+          if(length(params) > 0){
+            as.character(.compareOperation(lapply(params$x, function(vv){
+              unique(vv$areaNumValColumns)
+            }), xyCompare))
+          } else {
+            NULL
+          }
         }, 
         value = {
           if(.initial) sizeAreaVars
@@ -622,11 +632,17 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
         label = .getLabelLanguage("miniPlot", language),
         areaChartType = mwSelect(
           {
-            choices <- c("bar", "pie", "polar-area", "polar-radius")
+            # choices <- c("bar", "pie", "polar-area", "polar-radius")
+            # names(choices) <- c(.getLabelLanguage("bar chart", language), 
+            #                     .getLabelLanguage("pie chart", language), 
+            #                     .getLabelLanguage("polar (area)", language),
+            #                     .getLabelLanguage("polar (radius)", language))
+            # choices
+            
+            # BP 17
+            choices <- c("bar", "pie")
             names(choices) <- c(.getLabelLanguage("bar chart", language), 
-                                .getLabelLanguage("pie chart", language), 
-                                .getLabelLanguage("polar (area)", language),
-                                .getLabelLanguage("polar (radius)", language))
+                                .getLabelLanguage("pie chart", language))
             choices
           },
           value = {
@@ -647,18 +663,22 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       popupAreaVars = mwSelect(
         choices = 
         {
-          if (mcYear == "average") {
-            tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
-              unique(vv$areaValColumnsSynt)
-            }), xyCompare))
-            )
-          }else{
-            tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
-              unique(vv$areaValColumns)
-            }), xyCompare)))
+          if(length(params) > 0){
+            if (mcYear == "average") {
+              tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
+                unique(vv$areaValColumnsSynt)
+              }), xyCompare))
+              )
+            }else{
+              tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
+                unique(vv$areaValColumns)
+              }), xyCompare)))
+            }
+            names(tmp) <- c(.getLabelLanguage("none", language), tmp[-1])
+            tmp
+          } else {
+            NULL
           }
-          names(tmp) <- c(.getLabelLanguage("none", language), tmp[-1])
-          tmp
         }, 
         value = {
           if(.initial) popupAreaVars
@@ -669,19 +689,23 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       ),
       labelAreaVar = mwSelect(
         choices = {
-          if (mcYear == "average") {
-            tmp <- c("none",
-                     as.character(.compareOperation(lapply(params$x, function(vv){
-                       unique(vv$areaValColumnsSynt)
-                     }), xyCompare))
-            )
-          }else{
-            tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
-              unique(vv$areaValColumns)
-            }), xyCompare)))
+          if(length(params) > 0){
+            if (mcYear == "average") {
+              tmp <- c("none",
+                       as.character(.compareOperation(lapply(params$x, function(vv){
+                         unique(vv$areaValColumnsSynt)
+                       }), xyCompare))
+              )
+            }else{
+              tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
+                unique(vv$areaValColumns)
+              }), xyCompare)))
+            }
+            names(tmp) <- c(.getLabelLanguage("none", language), tmp[-1])
+            tmp
+          } else {
+            NULL
           }
-          names(tmp) <- c(.getLabelLanguage("none", language), tmp[-1])
-          tmp
         }, 
         value = {
           if(.initial) labelAreaVar
@@ -696,12 +720,15 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       label = .getLabelLanguage("Links", language),
       colLinkVar = mwSelect(
         {
-          tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
-            unique(vv$linkValColums)
-          }), xyCompare)))
-          names(tmp) <- c(.getLabelLanguage("none", language), tmp[-1])
-          tmp
-          
+          if(length(params) > 0){
+            tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
+              unique(vv$linkValColums)
+            }), xyCompare)))
+            names(tmp) <- c(.getLabelLanguage("none", language), tmp[-1])
+            tmp
+          } else {
+            NULL
+          }
         }, 
         value = {
           if(.initial) colLinkVar
@@ -710,11 +737,16 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       ),
       sizeLinkVar = mwSelect(
         {
-          tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
-            unique(vv$linkNumValColumns)
-          }), xyCompare)))
-          names(tmp) <- c(.getLabelLanguage("none", language), tmp[-1])
-          tmp
+          if(length(params) > 0){
+            tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
+              unique(vv$linkNumValColumns)
+            }), xyCompare)))
+            names(tmp) <- c(.getLabelLanguage("none", language), tmp[-1])
+            tmp
+          } else {
+            NULL
+          }
+          
         }, 
         value = {
           if(.initial) sizeLinkVar
@@ -723,11 +755,15 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       ),
       popupLinkVars = mwSelect(
         {
-          tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
-            unique(vv$linkValColums)
-          }), xyCompare)))
-          names(tmp) <- c(.getLabelLanguage("none", language), tmp[-1])
-          tmp
+          if(length(params) > 0){
+            tmp <- c("none", as.character(.compareOperation(lapply(params$x, function(vv){
+              unique(vv$linkValColums)
+            }), xyCompare)))
+            names(tmp) <- c(.getLabelLanguage("none", language), tmp[-1])
+            tmp
+          } else {
+            NULL
+          }
         },
         value = {
           if(.initial) popupLinkVars
