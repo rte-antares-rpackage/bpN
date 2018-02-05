@@ -8,6 +8,7 @@ output$hyp_prod <- renderAmCharts({
               stack_type = "regular", legend = TRUE,
               groups_color = unname(cl_hyp_prod[colnames(res)[-1]]), main = "Hypothèses de production",
               zoom = TRUE, export = TRUE, show_values = FALSE,
+              ylab = "Capacités (MW)",
               labelRotation = 45, legendPosition = "bottom", height = "800")
   })
 })
