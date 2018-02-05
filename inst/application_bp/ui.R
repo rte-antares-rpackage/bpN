@@ -18,11 +18,7 @@ navbarPage(title = "Bilan Prévisionnel 2017", id = "nav-id", theme = "css/custo
                     )
            ),
            
-           tabPanel("Hypothèses",
-                    fluidRow(
-                      "TO DO"
-                    )
-           ),
+           source("src/ui/03_ui_hypothese.R", local = T)$value,
            
            source("src/ui/05_ui_prodstack.R", local = T)$value,
            

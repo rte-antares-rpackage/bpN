@@ -3,6 +3,8 @@ require(antaresRead)
 require(bpNumerique2018)
 require(manipulateWidget)
 require(data.table)
+require(RColorBrewer)
+require(rAmCharts)
 
 # change eco2mix alias
 setProdStackAlias(
@@ -165,3 +167,34 @@ bpNumerique2018::limitSizeGraph(.data_module)
 # add.html.help("antaresRead", "readAntares", "inst/application/www/readAntares.html")
 # add.html.help("antaresRead", "removeVirtualAreas", "inst/application/www/removeVirtualAreas.html")
 # add.html.help("antaresRead", "writeAntaresH5", "inst/application/www/writeAntaresH5.html")
+
+#------------------
+# hypothese
+
+# bug with fread
+hyp_prod <- data.table(read.table("/home/benoit/bp2017/BP2017_production_global.csv", dec = ",", 
+                                  sep = ";", header = T, encoding = "Latin-1"))
+hyp_prod$filiere2 <- as.character(hyp_prod$filiere2)
+Encoding(hyp_prod$filiere2) <- "latin1"
+
+getProductionHypothesis <- function(data, nodes = NULL){
+  
+  if(is.null(nodes)){
+    res <- data[, list(capa = sum(capacite)), by = list(date, filiere2)]
+  } else {
+    res <- data[node %in% nodes, list(capa = sum(capacite)), by = list(date, filiere2)]
+  }
+  
+  res <- data.frame(dcast(res, date ~ filiere2, fun=sum, value.var = "capa"))
+  res$date <- as.character(res$date)
+  res
+}
+
+cl_hyp_prod <- c(brewer.pal(n = 12, name = "Set3"), brewer.pal(n = 5, name = "Set1"))
+names(cl_hyp_prod) <- unique(hyp_prod$filiere2)
+# 
+# amBarplot(x = "date", y = colnames(res)[-1], data = res, 
+#           stack_type = "regular", legend = TRUE,
+#           groups_color = cl,
+#           zoom = TRUE, export = TRUE, show_values = FALSE,
+#           labelRotation = 45, legendPosition = "bottom", height = "800")
