@@ -158,12 +158,11 @@ JS_updateLegend <- function(legendId, timeStep = "hourly", language = "en") {
     timeToLab <- switch(
       timeStep,
       hourly = "var date = new Date(x); 
-              var day = date.toLocaleDateString('fr-FR', { weekday: 'short', year: 'numeric', month: 'short', day: '2-digit' }).slice(0, 13);
-              var h = date.toLocaleDateString('fr-FR', { weekday: 'short', year: 'numeric', month: 'short', day: '2-digit', hour : 'numeric', minute : 'numeric' }).slice(20, 25);
-              return day + '<br/>' + h;",
-      daily = "var date = new Date(x); return date.toLocaleDateString('fr-FR', { weekday: 'short', year: 'numeric', month: 'short', day: '2-digit' }).slice(0, 13)",
-      weekly = "var date = new Date(x); date.toLocaleDateString('fr-FR', { weekday: 'short', year: 'numeric', month: 'short', day: '2-digit' }).slice(0, 13)",
-      monthly = "var date = new Date(x); return date.toLocaleDateString('fr-FR', { weekday: 'short', year: 'numeric', month: 'short', day: '2-digit' }).slice(7, 13)",
+              return date.toLocaleDateString('fr-FR', { weekday: 'short', month: 'short', day: 'numeric', hour : '2-digit', minute:'2-digit', timeZone : 'UTC'  })",
+      daily = "var date = new Date(x); return date.toLocaleDateString('fr-FR', { weekday: 'short', month: 'short', day: 'numeric', timeZone : 'UTC'  })",
+      weekly = "var date = new Date(x); return date.toLocaleDateString('fr-FR', { weekday: 'short', month: 'short', day: 'numeric', timeZone : 'UTC'  })",
+      monthly = "var date = new Date(x); return date.toLocaleDateString('fr-FR', {month: 'long', year: 'numeric', timeZone : 'UTC' })",
+      annual = "var date = new Date(x); return date.toLocaleDateString('fr-FR', {year: 'numeric', timeZone : 'UTC' })",
       "return x"
     )
   } else {
@@ -175,7 +174,8 @@ JS_updateLegend <- function(legendId, timeStep = "hourly", language = "en") {
               return day + '<br/>' + h;",
       daily = "var date = new Date(x); return date.toUTCString().slice(0, 11)",
       weekly = "var date = new Date(x); return date.toUTCString().slice(0, 11)",
-      monthly = "var date = new Date(x); return date.toUTCString().slice(7, 11)",
+      monthly = "var date = new Date(x); return date.toUTCString().slice(7, 16)",
+      annual = "var date = new Date(x); return date.toUTCString().slice(12, 16)",
       "return x"
     )
   }
