@@ -514,9 +514,9 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
           names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
           choices
         }, 
-        # value =  paramsH5$timeStepS[1], 
-        # BP 17
-        value =  "daily", 
+        # value =  paramsH5$timeStepS[1],
+        # BP 2017
+        value =  "daily",
         label = .getLabelLanguage("timeStep", language), 
         multiple = FALSE, .display = !"timeSteph5" %in% hidden
       ),

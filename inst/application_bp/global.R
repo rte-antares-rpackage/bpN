@@ -101,14 +101,14 @@ bpNumerique2018::limitSizeGraph(.data_module)
 
 .global_shared_prodStack <- data.frame(
   module = "prodStack", 
-  panel = "prodStack", 
+  panel = "Production", 
   input = c("dateRange", "unit", "mcYear", "mcYearh", "timeSteph5", "legend", "drawPoints", "stepPlot"),
   type = c("dateRangeInput", "selectInput", "selectInput", "selectInput", "selectInput", 
            "checkboxInput", "checkboxInput", "checkboxInput"), stringsAsFactors = FALSE)
 
 .global_shared_plotts <- data.frame(
   module = "plotts", 
-  panel = "tsPlot", 
+  panel = "Chroniques", 
   input = c("dateRange", "mcYear", "mcYearh", "timeSteph5", "legend", "drawPoints", "stepPlot"),
   type = c("dateRangeInput", "selectInput", "selectInput", "selectInput", 
            "checkboxInput", "checkboxInput", "checkboxInput"), stringsAsFactors = FALSE)
@@ -116,13 +116,13 @@ bpNumerique2018::limitSizeGraph(.data_module)
 
 .global_shared_plotMap <- data.frame(
   module = "plotMap", 
-  panel = "Map", 
+  panel = "Carte", 
   input = c("dateRange", "mcYear", "mcYearh", "timeSteph5"),
   type = c("dateRangeInput", "selectInput", "selectInput", "selectInput"), stringsAsFactors = FALSE)
 
 .global_shared_exchangesStack <- data.frame(
   module = "exchangesStack", 
-  panel = "exchangesStack", 
+  panel = "Echanges", 
   input = c("dateRange", "unit", "mcYear", "mcYearh", "timeSteph5", "legend", "drawPoints", "stepPlot"),
   type = c("dateRangeInput", "selectInput", "selectInput", "selectInput", "selectInput", 
            "checkboxInput", "checkboxInput", "checkboxInput"), stringsAsFactors = FALSE)

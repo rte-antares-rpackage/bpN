@@ -188,6 +188,11 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
       
       dt <- dcast(dt, timeId ~ to, value.var = "flow")
       
+      # BP 2017
+      if("ROW" %in% colnames(dt)){
+        dt[, ROW := NULL]
+      }
+      
       # Graphical parameters
       if (is.null(main) | isTRUE(all.equal("", main))) main <- paste("Flows from/to", area)
       if (is.null(ylab)) ylab <- sprintf("Flows (%s)", unit)
@@ -276,7 +281,9 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
           names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
           choices
         }, 
-        value =  paramsH5$timeStepS[1], 
+        # value =  paramsH5$timeStepS[1], 
+        # BP 2017
+        value =  "daily",
         label = .getLabelLanguage("timeStep", language),
         multiple = FALSE, .display = !"timeSteph5" %in% hidden
       ),

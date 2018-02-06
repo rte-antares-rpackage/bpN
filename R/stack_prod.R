@@ -405,19 +405,29 @@ prodStack <- function(x,
       label = .getLabelLanguage("H5request", language),
       timeSteph5 = mwSelect(
         {
-          choices = paramsH5$timeStepS
-          names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
-          choices
+          if(length(paramsH5) > 0){
+            choices = paramsH5$timeStepS
+            names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
+            choices
+          } else {
+            NULL
+          }
         }, 
-        value =  paramsH5$timeStepS[1], 
+        # value =  if(.initial) {paramsH5$timeStepS[1]}else{NULL}, 
+        # BP 2017
+        value =  "daily",
         label = .getLabelLanguage("timeStep", language), 
         multiple = FALSE, .display = !"timeSteph5" %in% hidden
       ),
       tables = mwSelect(
         {
+          if(length(paramsH5) > 0){
           choices = paramsH5[["tabl"]][paramsH5[["tabl"]]%in%c("areas", "districts")]
           names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
           choices
+          } else {
+            NULL
+          }
         },
         value = {
           if(.initial) {paramsH5[["tabl"]][paramsH5[["tabl"]]%in%c("areas", "districts")][1]}else{NULL}
@@ -526,7 +536,7 @@ prodStack <- function(x,
     # stack = mwSelect(names(pkgEnv$prodStackAliases), stack, 
     #                  label = .getLabelLanguage("stack", language), .display = !"stack" %in% hidden),
     # BP 17
-    stack = mwSelect(c("eco2mix", "thermalFirst"), stack, 
+    stack = mwSelect(c("eco2mix"), stack, 
                      label = .getLabelLanguage("stack", language), .display = !"stack" %in% hidden),
     unit = mwSelect(c("MWh", "GWh", "TWh"), unit, 
                     label = .getLabelLanguage("unit", language), .display = !"unit" %in% hidden),

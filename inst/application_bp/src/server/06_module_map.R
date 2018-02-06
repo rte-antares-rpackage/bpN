@@ -56,7 +56,8 @@ observe({
                                    .updateBtnInit = TRUE, compare = .compare,
                                    h5requestFiltering = list_data_all$params[ind_map],
                                    language = "fr", 
-                                   hidden = c("showLabels", "popupLinkVars", "uniqueScale", "showLabels"),
+                                   hidden = c("showLabels", "popupLinkVars", "uniqueScale", "showLabels", "popupAreaVars", 
+                                              "miniPlot", "tables", "sizeAreaVars"),
                                    colAreaVar ="LOAD", areaChartType = "pie", sizeMiniPlot = TRUE,
                                    sizeAreaVars = c("NUCLEAR", "LIGNITE", "COAL", "GAS", "OIL", "MIX. FUEL", "MISC. DTG", "H. STOR", "WIND", "SOLAR", "H. ROR", "MISC. NDG"),
                                    colLinkVar = "CONG. FEE (ABS.)", sizeLinkVar = "FLOW LIN.",
@@ -81,7 +82,7 @@ observe({
 
 
 observe({
-  if(input[['nav-id']] == "Carte"){
+  if(input[['res_tab_id']] == "Carte"){
     isolate({
       if("MWController" %in% class(modules$plotMap) & modules$init_plotMap){
         modules$plotMap <- mwModule(id = modules$id_plotMap,  modules$plotMap)

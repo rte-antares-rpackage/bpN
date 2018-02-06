@@ -37,10 +37,10 @@ observe({
           }
           mod_prodStack <- prodStack(list_data_all$antaresDataList[ind_areas], xyCompare = "union",
                                      # h5requestFiltering = list_data_all$params[ind_areas],
-                                     unit = "MWh", main = "Production", areas = "fr", mcYear = "1",
+                                     unit = "GWh", main = "Production", areas = "fr", mcYear = "1",
                                      interactive = TRUE, .updateBtn = TRUE, 
                                      .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE, 
-                                     language = "fr", hidden = c("stepPlot", "drawPoints"))
+                                     language = "fr", hidden = c("stepPlot", "drawPoints", "main", "stack", "legend", "unit", "tables"))
           
           if("MWController" %in% class(modules$prodStack)){
             modules$prodStack$clear()
@@ -76,6 +76,8 @@ observe({
           mod_plotts <- plot(list_data_all$antaresDataList[ind_areas], xyCompare = "union",
                              h5requestFiltering = list_data_all$params[ind_areas],
                              interactive = TRUE, .updateBtn = TRUE, language = "fr",
+                             hidden = c("main", "highlight", "stepPlot", "legend", "drawPoints", "confInt"), 
+                             highlight = TRUE,
                              .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE)
           
           if("MWController" %in% class(modules$plotts)){
@@ -121,8 +123,9 @@ observe({
           mod_exchangesStack <- exchangesStack(list_data_all$antaresDataList[ind_links], xyCompare = "union",
                                                h5requestFiltering = list_data_all$params[ind_links],
                                                interactive = TRUE, .updateBtn = TRUE, 
-                                               mcYear = "1", main = "Echanges", unit = "MWh", area = "fr",
-                                               stepPlot = TRUE, language = "fr",
+                                               mcYear = "1", main = "Echanges", unit = "GWh", area = "fr",
+                                               stepPlot = TRUE, language = "fr", 
+                                               hidden = c("stepPlot", "legend", "unit", "main", "drawPoints"),
                                                .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE)
           
           if("MWController" %in% class(modules$exchangesStack)){
@@ -156,7 +159,7 @@ observe({
 
 # call module when click on tab if needed
 observe({
-  if(input[['nav-id']] == "Production"){
+  if(input[['res_tab_id']] == "Production"){
     isolate({
       if("MWController" %in% class(modules$prodStack) & modules$init_prodStack){
         modules$prodStack <- mwModule(id = modules$id_prodStack,  modules$prodStack)
@@ -167,7 +170,7 @@ observe({
 })
 
 observe({
-  if(input[['nav-id']] == "Chroniques"){
+  if(input[['res_tab_id']] == "Chroniques"){
     isolate({
       if("MWController" %in% class(modules$plotts) & modules$init_plotts){
         modules$plotts <- mwModule(id = modules$id_plotts,  modules$plotts)
@@ -178,7 +181,7 @@ observe({
 })
 
 observe({
-  if(input[['nav-id']] == "Echanges"){
+  if(input[['res_tab_id']] == "Echanges"){
     isolate({
       if("MWController" %in% class(modules$exchangesStack) & modules$init_exchangesStack){
         modules$exchangesStack <- mwModule(id = modules$id_exchangesStack,  modules$exchangesStack)
@@ -207,9 +210,9 @@ outputOptions(output, "have_data_areas", suspendWhenHidden = FALSE)
 observe({
   if(input$update_module > 0){
     if(list_data_controls$have_areas & list_data_controls$n_areas >= 1){
-      updateNavbarPage(session, inputId = "nav-id", selected = "Production")
+      updateNavbarPage(session, inputId = "res_tab_id", selected = "Production")
     } else if(list_data_controls$have_links & list_data_controls$n_links >= 1){
-      updateNavbarPage(session, inputId = "nav-id", selected = "Echanges")
+      updateNavbarPage(session, inputId = "res_tab_id", selected = "Echanges")
     }
   }
 })

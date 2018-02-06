@@ -23,7 +23,7 @@ observe({
 })
 
 observe({
-  current_nav <- input[['nav-id']]
+  current_nav <- input[['res_tab_id']]
   current_input_data <- isolate(input_data$data)
   data_shared_input <- current_input_data[panel %in% current_nav]
   if(nrow(data_shared_input) > 0 & .is_shared_input){

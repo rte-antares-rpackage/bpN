@@ -474,13 +474,17 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
         names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
         choices
       }, 
-      value =  paramsH5$timeStepS[1], 
+      # value =  paramsH5$timeStepS[1], 
+      # BP 2017
+      value =  "daily",
       label = .getLabelLanguage("timeStep", language), 
       multiple = FALSE, .display = !"timeSteph5" %in% hidden
     ),
     tables = mwSelect(
       {
-        choices = paramsH5[["tabl"]]
+        # choices = paramsH5[["tabl"]]
+        # BP 2017
+        choices <- c("areas", "links")
         names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
         choices
       },
@@ -515,10 +519,12 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
   table = mwSelect(
     {
       if(!is.null(params)){
-        out <- as.character(.compareOperation(
-          lapply(params$x, function(vv){
-            unique(names(vv))
-          }), xyCompare))
+        # out <- as.character(.compareOperation(
+        #   lapply(params$x, function(vv){
+        #     unique(names(vv))
+        #   }), xyCompare))
+        # BP 2017
+        out <- c("areas", "links")
         if(length(out) > 0){
           names(out) <- sapply(out, function(x) .getLabelLanguage(x, language))
           out

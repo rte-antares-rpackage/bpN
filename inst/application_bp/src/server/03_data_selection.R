@@ -22,7 +22,7 @@ output$info_list <- renderUI({
       ind_impair <- seq(1, length(list_data), by = 2)
       ind_pair <- seq(2, length(list_data), by = 2)
       fluidRow(
-        column(3, offset = 1, do.call(tagList, study[ind_impair])),
+        column(3, do.call(tagList, study[ind_impair])),
         column(2, do.call(tagList, check_list[ind_impair])),
         column(3, do.call(tagList, study[ind_pair])),
         column(2, do.call(tagList, check_list[ind_pair]))
