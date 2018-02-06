@@ -339,13 +339,16 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       # print(dateRange)
       if(!is.null(dateRange)){
         dateRange <- sort(dateRange)
-        # xx <<- copy(x$areas)
+        # xx <<- copy(x)
         # dd <<- dateRange
         if(!is.null(x$areas))
         {
           # in case of missing transformation...
           if("character" %in% class(x$areas$time)){
             x$areas[,time := .timeIdToDate(x$areas$timeId, attr(x, "timeStep"), simOptions(x))]
+          }
+          if("Date" %in% class(x$areas$time)){
+            x$areas[,time := as.POSIXct(time, tz = "UTC")]
           }
           x$areas  <- x$areas[time >= as.POSIXlt(dateRange[1], tz = "UTC") & time < as.POSIXlt(dateRange[2] + 1, tz = "UTC")]
         }
@@ -354,6 +357,9 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
           # in case of missing transformation...
           if("character" %in% class(x$links$time)){
             x$links[,time := .timeIdToDate(x$links$timeId, attr(x, "timeStep"), simOptions(x))]
+          }
+          if("Date" %in% class(x$links$time)){
+            x$links[,time := as.POSIXct(time, tz = "UTC")]
           }
           x$links <- x$links[time >= as.POSIXlt(dateRange[1], tz = "UTC") & time < as.POSIXlt(dateRange[2] + 1, tz = "UTC")]
         }
