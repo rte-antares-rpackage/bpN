@@ -666,9 +666,15 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
       })
     },
     value = {
-      if(.initial) {as.character(.compareOperation(lapply(params$x, function(vv){
-        unique(vv[[table]]$uniqueElem)
-      }), xyCompare))[1]}
+      if(.initial) {
+        if(is.null(elements)){
+          as.character(.compareOperation(lapply(params$x, function(vv){
+            unique(vv[[table]]$uniqueElem)
+          }), xyCompare))[1]
+        }else {
+          elements
+        }
+      }
     }, 
     multiple = TRUE, 
     label = .getLabelLanguage("elements", language), 
