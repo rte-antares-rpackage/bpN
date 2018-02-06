@@ -205,7 +205,7 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
       # Stack
       g <- .plotStack(dt, timeStep, opts, colors,
                       legendId = legendId + id - 1, groupId = groupId, 
-                      main = main, ylab = ylab, stepPlot = stepPlot, drawPoints = drawPoints)
+                      main = main, ylab = ylab, stepPlot = stepPlot, drawPoints = drawPoints, language = language)
       
       if (legend) {
         # Add a nice legend

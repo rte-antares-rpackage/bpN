@@ -314,7 +314,7 @@ prodStack <- function(x,
                               legendId = legendId + id - 1,
                               groupId = groupId,
                               dateRange = dateRange,
-                              stepPlot = stepPlot, drawPoints = drawPoints), silent = TRUE)
+                              stepPlot = stepPlot, drawPoints = drawPoints, language = language), silent = TRUE)
       
       if("try-error" %in% class(p)){
         return (combineWidgets(paste0("Can't visualize stack '", stack, "'<br>", p[1])))
@@ -632,7 +632,7 @@ prodStack <- function(x,
 .plotProdStack <- function(x, variables, colors, lines, lineColors, lineWidth,
                            main = NULL, unit = "MWh", legendId = "",
                            groupId = legendId,
-                           width = NULL, height = NULL, dateRange = NULL, stepPlot = FALSE, drawPoints = FALSE) {
+                           width = NULL, height = NULL, dateRange = NULL, stepPlot = FALSE, drawPoints = FALSE, language = "en") {
   
   timeStep <- attr(x, "timeStep")
   
@@ -647,7 +647,7 @@ prodStack <- function(x,
   .plotStack(dt, timeStep, simOptions(x), colors, lines, lineColors, lineWidth, legendId,
              groupId,
              main = main, ylab = sprintf("Production (%s)", unit), 
-             width = width, height = height, dateRange = dateRange, stepPlot = stepPlot, drawPoints = drawPoints)
+             width = width, height = height, dateRange = dateRange, stepPlot = stepPlot, drawPoints = drawPoints, language = language)
 }
 
 #' @rdname tsLegend

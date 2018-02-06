@@ -151,20 +151,35 @@ tsLegend <- function(labels, colors, types = "line", legendItemsPerRow = 5, lege
   )
 }
 
-JS_updateLegend <- function(legendId, timeStep = "hourly") {
+JS_updateLegend <- function(legendId, timeStep = "hourly", language = "en") {
   
   # Function that transform a timestamp ta a date label
-  timeToLab <- switch(
-    timeStep,
-    hourly = "var date = new Date(x); 
+  if(language == "fr"){
+    timeToLab <- switch(
+      timeStep,
+      hourly = "var date = new Date(x); 
+              var day = date.toLocaleDateString('fr-FR', { weekday: 'short', year: 'numeric', month: 'short', day: '2-digit' }).slice(0, 13);
+              var h = date.toLocaleDateString('fr-FR', { weekday: 'short', year: 'numeric', month: 'short', day: '2-digit', hour : 'numeric', minute : 'numeric' }).slice(20, 25);
+              return day + '<br/>' + h;",
+      daily = "var date = new Date(x); return date.toLocaleDateString('fr-FR', { weekday: 'short', year: 'numeric', month: 'short', day: '2-digit' }).slice(0, 13)",
+      weekly = "var date = new Date(x); date.toLocaleDateString('fr-FR', { weekday: 'short', year: 'numeric', month: 'short', day: '2-digit' }).slice(0, 13)",
+      monthly = "var date = new Date(x); return date.toLocaleDateString('fr-FR', { weekday: 'short', year: 'numeric', month: 'short', day: '2-digit' }).slice(7, 13)",
+      "return x"
+    )
+  } else {
+    timeToLab <- switch(
+      timeStep,
+      hourly = "var date = new Date(x); 
               var day = date.toUTCString().slice(0, 11);
               var h = date.toUTCString().slice(17, 22);
               return day + '<br/>' + h;",
-    daily = "var date = new Date(x); return date.toUTCString().slice(0, 11)",
-    weekly = "var date = new Date(x); return date.toUTCString().slice(0, 11)",
-    monthly = "var date = new Date(x); return date.toUTCString().slice(7, 11)",
-    "return x"
-  )
+      daily = "var date = new Date(x); return date.toUTCString().slice(0, 11)",
+      weekly = "var date = new Date(x); return date.toUTCString().slice(0, 11)",
+      monthly = "var date = new Date(x); return date.toUTCString().slice(7, 11)",
+      "return x"
+    )
+  }
+
   
   script <-"
 function(e, timestamp, data) {
@@ -184,7 +199,7 @@ function(e, timestamp, data) {
     if (!values.hasOwnProperty(k)) continue; 
     var el = document.getElementById(k + '%s');
     if (el) {
-      if (Math.abs(values[k]) > 100) {
+      if (Math.abs(values[k]) > 100 || values[k] === 0) {
         el.innerHTML = Math.round(values[k]);
       } else {
         el.innerHTML = values[k].toPrecision(3);
