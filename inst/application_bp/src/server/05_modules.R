@@ -75,7 +75,7 @@ observe({
           }
           mod_plotts <- plot(list_data_all$antaresDataList[ind_areas], xyCompare = "union",
                              h5requestFiltering = list_data_all$params[ind_areas],
-                             interactive = TRUE, .updateBtn = TRUE, language = "fr",
+                             interactive = TRUE, .updateBtn = TRUE, language = "fr", elements = "fr",
                              hidden = c("main", "highlight", "stepPlot", "legend", "drawPoints", "confInt"), 
                              highlight = TRUE,
                              .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE)
