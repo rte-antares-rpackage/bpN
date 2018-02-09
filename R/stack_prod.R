@@ -550,8 +550,11 @@ prodStack <- function(x,
       if(.initial) areas
       else NULL
     },
-    multiple = TRUE, 
-    label = .getLabelLanguage("areas", language),
+    # multiple = TRUE, 
+    # label = .getLabelLanguage("areas", language),
+    # BP 2017
+    multiple = FALSE, 
+    label = .getLabelLanguage("area", language),
     .display = !"areas" %in% hidden
     ),
     
