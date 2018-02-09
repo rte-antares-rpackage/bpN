@@ -10,7 +10,7 @@ output$hyp_prod <- renderAmCharts({
               groups_color = unname(cl_hyp_prod[colnames(res)[-1]]), 
               main = paste0("Evolution du parc installé (scénario ", input$hyp_scenario, ")"),
               zoom = TRUE, export = TRUE, show_values = FALSE,
-              ylab = "MWh",
+              ylab = "MW",
               labelRotation = 45, legendPosition = "bottom", height = "800")
   })
 })
@@ -41,7 +41,7 @@ output$hyp_inter_import <- renderAmCharts({
             groups_color = unname(cl_hyp_interco[1:(ncol(res) - 1)]), 
             main = paste0("Evolution des capacités d'import (scénario ", input$hyp_scenario, ")"),
             zoom = TRUE, export = TRUE, show_values = FALSE,
-            ylab = "MWh",
+            ylab = "MW",
             labelRotation = 45, legendPosition = "bottom", height = "800")
 })
 
@@ -54,6 +54,6 @@ output$hyp_inter_export <- renderAmCharts({
             groups_color = unname(cl_hyp_interco[1:(ncol(res) - 1)]), 
             main = paste0("Evolution des capacités d'export (scénario ", input$hyp_scenario, ")"),
             zoom = TRUE, export = TRUE, show_values = FALSE,
-            ylab = "MWh",
+            ylab = "MW",
             labelRotation = 45, legendPosition = "bottom", height = "800")
 })
