@@ -23,7 +23,7 @@
                     legend = TRUE,
                     legendItemsPerRow = 5,
                     group = NULL,
-                    width = NULL, height = NULL, highlight = FALSE, stepPlot = FALSE, drawPoints = FALSE, ...) {
+                    width = NULL, height = NULL, highlight = FALSE, stepPlot = FALSE, drawPoints = FALSE, language = language, ...) {
   
   
   uniqueElements <- sort(unique(dt$element))
@@ -85,7 +85,7 @@
     #dyRangeSelector() %>% 
     dyLegend(show = "never") %>% 
     dyCallbacks(
-      highlightCallback = JS_updateLegend(legendId, timeStep),
+      highlightCallback = JS_updateLegend(legendId, timeStep, language = language),
       unhighlightCallback = JS_resetLegend(legendId)
     )
   if(length(variable2Axe)>0){

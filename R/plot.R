@@ -363,7 +363,8 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
           group = group,
           highlight = highlight,
           stepPlot = stepPlot,
-          drawPoints = drawPoints
+          drawPoints = drawPoints,
+          language = language
         )
         
       }

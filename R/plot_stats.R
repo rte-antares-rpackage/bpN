@@ -114,7 +114,7 @@
 .plotStat <- function(dt, ylab, main, colors, uniqueElements, 
                       legend, legendItemsPerRow, width, height,
                       plotConfInt = FALSE, highlight = FALSE,
-                      stepPlot = FALSE, drawPoints = FALSE,variable2Axe = NULL, ...) {
+                      stepPlot = FALSE, drawPoints = FALSE,variable2Axe = NULL, language = "en", ...) {
   dt <- dcast(dt, x ~ element, value.var = "y")
   
   if (is.null(colors)) {
@@ -138,7 +138,7 @@
     dyAxis("y", label = ylab, pixelsPerLabel = 60) %>% 
     dyLegend(show = "never") %>% 
     dyCallbacks(
-      highlightCallback = JS_updateLegend(legendId, timeStep = "none"),
+      highlightCallback = JS_updateLegend(legendId, timeStep = "none", language = language),
       unhighlightCallback = JS_resetLegend(legendId)
     )
   
