@@ -173,6 +173,11 @@ bpNumerique2018::limitSizeGraph(.data_module)
 #------------------
 # hypothese
 
+
+# production
+
+sce_prod <- fread("/home/benoit/bp2017/Correspondance_scenarios_enr_th.csv", encoding = "Latin-1")
+
 # bug with fread
 hyp_prod <- data.table(read.table("/home/benoit/bp2017/BP2017_production_global.csv", dec = ",", 
                                   sep = ";", header = T, encoding = "Latin-1"))
@@ -180,23 +185,39 @@ hyp_prod <- data.table(read.table("/home/benoit/bp2017/BP2017_production_global.
 hyp_prod$filiere2 <- as.character(hyp_prod$filiere2)
 Encoding(hyp_prod$filiere2) <- "latin1"
 
-getProductionHypothesis <- function(data, nodes = NULL, enr = NULL, thermal = NULL){
+# hyp_prod[, .N, list(filiere1, filiere2)]
+# hyp_prod[, .N, list(filiere1, trajectoire)]
+# data <- hyp_prod
+
+getProductionHypothesis <- function(data, nodes = NULL, sce_prod = NULL, scenario = "Hertz"){
   
-  if(is.null(enr)){
-    enr <- hyp_prod[filiere1 %in% "enr", as.character(unique(trajectoire))]
-  }
+
+  enr_fr <- sce_prod[Pays %in% "France" & filiere1 %in% "enr", get(scenario)]
+  enr_ue <- sce_prod[Pays %in% "Europe" & filiere1 %in% "enr", get(scenario)]
   
-  if(is.null(thermal)){
-    thermal <- hyp_prod[filiere1 %in% "thermal", as.character(unique(trajectoire))]
-  }
+  nuclear_fr <- sce_prod[Pays %in% "France" & filiere1 %in% "nuclear", get(scenario)]
+  nuclear_ue <- sce_prod[Pays %in% "Europe" & filiere1 %in% "nuclear", get(scenario)]
   
-  v_trajectoire <- c(enr, thermal)
+  thermal_fr <- sce_prod[Pays %in% "France" & filiere1 %in% "thermal", get(scenario)]
+  thermal_ue <- sce_prod[Pays %in% "Europe" & filiere1 %in% "thermal", get(scenario)]
+  
+  data <- data[(node %in% "fr" & filiere1 %in% "enr" & trajectoire %in% enr_fr) |
+              (!node %in% "fr" & filiere1 %in% "enr" & trajectoire %in% enr_ue) |
+                (node %in% "fr" & filiere1 %in% "nuclear" & trajectoire %in% nuclear_fr) |
+                (!node %in% "fr" & filiere1 %in% "nuclear" & trajectoire %in% nuclear_ue) |
+                (node %in% "fr" & filiere1 %in% "thermal" & trajectoire %in% thermal_fr) |
+                (!node %in% "fr" & filiere1 %in% "thermal" & trajectoire %in% thermal_ue)]
   
   if(is.null(nodes)){
-    res <- data[trajectoire %in% v_trajectoire, list(capa = sum(capacite)), by = list(date, filiere2)]
+    res <- data[, list(capa = sum(capacite)), by = list(date, filiere2)]
   } else {
-    res <- data[node %in% nodes & trajectoire %in% v_trajectoire, list(capa = sum(capacite)), by = list(date, filiere2)]
+    res <- data[node %in% nodes, list(capa = sum(capacite)), by = list(date, filiere2)]
   }
+  
+  # GW ?
+  # res[, capa := round(capa/1000)]
+  
+  res[, capa := round(capa)]
   
   res <- data.frame(dcast(res, date ~ filiere2, fun=sum, value.var = "capa"))
   res$date <- as.character(res$date)
