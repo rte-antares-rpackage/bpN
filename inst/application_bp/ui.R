@@ -9,49 +9,9 @@ navbarPage(title = "Bilan prévisionnel 2017", id = "nav-id", theme = "css/custo
              
            ), windowTitle = "BP 2017",
            
-           tabPanel("Synthèse",
-                    fluidRow(
-                      column(12,
-                             navlistPanel(id = "synth_tab", widths = c(2, 10),
-                                          tabPanel("Les scénarios", 
-                                                   "TO DO"
-                                          ),
-                                          tabPanel("Ampère",  
-                                                   tabsetPanel(id = "synth_tab_amp",
-                                                               tabPanel("Principe"),
-                                                               tabPanel("Hypothèses principales"),
-                                                               tabPanel("Résultats")
-                                                   )
-                                          ),
-                                          
-                                          tabPanel("Hertz",  
-                                                   tabsetPanel(id = "synth_tab_hertz",
-                                                               tabPanel("Principe"),
-                                                               tabPanel("Hypothèses principales"),
-                                                               tabPanel("Résultats")
-                                                   )
-                                          ),
-                                          tabPanel("Volt",  
-                                                   tabsetPanel(id = "synth_tab_volt",
-                                                               tabPanel("Principe"),
-                                                               tabPanel("Hypothèses principales"),
-                                                               tabPanel("Résultats")
-                                                   )
-                                          ),
-                                          tabPanel("Watt",  
-                                                   tabsetPanel(id = "synth_tab_watt",
-                                                               tabPanel("Principe"),
-                                                               tabPanel("Hypothèses principales"),
-                                                               tabPanel("Résultats")
-                                                   )
-                                          )
-                             )
-                      )
-                    )
-                    
-           ),
+           source("src/ui/01_ui_syntheses.R", local = T)$value,
            
-           source("src/ui/03_ui_hypothese.R", local = T)$value,
+           source("src/ui/02_ui_hypothese.R", local = T)$value,
            
            tabPanel("Résultats",
                     tabsetPanel(id = "res_tab_id",
