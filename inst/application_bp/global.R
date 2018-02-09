@@ -176,7 +176,7 @@ bpNumerique2018::limitSizeGraph(.data_module)
 
 # production
 
-sce_prod <- fread("/home/benoit/bp2017/Correspondance_scenarios_enr_th.csv", encoding = "Latin-1")
+sce_prod <- fread("/home/benoit/bp2017/Correspondance_scenarios.csv", encoding = "Latin-1")
 
 # bug with fread
 hyp_prod <- data.table(read.table("/home/benoit/bp2017/BP2017_production_global.csv", dec = ",", 
@@ -190,6 +190,13 @@ unique(hyp_prod$filiere2)
 hyp_prod$filiere2 <- gsub("^other$", "Autre renouvelables", hyp_prod$filiere2)
 hyp_prod$filiere2 <- gsub("^wind$", "éolien", hyp_prod$filiere2)
 hyp_prod$filiere2 <- gsub("^solar$", "solaire", hyp_prod$filiere2)
+hyp_prod$filiere2 <- gsub("^biogas$", "biogaz", hyp_prod$filiere2)
+hyp_prod$filiere2 <- gsub("^biomass$", "biomasse", hyp_prod$filiere2)
+hyp_prod$filiere2 <- gsub("^geothermal$", "géothermie", hyp_prod$filiere2)
+hyp_prod$filiere2 <- gsub("^hydro$", "hydraulique", hyp_prod$filiere2)
+hyp_prod$filiere2 <- gsub("^hydrokinetic$", "hydrolien", hyp_prod$filiere2)
+hyp_prod$filiere2 <- gsub("^waste$", "déchets", hyp_prod$filiere2)
+hyp_prod$filiere2 <- gsub("^wave$", "vagues", hyp_prod$filiere2)
 
 # hyp_prod[, .N, list(filiere1, filiere2)]
 # hyp_prod[, .N, list(filiere1, trajectoire)]
@@ -246,16 +253,56 @@ names(cl_hyp_prod) <- unique(hyp_prod$filiere2)
 hyp_inter<- data.table(read.table("/home/benoit/bp2017/Links.csv", dec = ",", 
                                   sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
 
-
-
-# data <- hyp_inter
 getIntercoHypothesis <- function(data, sce_prod = NULL, scenario = "Hertz"){
   
-  enr_fr <- sce_prod[Pays %in% "France" & filiere1 %in% "enr", get(scenario)]
-  enr_ue <- sce_prod[Pays %in% "Europe" & filiere1 %in% "enr", get(scenario)]
+  trj <- sce_prod[Pays %in% "France" & filiere1 %in% "interconnexions", get(scenario)]
   
+  res_import <- data[hypothesis %in% trj & to %in% "fr",]
+  
+  res_import <- melt(res_import, id = 1:4, measure.vars = 5:ncol(res_import))
+  
+  
+  res_import <- data.frame(dcast(res_import, variable ~ from, fun=sum, value.var = "value"))
+  res_import$variable <- as.character(res_import$variable)
+  colnames(res_import)[1] <- "date"
+  colnames(res_import) <- gsub("^be$", "Belgique", colnames(res_import))
+  colnames(res_import) <- gsub("^ch$", "Suisse", colnames(res_import))
+  colnames(res_import) <- gsub("^de$", "Allemagne", colnames(res_import))
+  colnames(res_import) <- gsub("^es$", "Espagne", colnames(res_import))
+  colnames(res_import) <- gsub("^gb$", "Royaume-Uni", colnames(res_import))
+  colnames(res_import) <- gsub("^ie$", "Irlande", colnames(res_import))
+  colnames(res_import) <- gsub("^it$", "Italie", colnames(res_import))
+  
+  res_export <- data[hypothesis %in% trj & from %in% "fr",]
+  
+  res_export <- melt(res_export, id = 1:4, measure.vars = 5:ncol(res_export))
+  
+  res_export <- data.frame(dcast(res_export, variable ~ to, fun=sum, value.var = "value"))
+  res_export$variable <- as.character(res_export$variable)
+  colnames(res_export)[1] <- "date"
+  colnames(res_export) <- gsub("^be$", "Belgique", colnames(res_export))
+  colnames(res_export) <- gsub("^ch$", "Suisse", colnames(res_export))
+  colnames(res_export) <- gsub("^de$", "Allemagne", colnames(res_export))
+  colnames(res_export) <- gsub("^es$", "Espagne", colnames(res_export))
+  colnames(res_export) <- gsub("^gb$", "Royaume-Uni", colnames(res_export))
+  colnames(res_export) <- gsub("^ie$", "Irlande", colnames(res_export))
+  colnames(res_export) <- gsub("^it$", "Italie", colnames(res_export))
+  
+  list(import = res_import, export = res_export)
   
 }
+
+
+cl_hyp_interco <- c("#886A08", "#FE9A2E", "#190707", "#FFFF00", "#B40431", "#BFFF00", "#298A08")
+names(cl_hyp_interco) <- c("Belgique", "Suisse", "Allemagne", "Espagne", "Royaume-Uni", "Irlande", "Italie")
+
+# amBarplot(x = "date", y = colnames(res_import)[-1], data = res_import, 
+#           stack_type = "regular", legend = TRUE,
+#           groups_color = unname(cl_hyp_interco[1:(ncol(res_import) - 1)]), 
+#           main = paste0("Evolution des capacités d'import (scénario ", ")"),
+#           zoom = TRUE, export = TRUE, show_values = FALSE,
+#           ylab = "MWh", horiz = TRUE,
+#           labelRotation = 45, legendPosition = "bottom", height = "800")
 
 #------------------
 # consommation
@@ -276,11 +323,16 @@ Encoding(hyp_conso$Usage1) <- "latin1"
 hyp_conso$Usage2 <- as.character(hyp_conso$Usage2)
 Encoding(hyp_conso$Usage2) <- "latin1"
 
+hyp_conso$Trajectoire <- as.character(hyp_conso$Trajectoire)
+Encoding(hyp_conso$Trajectoire) <- "latin1"
+
 Encoding(colnames(hyp_conso)) <- "latin1"
 
 getConsoHypothesis <- function(data, sce_prod = NULL, scenario = "Hertz"){
   
-  res <- data[Trajectoire %in% "Haute", list(conso = sum(Consommation)), by = list("date" = Année, Secteur)]
+  trj <- sce_prod[Pays %in% "France" & filiere1 %in% "consommation", get(scenario)]
+  
+  res <- data[Trajectoire %in% trj, list(conso = sum(Consommation)), by = list("date" = Année, Secteur)]
   
   # TWh
   res[, conso := round(conso/1000)]

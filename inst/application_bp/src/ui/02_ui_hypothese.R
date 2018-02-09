@@ -11,7 +11,16 @@ tabPanel("Hypothèses",
                     ),
                     amChartsOutput("hyp_prod", width = "100%", height = "650px")
            ),
-           tabPanel("Consommation", verbatimTextOutput("summary")),
-           tabPanel("Interconnexion", tableOutput("table"))
+           tabPanel("Consommation", amChartsOutput("hyp_conso", width = "100%", height = "650px")),
+           tabPanel("Interconnexions", 
+                    fluidRow(
+                      column(6, amChartsOutput("hyp_inter_import", width = "100%", height = "650px")),
+                      column(6, amChartsOutput("hyp_inter_export", width = "100%", height = "650px"))
+                    )
+                    # amChartsOutput("hyp_inter_import", width = "100%", height = "650px"), 
+                    # hr(),
+                    # amChartsOutput("hyp_inter_export", width = "100%", height = "650px")
+           )         
+
          )
 )
