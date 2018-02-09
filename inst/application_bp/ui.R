@@ -30,16 +30,27 @@ navbarPage(title = "Bilan prévisionnel 2017", id = "nav-id", theme = "css/custo
                            )
                     ),
 
-                    tabsetPanel(id = "res_tab_id",
-                              
-                                source("src/ui/05_ui_prodstack.R", local = T)$value,
-                                
-                                source("src/ui/06_ui_exchange.R", local = T)$value,
-                                
-                                source("src/ui/07_ui_tsplot.R", local = T)$value,
-                                
-                                source("src/ui/08_ui_map.R", local = T)$value
+                    
+                    conditionalPanel(condition = "input.update_module === 0",
+                                     div(h3("Veuillez sélectionner une étude et lancer l'analyse."), align =" center")
+                    ),
+                    conditionalPanel(condition = "input.update_module > 0 && output.have_data_areas === false",
+                                     div(h3("Pas de données importées."), align =" center")
+                    ),
+                    conditionalPanel(condition = "input.update_module > 0 && output.have_data_areas === true",
+                                     tabsetPanel(id = "res_tab_id",
+                                                 
+                                                 source("src/ui/05_ui_prodstack.R", local = T)$value,
+                                                 
+                                                 source("src/ui/06_ui_exchange.R", local = T)$value,
+                                                 
+                                                 source("src/ui/07_ui_tsplot.R", local = T)$value,
+                                                 
+                                                 source("src/ui/08_ui_map.R", local = T)$value
+                                     )
                     )
+                    
+
            ),
            
            source("src/ui/10_ui_help.R", local = T)$value
