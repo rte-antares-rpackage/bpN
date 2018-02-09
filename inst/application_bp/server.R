@@ -49,26 +49,15 @@ function(input, output, session) {
   ind_keep_list_data <- reactive({
     if(input$update_module > 0){
       isolate({
-        names_input <- names(input)
-        keep_input <- names_input[grepl("^list_study_check", names_input)]
-        keep_input <- keep_input[as.numeric(gsub("list_study_check", "", keep_input)) <= length(list_data_all$antaresDataList)]
-        if(length(keep_input) > 0){
-          keep_input <- sort(keep_input)
-          final_keep <- sapply(keep_input, function(x){
-            input[[x]]
-          })
-          
-          # all to keep
-          ind_all <- which(final_keep)
-          
-          # with areas
-          ind_areas <- intersect(which(list_data_all$have_areas), ind_all)
-          
-          # with links
-          ind_links <- intersect(which(list_data_all$have_links), ind_all)
-          
-          list(ind_all = ind_all, ind_areas = ind_areas, ind_links = ind_links)
+        if(length(input$sel_study > 0)){
+          ind_all <- which(names(list_data_all$antaresDataList) %in% input$sel_study)
+          list(ind_all = ind_all, ind_areas = ind_all, ind_links = ind_all)
         } else {
+          showModal(modalDialog(
+            "Pas d'étude(s) sélectionnée(s)",
+            easyClose = TRUE,
+            footer = NULL
+          ))
           NULL
         }
       })

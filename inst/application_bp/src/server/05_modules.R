@@ -159,7 +159,7 @@ observe({
 
 # call module when click on tab if needed
 observe({
-  if(input[['res_tab_id']] == "Production"){
+  if(input[['res_tab_id']] == "Production" & modules$init_prodStack){
     isolate({
       if("MWController" %in% class(modules$prodStack) & modules$init_prodStack){
         modules$prodStack <- mwModule(id = modules$id_prodStack,  modules$prodStack)
