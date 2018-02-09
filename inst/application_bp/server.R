@@ -25,7 +25,13 @@ function(input, output, session) {
   })
   outputOptions(output, "have_data", suspendWhenHidden = FALSE)
   
-  # Dataset selection
+  #----------------
+  # syntheses
+  #----------------
+  source("src/server/01_syntheses.R", local = T)
+  
+  #----------------
+  # Hypotheses
   #----------------
   source("src/server/02_hypotheses.R", local = T)
   

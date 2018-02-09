@@ -176,6 +176,7 @@ bpNumerique2018::limitSizeGraph(.data_module)
 # bug with fread
 hyp_prod <- data.table(read.table("/home/benoit/bp2017/BP2017_production_global.csv", dec = ",", 
                                   sep = ";", header = T, encoding = "Latin-1"))
+
 hyp_prod$filiere2 <- as.character(hyp_prod$filiere2)
 Encoding(hyp_prod$filiere2) <- "latin1"
 
