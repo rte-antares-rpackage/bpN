@@ -303,6 +303,10 @@ prodStack <- function(x,
       if(nrow(dt) == 0){
         return (combineWidgets("No data for this selection"))
       }
+      
+      # BP 2017
+      main <- paste0("Production ", areas, " (tirage ", mcYear, ")")
+      
       p <- try(.plotProdStack(dt,
                               stackOpts$variables,
                               stackOpts$colors,

@@ -202,6 +202,9 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
         colors <- rep(colors, length.out = ncol(dt - 1))
       }
       
+      # BP 2017
+      main <- paste0("Echanges ", areas, " (tirage ", mcYear, ")")
+      
       # Stack
       g <- .plotStack(dt, timeStep, opts, colors,
                       legendId = legendId + id - 1, groupId = groupId, 
