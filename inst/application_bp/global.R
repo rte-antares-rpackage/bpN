@@ -172,7 +172,7 @@ bpNumerique2018::limitSizeGraph(.data_module)
 
 #------------------
 # hypothese
-
+#------------------
 
 # production
 
@@ -184,6 +184,12 @@ hyp_prod <- data.table(read.table("/home/benoit/bp2017/BP2017_production_global.
 
 hyp_prod$filiere2 <- as.character(hyp_prod$filiere2)
 Encoding(hyp_prod$filiere2) <- "latin1"
+
+# renommage en francais
+unique(hyp_prod$filiere2)
+hyp_prod$filiere2 <- gsub("^other$", "Autre renouvelables", hyp_prod$filiere2)
+hyp_prod$filiere2 <- gsub("^wind$", "éolien", hyp_prod$filiere2)
+hyp_prod$filiere2 <- gsub("^solar$", "solaire", hyp_prod$filiere2)
 
 # hyp_prod[, .N, list(filiere1, filiere2)]
 # hyp_prod[, .N, list(filiere1, trajectoire)]
@@ -232,3 +238,56 @@ names(cl_hyp_prod) <- unique(hyp_prod$filiere2)
 #           groups_color = cl,
 #           zoom = TRUE, export = TRUE, show_values = FALSE,
 #           labelRotation = 45, legendPosition = "bottom", height = "800")
+
+#------------------
+# interconnexion
+#------------------
+# bug with fread
+hyp_inter<- data.table(read.table("/home/benoit/bp2017/Links.csv", dec = ",", 
+                                  sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
+
+
+
+# data <- hyp_inter
+getIntercoHypothesis <- function(data, sce_prod = NULL, scenario = "Hertz"){
+  
+  enr_fr <- sce_prod[Pays %in% "France" & filiere1 %in% "enr", get(scenario)]
+  enr_ue <- sce_prod[Pays %in% "Europe" & filiere1 %in% "enr", get(scenario)]
+  
+  
+}
+
+#------------------
+# consommation
+#------------------
+# bug with fread
+hyp_conso <- data.table(read.delim("/home/benoit/bp2017/BP17_hypothese_consommation_flat_2.csv", dec = ",", 
+                                  sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
+
+hyp_conso$Secteur <- as.character(hyp_conso$Secteur)
+Encoding(hyp_conso$Secteur) <- "latin1"
+
+hyp_conso$Branche <- as.character(hyp_conso$Branche)
+Encoding(hyp_conso$Branche) <- "latin1"
+
+hyp_conso$Usage1 <- as.character(hyp_conso$Usage1)
+Encoding(hyp_conso$Usage1) <- "latin1"
+
+hyp_conso$Usage2 <- as.character(hyp_conso$Usage2)
+Encoding(hyp_conso$Usage2) <- "latin1"
+
+Encoding(colnames(hyp_conso)) <- "latin1"
+
+getConsoHypothesis <- function(data, sce_prod = NULL, scenario = "Hertz"){
+  
+  res <- data[Trajectoire %in% "Haute", list(conso = sum(Consommation)), by = list("date" = Année, Secteur)]
+  
+  # TWh
+  res[, conso := round(conso/1000)]
+  
+  res <- data.frame(dcast(res, date ~ Secteur, fun=sum, value.var = "conso"))
+  res$date <- as.character(res$date)
+  
+  colnames(res) <- gsub("^Transport..agriculture.et.énergie$", "Transport, agriculture et énergie", colnames(res))
+  res
+}
