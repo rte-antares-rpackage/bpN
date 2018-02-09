@@ -203,7 +203,7 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
       }
       
       # BP 2017
-      main <- paste0("Echanges ", areas, " (tirage ", mcYear, ")")
+      main <- paste0("Echanges ", area, " (tirage ", mcYear, ")")
       
       # Stack
       g <- .plotStack(dt, timeStep, opts, colors,
