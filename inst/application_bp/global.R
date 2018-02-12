@@ -8,6 +8,53 @@ require(rAmCharts)
 
 # manipulateWidget:::mwDebug()
 
+#-------------
+#  options
+#-------------
+.is_shared_input <- TRUE
+.ram_limit <- 10
+.data_module <- 200
+
+#--------------
+# data path
+#--------------
+data_dir <- "/home/benoit/bp2017"
+
+# map layout
+ml_data <- tryCatch(readRDS(paste0(data_dir, "/mapLayout-2018-01-19.RDS")), error = function(e) {NULL})
+# ml_data <- tryCatch(readRDS("/home/benoit/bp2017/mapLayout-2018-02-09.RDS"), error = function(e) {NULL})
+
+
+# .h5 files
+h5_files <- list.files(data_dir, full.names = FALSE, pattern = ".h5$")
+
+.list_data_all <- list(antaresDataList = list(), params = list(), 
+                       have_links = c(), have_areas = c(), opts = list())
+
+add_h5_file <- lapply(1:length(h5_files), function(x){
+  params <- list(
+    areas = "all", links = "all", 
+    clusters = "all", districts = "all",
+    select = NULL
+  )
+  
+  # a .h5 file, so return opts...
+  opts <- setSimulationPath(paste0(data_dir, "/", h5_files[x]))
+  .list_data_all$antaresDataList[[x]] <<- opts
+  .list_data_all$params[[x]] <<- params
+  .list_data_all$opts[[x]] <<- opts
+  
+  .list_data_all$have_links[x] <<- TRUE
+  .list_data_all$have_areas[x] <<- TRUE
+  
+  names(.list_data_all$antaresDataList)[[x]] <<- h5_files[x]
+  invisible()
+})
+
+#--------------
+# new prodStack alias
+#--------------
+
 # change eco2mix alias
 setProdStackAlias(
   name = "eco2mix",
@@ -37,66 +84,31 @@ setProdStackAlias(
   lineWidth = 2
 )
 
-setProdStackAlias(
-  name = "thermalFirst",
-  variables = alist(
-    "Pompage/turbinage" = PSP,
-    "import/export" = -(BALANCE + `ROW BAL.`),
-    "Nucléaire" = NUCLEAR,
-    "Lignite" = LIGNITE,
-    "Charbon" = COAL,
-    "Gaz" = GAS,
-    "Fioul" = OIL,
-    "Autre thermique" = `MIX. FUEL`,
-    "Effacement" = `MISC. DTG`,
-    "Autre renouvelable" = `MISC. NDG`,
-    "Eolien" = WIND,
-    "Solaire" = SOLAR,
-    "Hydraulique fil" = `H. ROR`,
-    "Hydraulique lac" = `H. STOR`
-  ),
-  colors = c("#1147B9", "#969696", "#F5B300", "#B4822B", "#AC8C35", "#F30A0A", "#8356A2", "#7F549C", "#ADFF2F", "#166A57", "#74CDB9", "#F27406", "#3D607D", "#5497D0")
-)
-
-
-# map layout
-ml_data <- tryCatch(readRDS("/home/benoit/bp2017/mapLayout-2018-01-19.RDS"), error = function(e) {NULL})
-
-# get h5 data
-h5_dir <- "/home/benoit/bp2017"
-
-h5_files <- list.files(h5_dir, full.names = FALSE, pattern = ".h5$")
-
-.list_data_all <- list(antaresDataList = list(), params = list(), 
-                                have_links = c(), have_areas = c(), opts = list())
-
-add_h5_file <- lapply(1:length(h5_files), function(x){
-  params <- list(
-    areas = "all", links = "all", 
-    clusters = "all", districts = "all",
-    select = NULL
-  )
-  
-  # a .h5 file, so return opts...
-  opts <- setSimulationPath(paste0(h5_dir, "/", h5_files[x]))
-  .list_data_all$antaresDataList[[x]] <<- opts
-  .list_data_all$params[[x]] <<- params
-  .list_data_all$opts[[x]] <<- opts
-  
-  .list_data_all$have_links[x] <<- TRUE
-  .list_data_all$have_areas[x] <<- TRUE
-
-  names(.list_data_all$antaresDataList)[[x]] <<- h5_files[x]
-  invisible()
-})
+# setProdStackAlias(
+#   name = "thermalFirst",
+#   variables = alist(
+#     "Pompage/turbinage" = PSP,
+#     "import/export" = -(BALANCE + `ROW BAL.`),
+#     "Nucléaire" = NUCLEAR,
+#     "Lignite" = LIGNITE,
+#     "Charbon" = COAL,
+#     "Gaz" = GAS,
+#     "Fioul" = OIL,
+#     "Autre thermique" = `MIX. FUEL`,
+#     "Effacement" = `MISC. DTG`,
+#     "Autre renouvelable" = `MISC. NDG`,
+#     "Eolien" = WIND,
+#     "Solaire" = SOLAR,
+#     "Hydraulique fil" = `H. ROR`,
+#     "Hydraulique lac" = `H. STOR`
+#   ),
+#   colors = c("#1147B9", "#969696", "#F5B300", "#B4822B", "#AC8C35", "#F30A0A", "#8356A2", "#7F549C", "#ADFF2F", "#166A57", "#74CDB9", "#F27406", "#3D607D", "#5497D0")
+# )
 
 
 # shared inputs
-.is_shared_input <- TRUE
-.ram_limit <- 10
-antaresRead::setRam(.ram_limit)
 
-.data_module <- 200
+antaresRead::setRam(.ram_limit)
 bpNumerique2018::limitSizeGraph(.data_module)
 
 .global_shared_prodStack <- data.frame(
@@ -145,41 +157,27 @@ bpNumerique2018::limitSizeGraph(.data_module)
 
 .global_compare <- c("mcYear", "areas")
 
-.global_compare_prodstack <- c("mcYear", "main", "unit", "areas", "legend", 
-                       "stack", "stepPlot", "drawPoints")
-
-.global_compare_exchangesStack <- c("mcYear", "main", "unit", "area",
-                            "legend", "stepPlot", "drawPoints")
-
-.global_compare_tsPlot <- c("mcYear", "main", "variable", "type", "confInt", "elements", 
-                    "aggregate", "legend", "highlight", "stepPlot", "drawPoints", "secondAxis")
-
-.global_compare_plotMap <- c("mcYear", "type", "colAreaVar", "sizeAreaVars", "areaChartType", "showLabels",
-  "popupAreaVars", "labelAreaVar","colLinkVar", "sizeLinkVar", "popupLinkVars")
-
-
-#----- generate help for antaresRead function
-# library(tools)
-# add.html.help <- function(package, func, tempsave = paste0(getwd(), "/temp.html")) {
-#   pkgRdDB = tools:::fetchRdDB(file.path(find.package(package), "help", package))
-#   topics = names(pkgRdDB)
-#   rdfunc <- pkgRdDB[[func]]
-#   tools::Rd2HTML(pkgRdDB[[func]], out = tempsave)
-# }
-# add.html.help("antaresRead", "readAntares", "inst/application/www/readAntares.html")
-# add.html.help("antaresRead", "removeVirtualAreas", "inst/application/www/removeVirtualAreas.html")
-# add.html.help("antaresRead", "writeAntaresH5", "inst/application/www/writeAntaresH5.html")
+# .global_compare_prodstack <- c("mcYear", "main", "unit", "areas", "legend", 
+#                        "stack", "stepPlot", "drawPoints")
+# 
+# .global_compare_exchangesStack <- c("mcYear", "main", "unit", "area",
+#                             "legend", "stepPlot", "drawPoints")
+# 
+# .global_compare_tsPlot <- c("mcYear", "main", "variable", "type", "confInt", "elements", 
+#                     "aggregate", "legend", "highlight", "stepPlot", "drawPoints", "secondAxis")
+# 
+# .global_compare_plotMap <- c("mcYear", "type", "colAreaVar", "sizeAreaVars", "areaChartType", "showLabels",
+#   "popupAreaVars", "labelAreaVar","colLinkVar", "sizeLinkVar", "popupLinkVars")
 
 #------------------
 # hypothese
 #------------------
 
 # production
-
-sce_prod <- fread("/home/benoit/bp2017/Correspondance_scenarios.csv", encoding = "Latin-1")
+sce_prod <- fread(paste0(data_dir, "/Correspondance_scenarios.csv"), encoding = "Latin-1")
 
 # bug with fread
-hyp_prod <- data.table(read.table("/home/benoit/bp2017/BP2017_production_global.csv", dec = ",", 
+hyp_prod <- data.table(read.table(paste0(data_dir, "/BP2017_production_global.csv"), dec = ",", 
                                   sep = ";", header = T, encoding = "Latin-1"))
 
 hyp_prod$filiere2 <- as.character(hyp_prod$filiere2)
@@ -239,18 +237,19 @@ getProductionHypothesis <- function(data, nodes = NULL, sce_prod = NULL, scenari
 
 cl_hyp_prod <- c(brewer.pal(n = 12, name = "Set3"), brewer.pal(n = 5, name = "Set1"))
 names(cl_hyp_prod) <- unique(hyp_prod$filiere2)
-# 
-# amBarplot(x = "date", y = colnames(res)[-1], data = res, 
+
+
+# amBarplot(x = "date", y = colnames(res)[-1], data = res,
 #           stack_type = "regular", legend = TRUE,
-#           groups_color = cl,
 #           zoom = TRUE, export = TRUE, show_values = FALSE,
 #           labelRotation = 45, legendPosition = "bottom", height = "800")
+
 
 #------------------
 # interconnexion
 #------------------
 # bug with fread
-hyp_inter<- data.table(read.table("/home/benoit/bp2017/Links.csv", dec = ",", 
+hyp_inter<- data.table(read.table(paste0(data_dir, "/Links.csv"), dec = ",", 
                                   sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
 
 getIntercoHypothesis <- function(data, sce_prod = NULL, scenario = "Hertz"){
@@ -296,9 +295,9 @@ getIntercoHypothesis <- function(data, sce_prod = NULL, scenario = "Hertz"){
 cl_hyp_interco <- c("#886A08", "#FE9A2E", "#190707", "#FFFF00", "#B40431", "#BFFF00", "#298A08")
 names(cl_hyp_interco) <- c("Belgique", "Suisse", "Allemagne", "Espagne", "Royaume-Uni", "Irlande", "Italie")
 
-# amBarplot(x = "date", y = colnames(res_import)[-1], data = res_import, 
+# amBarplot(x = "date", y = colnames(res_import)[-1], data = res_import,
 #           stack_type = "regular", legend = TRUE,
-#           groups_color = unname(cl_hyp_interco[1:(ncol(res_import) - 1)]), 
+#           groups_color = unname(cl_hyp_interco[1:(ncol(res_import) - 1)]),
 #           main = paste0("Evolution des capacités d'import (scénario ", ")"),
 #           zoom = TRUE, export = TRUE, show_values = FALSE,
 #           ylab = "MWh", horiz = TRUE,
@@ -308,38 +307,41 @@ names(cl_hyp_interco) <- c("Belgique", "Suisse", "Allemagne", "Espagne", "Royaum
 # consommation
 #------------------
 # bug with fread
-hyp_conso <- data.table(read.delim("/home/benoit/bp2017/BP17_hypothese_consommation_flat_2.csv", dec = ",", 
+hyp_conso <- data.table(read.delim(paste0(data_dir, "/BP17_hypothese_consommation_flat_3.csv"), dec = ",", 
                                   sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
 
-hyp_conso$Secteur <- as.character(hyp_conso$Secteur)
-Encoding(hyp_conso$Secteur) <- "latin1"
-
-hyp_conso$Branche <- as.character(hyp_conso$Branche)
-Encoding(hyp_conso$Branche) <- "latin1"
-
-hyp_conso$Usage1 <- as.character(hyp_conso$Usage1)
-Encoding(hyp_conso$Usage1) <- "latin1"
-
-hyp_conso$Usage2 <- as.character(hyp_conso$Usage2)
-Encoding(hyp_conso$Usage2) <- "latin1"
-
-hyp_conso$Trajectoire <- as.character(hyp_conso$Trajectoire)
-Encoding(hyp_conso$Trajectoire) <- "latin1"
-
+# encoding
+for(v in c("Trajectoire", "Secteur", "Branche", "Branche2", "Usage", "Usage2")){
+  hyp_conso[[v]] <- as.character(hyp_conso[[v]])
+  Encoding(hyp_conso[[v]] ) <- "latin1"
+}
 Encoding(colnames(hyp_conso)) <- "latin1"
 
-getConsoHypothesis <- function(data, sce_prod = NULL, scenario = "Hertz"){
+# hyp_conso[, .N, Secteur]
+# hyp_conso[, .N, Branche]
+# hyp_conso[, .N, Usage]
+# 
+# hyp_conso[, .N, list(Secteur, Branche)]
+# hyp_conso[, .N, list(Secteur, Usage)]
+
+data <- hyp_conso
+  
+getConsoHypothesis <- function(data, type = "Secteur", sce_prod = NULL, scenario = "Hertz"){
   
   trj <- sce_prod[Pays %in% "France" & filiere1 %in% "consommation", get(scenario)]
   
-  res <- data[Trajectoire %in% trj, list(conso = sum(Consommation)), by = list("date" = Année, Secteur)]
+  res <- data[Trajectoire %in% trj, list(conso = sum(Consommation)), by = c("Année", type)]
+  colnames(res)[1:2] <- c("date", "type")
   
   # TWh
   res[, conso := round(conso/1000)]
   
-  res <- data.frame(dcast(res, date ~ Secteur, fun=sum, value.var = "conso"))
+  label <- sort(unique(res$type))
+  
+  res <- data.frame(dcast(res, date ~ type, fun=sum, value.var = "conso"))
   res$date <- as.character(res$date)
   
-  colnames(res) <- gsub("^Transport..agriculture.et.énergie$", "Transport, agriculture et énergie", colnames(res))
+  colnames(res)[-1] <- label
+  
   res
 }
