@@ -40,6 +40,12 @@ function(input, output, session) {
   #----------------
   source("src/server/03_data_selection.R", local = T)
   
+  #----------------
+  # shared inputs
+  #----------------
+  
+  source("src/server/04_shared_input.R", local = T)
+  
   #-----------------
   # modules
   #-----------------
@@ -77,12 +83,6 @@ function(input, output, session) {
   #------------
   
   source("src/server/06_module_map.R", local = T)
-  
-  #----------------
-  # shared inputs
-  #----------------
-  
-  source("src/server/04_shared_input.R", local = T)
   
   #----------------
   # quit
