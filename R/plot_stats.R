@@ -1,7 +1,7 @@
 .plotMonotone <- function(dt, timeStep, variable, variable2Axe = NULL, confInt = NULL, maxValue,
                           main = NULL, ylab = NULL, highlight = FALSE, stepPlot = FALSE, drawPoints = FALSE, ...) {
   
-  uniqueElements <- sort(unique(dt$element))
+  uniqueElements <- as.character(sort(unique(dt$element)))
   plotConfInt <- FALSE
   # If dt contains several Monte-Carlo scenario, compute aggregate statistics
   if (is.null(dt$mcYear)) {
@@ -19,7 +19,7 @@
       dt <- dt[, .(y = mean(y)), by = .(element, x)]
     } else {
       plotConfInt <- TRUE
-      uniqueElements <- sort(unique(dt$element))
+      uniqueElements <- as.character(sort(unique(dt$element)))
       
       alpha <- (1 - confInt) / 2
       dt <- dt[, .(y = c(mean(y), quantile(y, c(alpha, 1 - alpha))),
@@ -41,7 +41,7 @@
 .density <- function(dt, timeStep, variable, variable2Axe = NULL, minValue = NULL, maxValue = NULL, 
                      main = NULL, ylab = NULL, highlight = FALSE, stepPlot = FALSE, drawPoints = FALSE, ...) {
   
-  uniqueElements <- sort(unique(dt$element))
+  uniqueElements <- as.character(sort(unique(dt$element)))
   
   xbins <- .getXBins(dt$value, minValue, maxValue)
   if (is.character(xbins)) return(xbins)
@@ -65,7 +65,7 @@
 .cdf <- function(dt, timeStep, variable, variable2Axe = NULL, minValue = NULL, maxValue = NULL,
                  main = NULL, ylab = NULL, highlight = FALSE, stepPlot = FALSE, drawPoints = FALSE, ...) {
   
-  uniqueElements <- sort(unique(dt$element))
+  uniqueElements <- as.character(sort(unique(dt$element)))
   
   xbins <- .getXBins(dt$value, minValue, maxValue)$xbins
   
@@ -127,7 +127,7 @@
   g <- dygraph(as.data.frame(dt), main = main, group = legendId) %>% 
     dyOptions(
       includeZero = TRUE, 
-      colors = colors,
+      # colors = colors,
       gridLineColor = gray(0.8), 
       axisLineColor = gray(0.6), 
       axisLabelColor = gray(0.6), 
@@ -142,14 +142,13 @@
       unhighlightCallback = JS_resetLegend(legendId)
     )
   
-  
-  if(length(variable2Axe)>0){
-    for( i in variable2Axe)
-    {
-      g <- g %>%   dySeries(i, axis = 'y2')
-    } 
+  for(i in 1:length(uniqueElements)){
+    if(!uniqueElements[i] %in% variable2Axe){
+      g <- g %>% dySeries(uniqueElements[i], color = colors[i])
+    } else {
+      g <- g %>% dySeries(uniqueElements[i], axis = 'y2', color = colors[i])
+    }
   }
-  
   
   if(highlight)
   {

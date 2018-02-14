@@ -21,7 +21,7 @@
     if (confInt == 0) {
       dt <- dt[, .(value = mean(value)), by = .(element)]
     } else {
-      uniqueElements <- sort(unique(dt$element))
+      uniqueElements <- as.character(sort(unique(dt$element)))
       
       alpha <- (1 - confInt) / 2
       .getConfInt <- function(x) {
