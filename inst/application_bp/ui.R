@@ -7,8 +7,8 @@ navbarPage(title = "Bilan prévisionnel 2017", id = "nav-id", theme = "css/custo
              div(id = "import_busy", tags$img(src= "spinner.gif", height = 100,
                                               style = "position: fixed;top: 50%;z-index:10;left: 48%;"))
              
-           ), windowTitle = div(img(src="img/RTE_logo.svg.png"), "BP 2017 RTE - Accueil")),
-           
+           # ), windowTitle = div(img(src="img/RTE_logo.svg.png"), "BP 2017 RTE - Accueil"),
+           ),windowTitle = "BP 2017 RTE - Accueil",
            # source("src/ui/01_ui_syntheses.R", local = T)$value,
            
            source("src/ui/02_ui_hypothese.R", local = T)$value,
