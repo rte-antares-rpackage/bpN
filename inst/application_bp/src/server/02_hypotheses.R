@@ -1,4 +1,27 @@
 #------------
+# generalites
+#------------
+
+output$md_gen <- renderUI({
+  switch(input$hyp_scenario, 
+         "Ampère" = fluidRow(
+           column(12, includeMarkdown("src/aide/ampere_onglet_gen.md"))
+         ), 
+         "Hertz" = fluidRow(
+           column(12, includeMarkdown("src/aide/hertz_onglet_gen.md"))
+         ), 
+         "Volt" = fluidRow(
+           column(12, includeMarkdown("src/aide/volt_onglet_gen.md"))
+         ), 
+         "Watt" = fluidRow(
+           column(12, includeMarkdown("src/aide/watt_onglet_gen.md"))
+         ))
+})
+
+
+
+
+#------------
 # production
 #------------
 output$hyp_prod <- renderAmCharts({

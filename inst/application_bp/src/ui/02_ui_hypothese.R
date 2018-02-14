@@ -1,6 +1,10 @@
 tabPanel("Hypothèses",
          selectInput("hyp_scenario", "Scénario : ", c("Ampère", "Hertz", "Volt", "Watt")),
          tabsetPanel(
+           tabPanel("Généralités", 
+                    br(),
+                    uiOutput("md_gen")
+           ),
            tabPanel("Production", 
                     br(),
                     fluidRow(

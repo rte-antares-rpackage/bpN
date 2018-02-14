@@ -9,7 +9,7 @@ navbarPage(title = "Bilan prévisionnel 2017", id = "nav-id", theme = "css/custo
              
            ), windowTitle = "BP 2017",
            
-           source("src/ui/01_ui_syntheses.R", local = T)$value,
+           # source("src/ui/01_ui_syntheses.R", local = T)$value,
            
            source("src/ui/02_ui_hypothese.R", local = T)$value,
            

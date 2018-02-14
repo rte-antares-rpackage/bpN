@@ -28,7 +28,7 @@ function(input, output, session) {
   #----------------
   # syntheses
   #----------------
-  source("src/server/01_syntheses.R", local = T)
+  # source("src/server/01_syntheses.R", local = T)
   
   #----------------
   # Hypotheses
