@@ -5,7 +5,7 @@ tabPanel("Hypothèses",
                     br(),
                     uiOutput("md_gen")
            ),
-           tabPanel("Production", 
+           tabPanel("Parc de production", 
                     br(),
                     fluidRow(
                       column(1,  div(h4("Pays : "), align = "center")),
