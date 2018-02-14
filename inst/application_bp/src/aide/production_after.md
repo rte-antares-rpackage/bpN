@@ -1,25 +1,31 @@
-## Précisions sur certaines rubriques et abréviations
+#### Personnalisation de la présentation
 
-### Pompage & STEP Turbinage
+Vous avez la possibilité de modifier le tirage et la période à afficher via le bouton <img src="img/bouton_reglages.png" width="20" style="vertical-align:top"/>.
 
-Les *STEP* (stations de transfert d’énergie par pompage) sont des installations hydroélectriques qui puisent aux heures creuses de l'eau dans un bassin inférieur afin de remplir une retenue en amont (lac d'altitude). L'eau est ensuite turbinée aux heures pleines pour produire de l’électricité.
+<br>
 
-- La rubrique **STEP Turbinage** correspond à la puissance produite par l’eau turbinée.
-- La rubrique **pompage** représente l’ensemble de la puissance consommée par les STEP.
+#### Précisions sur certaines rubriques et abréviations
 
-### Autre renouvelable
+**Pompage & Turbinage des STEP**
 
-La rubrique *Autres* renouvelable représente la production des bioénergies et des hydroliennes.
+Les "STEP" (stations de transfert d'énergie par pompage) sont des installations hydroélectriques qui puisent aux heures creuses de l'eau dans un bassin inférieur afin de remplir une retenue en amont (lac d'altitude). L'eau est ensuite turbinée aux heures pleines pour produire de l'électricité.
+<li>La rubrique **Turbinage** correspond à la puissance produite par l'eau turbinée.
+<li>La rubrique **Pompage** représente la puissance consommée par les STEP.
 
-### Déversement
+**Autre renouvelable**
 
-Le déversement correspond à de l’énergie produite *en trop* par les filières fatales et qui ne trouve pas de débouchés sur les marchés. Les épisodes présentant du déversement sont typiquement des situations avec une consommation faible et de fortes productions renouvelables à l’horizon 2030 ou 2035.
+La rubrique "Autre renouvelable" représente la production des bioénergies et des hydroliennes.
 
-### Tirage
+**Déversement**
 
-Un tirage correspond à une combinaison d’aléas simulés pour une coupe du Bilan prévisionnel. Une coupe est typiquement simulée sur 1000 combinaisons d’aléas différentes afin de correctement représenter les rares épisodes de défaillances. Les 100 premiers tirages sont mis à la disposition des utilisateurs. Un tirage correspond donc à une réalisation possible à l’horizon étudié.
+Le déversement correspond à de l'énergie produite "en trop" par les filières fatales et qui ne trouve pas de débouchés sur les marchés. Les situations présentant du déversement sont généralement associées à une consommation faible et de fortes productions renouvelables aux horizons 2030 ou 2035.
 
-## A propos des données
+**Tirage**
 
-L’ensemble de données présentées dans cette application sont téléchargeables sur la plateforme OpenData de RTE à l’adresse suivante : [www.dedede.fr](http://www.dedede.fr)
+Un tirage correspond à une combinaison d'aléas simulés. Pour chaque coupe temporelle étudiée (2025, 2030 et 2035), 1000 combinaisons d'aléas différentes sont simulées afin de correctement représenter les rares épisodes de défaillances. Les 100 premiers tirages sont mis à la disposition des utilisateurs. Un tirage représente donc à une une combinaison d'aléas possible à l'horizon étudié.
 
+<br>
+
+#### A propos des données
+
+Les données présentées dans sont téléchargeables sur la plateforme <a href="https://opendata.reseaux-energies.fr/pages/accueil/" target="_blank">Open Data Réseaux Energies</a>
