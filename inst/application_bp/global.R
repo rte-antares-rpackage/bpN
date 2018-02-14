@@ -357,3 +357,23 @@ getConsoHypothesis <- function(data, type = "Secteur", sce_prod = NULL, scenario
   
   res
 }
+
+#------------------
+# co2
+#------------------
+# bug with fread
+
+hyp_co2 <- data.table(read.delim(paste0(data_dir, "/co2.csv"), dec = ",", 
+                                   sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
+
+
+hyp_co2$scenario <- as.character(hyp_co2$scenario)
+Encoding(hyp_co2$scenario) <- "latin1"
+
+# tmp <- data.frame(date = colnames(hyp_co2)[-1], valeur = t(data.frame(hyp_co2[1, ][, scenario := NULL]))[, 1])
+# amBarplot(x = "date", y = "valeur", data = tmp,
+#                     stack_type = "regular", legend = FALSE,
+#                     main = "Évolution des émissions de CO2 en France (scénario ",
+#                     zoom = TRUE, export = TRUE, show_values = TRUE,
+#                     ylab = "Millions de tonnes (Mt)", horiz = FALSE,
+#                     labelRotation = 45)

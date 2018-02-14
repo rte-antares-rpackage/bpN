@@ -25,10 +25,15 @@ tabPanel("Hypothèses",
                     uiOutput("hyp_conso_graph")
            ),
            tabPanel("Interconnexions", 
+                    br(),
                     fluidRow(
                       column(6, amChartsOutput("hyp_inter_import", width = "100%", height = "650px")),
                       column(6, amChartsOutput("hyp_inter_export", width = "100%", height = "650px"))
                     )
-           )         
+           ) ,
+           tabPanel("CO2", 
+                    br(),
+                    amChartsOutput("hyp_co2", width = "100%", height = "650px")
+           )
          )
 )

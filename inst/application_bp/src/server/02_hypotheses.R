@@ -69,8 +69,8 @@ output$hyp_conso <- renderAmCharts({
   
   if(type == "Branche"){
     gr <- setChartCursor(.Object = gr, valueZoomable = TRUE, 
-                            valueLineEnabled = TRUE, zoomable = TRUE, 
-                            valueLineBalloonEnabled = TRUE, valueBalloonsEnabled = FALSE)
+                         valueLineEnabled = TRUE, zoomable = TRUE, 
+                         valueLineBalloonEnabled = TRUE, valueBalloonsEnabled = FALSE)
   }
   gr
 })
@@ -120,4 +120,21 @@ output$hyp_inter_export <- renderAmCharts({
                    labelRotation = 45, legendPosition = "bottom", height = "800")
   gr@otherProperties$thousandsSeparator <- " "
   gr
+})
+
+
+#------------
+# co2
+#------------
+
+output$hyp_co2<- renderAmCharts({
+  
+  tmp <- data.frame(date = colnames(hyp_co2)[-1], valeur = t(data.frame(hyp_co2[scenario %in% input$hyp_scenario, ][, scenario := NULL]))[, 1])
+  
+  amBarplot(x = "date", y = "valeur", data = tmp,
+            stack_type = "regular", legend = FALSE,
+            main = paste0("Évolution des émissions de CO2 en France (scénario ", input$hyp_scenario, ")"),
+            zoom = TRUE, export = TRUE, show_values = TRUE,
+            ylab = "Millions de tonnes (Mt)", horiz = FALSE,
+            labelRotation = 45)
 })
