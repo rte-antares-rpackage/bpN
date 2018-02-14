@@ -187,9 +187,10 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
   areaChartType <- match.arg(areaChartType)
   xyCompare <- match.arg(xyCompare)
   
-  if(colAreaVar != "none" & colAreaVar%in%colorsVars$Column & runScale)
+  tmp_colAreaVar <- gsub("(_std$)|(_min$)|(_max$)", "", colAreaVar)
+  if(tmp_colAreaVar != "none" & tmp_colAreaVar%in%colorsVars$Column & runScale)
   {
-    raw <- colorsVars[Column == colAreaVar]
+    raw <- colorsVars[Column == tmp_colAreaVar]
     options <- plotMapOptions(areaColorScaleOpts = colorScaleOptions(
       negCol = "#FF0000",
       # zeroCol = rgb(raw$red, raw$green, raw$blue,  maxColorValue = 255),
@@ -491,8 +492,9 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
     }),
     options = mwSharedValue({options}),
     optionsT = mwSharedValue({
-      if(colAreaVar %in% colorsVars$Column & runScale){
-        raw <- colorsVars[Column == colAreaVar]
+      tmp_colAreaVar <- gsub("(_std$)|(_min$)|(_max$)", "", colAreaVar)
+      if(tmp_colAreaVar %in% colorsVars$Column & runScale){
+        raw <- colorsVars[Column == tmp_colAreaVar]
         plotMapOptions(areaColorScaleOpts = colorScaleOptions(
           negCol = "#FF0000",
           # zeroCol = rgb(raw$red, raw$green, raw$blue,  maxColorValue = 255),
