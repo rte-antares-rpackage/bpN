@@ -1,4 +1,4 @@
-tabPanel("Aide", 
+tabPanel("A propos", 
          fluidRow(
            column(width = 12,
                   "TO DO"
