@@ -19,7 +19,7 @@ tabPanel("Hypothèses",
                     br(),
                     fluidRow(
                       column(1,  div(h4("Type : "), align = "center")), 
-                      column(2,  selectInput("type_hyp_conso", NULL, choices = c("Secteur", "Usage", "Branche"), 
+                      column(2,  selectInput("type_hyp_conso", NULL, choices = c("Secteur", "Usage"), 
                                              selected = "Secteur", multiple = FALSE, width = "100%"))
                     ),
                     uiOutput("hyp_conso_graph")
