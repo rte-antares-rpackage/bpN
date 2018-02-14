@@ -198,6 +198,14 @@ hyp_prod$filiere2 <- gsub("^wave$", "houlomotrice", hyp_prod$filiere2)
 # hyp_prod[, .N, list(filiere1, trajectoire)]
 # data <- hyp_prod
 
+couleur_prod <- data.table(read.delim(paste0(data_dir, "/couleur_prod.csv"), dec = ",", 
+                                       sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
+couleur_prod[[1]] <- as.character(couleur_prod[[1]])
+Encoding(couleur_prod[[1]] ) <- "latin1"
+
+prod_col <- couleur_prod[, rgb(R, G, B, maxColorValue = 255)]
+names(prod_col) <- couleur_prod[[1]]
+
 getProductionHypothesis <- function(data, nodes = NULL, sce_prod = NULL, scenario = "Hertz"){
   
 
@@ -322,8 +330,14 @@ Encoding(colnames(hyp_conso)) <- "latin1"
 # hyp_conso[, .N, list(Secteur, Branche)]
 # hyp_conso[, .N, list(Secteur, Usage)]
 
-data <- hyp_conso
-  
+couleur_conso <- data.table(read.delim(paste0(data_dir, "/couleur_conso.csv"), dec = ",", 
+                            sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
+couleur_conso[["Nom"]] <- as.character(couleur_conso[["Nom"]])
+Encoding(couleur_conso[["Nom"]] ) <- "latin1"
+
+secteur_col <- couleur_conso[Type %in% "Secteur", rgb(R, G, B, maxColorValue = 255)]
+names(secteur_col) <- couleur_conso[Type %in% "Secteur", Nom]
+
 getConsoHypothesis <- function(data, type = "Secteur", sce_prod = NULL, scenario = "Hertz"){
   
   trj <- sce_prod[Pays %in% "France" & filiere1 %in% "consommation", get(scenario)]

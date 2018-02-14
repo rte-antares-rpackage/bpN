@@ -33,7 +33,7 @@ output$hyp_prod <- renderAmCharts({
     
     gr  <- amBarplot(x = "date", y = colnames(res)[-1], data = res, 
                      stack_type = "regular", legend = TRUE,
-                     groups_color = unname(cl_hyp_prod[colnames(res)[-1]]), 
+                     groups_color = unname(prod_col[colnames(res)[-1]]), 
                      main = paste0("Evolution du parc installé (scénario ", input$hyp_scenario, ")"),
                      zoom = TRUE, export = TRUE, show_values = FALSE,
                      ylab = "MW",
@@ -51,9 +51,14 @@ output$hyp_conso <- renderAmCharts({
   type <- input$type_hyp_conso
   res <- getConsoHypothesis(data = hyp_conso, type = type, sce_prod = sce_prod, scenario = input$hyp_scenario)
   
+  if(type == "Secteur"){
+    groups_color = unname(secteur_col[colnames(res)[-1]])
+  } else {
+    groups_color = unname(cl_hyp_prod[1:(ncol(res) - 1)])
+  }
   gr  <- amBarplot(x = "date", y = colnames(res)[-1], data = res, 
                    stack_type = "regular", legend = TRUE,
-                   groups_color = unname(cl_hyp_prod[1:(ncol(res) - 1)]), 
+                   groups_color = groups_color, 
                    main = paste0("Hypothèses de consommation (scénario ", input$hyp_scenario, ")"),
                    zoom = ifelse(type == "Branche", FALSE, TRUE), 
                    export = TRUE, show_values = FALSE,
