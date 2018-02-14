@@ -12,8 +12,11 @@ require(rAmCharts)
 #  options
 #-------------
 .is_shared_input <- TRUE
-.ram_limit <- 10
+.ram_limit <- 2
 .data_module <- 200
+
+antaresRead::setRam(.ram_limit)
+bpNumerique2018::limitSizeGraph(.data_module)
 
 #--------------
 # data path
@@ -21,9 +24,8 @@ require(rAmCharts)
 data_dir <- "/home/benoit/bp2017"
 
 # map layout
-ml_data <- tryCatch(readRDS(paste0(data_dir, "/mapLayout-2018-01-19.RDS")), error = function(e) {NULL})
-# ml_data <- tryCatch(readRDS("/home/benoit/bp2017/mapLayout-2018-02-09.RDS"), error = function(e) {NULL})
-
+# ml_data <- tryCatch(readRDS(paste0(data_dir, "/mapLayout-2018-01-19.RDS")), error = function(e) {NULL})
+ml_data <- tryCatch(readRDS(paste0(data_dir, "/mapLayout-2018-02-09.RDS")), error = function(e) {NULL})
 
 # .h5 files
 h5_files <- list.files(data_dir, full.names = FALSE, pattern = ".h5$")
@@ -107,10 +109,6 @@ setProdStackAlias(
 
 
 # shared inputs
-
-antaresRead::setRam(.ram_limit)
-bpNumerique2018::limitSizeGraph(.data_module)
-
 .global_shared_prodStack <- data.frame(
   module = "prodStack", 
   panel = "Production", 
@@ -194,7 +192,7 @@ hyp_prod$filiere2 <- gsub("^geothermal$", "géothermie", hyp_prod$filiere2)
 hyp_prod$filiere2 <- gsub("^hydro$", "hydraulique", hyp_prod$filiere2)
 hyp_prod$filiere2 <- gsub("^hydrokinetic$", "hydrolien", hyp_prod$filiere2)
 hyp_prod$filiere2 <- gsub("^waste$", "déchets", hyp_prod$filiere2)
-hyp_prod$filiere2 <- gsub("^wave$", "vagues", hyp_prod$filiere2)
+hyp_prod$filiere2 <- gsub("^wave$", "houlomotrice", hyp_prod$filiere2)
 
 # hyp_prod[, .N, list(filiere1, filiere2)]
 # hyp_prod[, .N, list(filiere1, trajectoire)]
