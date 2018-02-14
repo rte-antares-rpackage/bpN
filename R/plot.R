@@ -499,7 +499,7 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
                         value = {
                           if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
                         }, 
-                        label = .getLabelLanguage("mcYear", language), multiple = TRUE, 
+                        label = .getLabelLanguage("mcYears to be imported", language), multiple = TRUE, 
                         .display = !"mcYearH5" %in% hidden
     ),
     .display = {
@@ -555,7 +555,7 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
       if(.initial) "average"
       else NULL
     }, multiple = FALSE, 
-    label = .getLabelLanguage("mcYear", language), 
+    label = .getLabelLanguage("mcYear to be displayed", language), 
     .display = !"mcYear" %in% hidden
   ),
   

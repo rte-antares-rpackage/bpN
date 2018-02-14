@@ -294,7 +294,7 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
                           value = {
                             if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
                           }, 
-                          label = .getLabelLanguage("mcYear", language),
+                          label = .getLabelLanguage("mcYears to be imported", language),
                           multiple = TRUE, .display = !"timeSteph5" %in% hidden
       ),
       .display = {
@@ -346,7 +346,7 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
           unique(vv$x$mcYear)
         }), xyCompare))})) != 1 & !"mcYear" %in% hidden
     },
-    label = .getLabelLanguage("mcYear", language)
+    label = .getLabelLanguage("mcYear to be displayed", language)
     ),
     
     area = mwSelect({

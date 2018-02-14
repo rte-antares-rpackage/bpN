@@ -443,7 +443,7 @@ prodStack <- function(x,
                            value = {
                              if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
                            }, 
-                           label = .getLabelLanguage("mcYear", language), 
+                           label = .getLabelLanguage("mcYears to be imported", language), 
                            multiple = TRUE, .display = !"mcYearhH5" %in% hidden
       ),
       .display = {
@@ -504,7 +504,7 @@ prodStack <- function(x,
     }, value = {
       if(.initial) mcYear
       else NULL
-    }, label = .getLabelLanguage("mcYear", language), .display = !"mcYear" %in% hidden),
+    }, label = .getLabelLanguage("mcYear to be displayed", language), .display = !"mcYear" %in% hidden),
     
     main = mwText(main, label = .getLabelLanguage("title", language), .display = !"main" %in% hidden),
     

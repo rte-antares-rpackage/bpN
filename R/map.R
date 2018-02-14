@@ -542,7 +542,7 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
                           value = {
                             if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
                           }, 
-                          label = .getLabelLanguage("mcYear", language), multiple = TRUE, 
+                          label = .getLabelLanguage("mcYears to be imported", language), multiple = TRUE, 
                           .display = !"mcYearH5" %in% hidden
       ),
       .display = {any(unlist(lapply(x_in, .isSimOpts))) &  !"H5request" %in% hidden}
@@ -567,7 +567,7 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       }, 
       value = { if(.initial) mcYear else NULL}, 
       .display = any(unlist(lapply(params$x, function(X){X$showMcYear}))) & !"mcYear" %in% hidden, 
-      label = .getLabelLanguage("mcYear", language)
+      label = .getLabelLanguage("mcYear to be displayed", language)
     ),
     type = mwRadio(
       {

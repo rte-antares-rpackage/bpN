@@ -1,6 +1,7 @@
 en;fr
 timeStep;Pas de temps
-mcYear;Tirage
+mcYears to be imported;Tirage(s) à importer
+mcYear to be displayed;Tirage à visualiser
 H5request;Données
 area;Zone
 Areas;Zones
