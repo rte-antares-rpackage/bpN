@@ -21,5 +21,5 @@ Un tirage correspond à une combinaison d’aléas simulés pour une coupe du Bi
 
 ## A propos des données
 
-L’ensemble de données présentées dans cette application sont téléchargeables sur la plateforme OpenData de RTE à l’adresse suivante : [www.dedede.fr](http://www.dedede.fr)
+L’ensemble de données présentées dans cette application sont téléchargeables sur la plateforme OpenData de RTE à l’adresse suivante : [rte-opendata.opendatasoft.com](https://rte-opendata.opendatasoft.com/pages/accueil/)
 
