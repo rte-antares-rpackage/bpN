@@ -323,6 +323,9 @@ for(v in c("Trajectoire", "Secteur", "Branche", "Branche2", "Usage", "Usage2")){
 }
 Encoding(colnames(hyp_conso)) <- "latin1"
 
+# remove 2036
+hyp_conso <- hyp_conso[hyp_conso[["Année"]] != 2036]
+
 # hyp_conso[, .N, Secteur]
 # hyp_conso[, .N, Branche]
 # hyp_conso[, .N, Usage]
