@@ -36,9 +36,10 @@ output$hyp_prod <- renderAmCharts({
                      groups_color = unname(prod_col[colnames(res)[-1]]), 
                      # main = paste0("Évolution du parc installé (scénario ", input$hyp_scenario, ")"),
                      main = "Évolution du parc installé",
-                     zoom = TRUE, export = TRUE, show_values = FALSE,
-                     ylab = "MW",
-                     labelRotation = 45, legendPosition = "bottom", height = "800")
+                     zoom = TRUE, show_values = FALSE, ylab = "MW",
+                     labelRotation = 45, legendPosition = "bottom", height = "800")  %>%
+      setExport(enabled = TRUE, menu = ramcharts_menu_obj)
+    
     gr@otherProperties$thousandsSeparator <- " "
     gr
   })
@@ -63,10 +64,11 @@ output$hyp_conso <- renderAmCharts({
                    # main = paste0("Hypothèses de consommation (scénario ", input$hyp_scenario, ")"),
                    main = "Hypothèses de consommation",
                    zoom = ifelse(type == "Branche", FALSE, TRUE), 
-                   export = TRUE, show_values = FALSE,
-                   ylab = "TWh",
+                   show_values = FALSE, ylab = "TWh",
                    # horiz = ifelse(type == "Branche", TRUE, FALSE),
-                   labelRotation = 45, legendPosition = "bottom", height = "800")
+                   labelRotation = 45, legendPosition = "bottom", height = "800")  %>%
+    setExport(enabled = TRUE, menu = ramcharts_menu_obj)
+  
   gr@otherProperties$thousandsSeparator <- " "
   
   if(type == "Branche"){
@@ -103,9 +105,10 @@ output$hyp_inter_import <- renderAmCharts({
                    groups_color = unname(cl_hyp_interco[1:(ncol(res) - 1)]), 
                    # main = paste0("Évolution des capacités d'import (scénario ", input$hyp_scenario, ")"),
                    main = "Évolution des capacités d'import",
-                   zoom = TRUE, export = TRUE, show_values = FALSE,
-                   ylab = "MW",
-                   labelRotation = 45, legendPosition = "bottom", height = "800")
+                   zoom = TRUE, show_values = FALSE, ylab = "MW",
+                   labelRotation = 45, legendPosition = "bottom", height = "800")  %>%
+    setExport(enabled = TRUE, menu = ramcharts_menu_obj)
+  
   gr@otherProperties$thousandsSeparator <- " "
   gr
 })
@@ -119,9 +122,10 @@ output$hyp_inter_export <- renderAmCharts({
                    groups_color = unname(cl_hyp_interco[1:(ncol(res) - 1)]), 
                    # main = paste0("Évolution des capacités d'export (scénario ", input$hyp_scenario, ")"),
                    main = "Évolution des capacités d'export",
-                   zoom = TRUE, export = TRUE, show_values = FALSE,
-                   ylab = "MW",
-                   labelRotation = 45, legendPosition = "bottom", height = "800")
+                   zoom = TRUE, show_values = FALSE, ylab = "MW",
+                   labelRotation = 45, legendPosition = "bottom", height = "800")  %>%
+    setExport(enabled = TRUE, menu = ramcharts_menu_obj)
+  
   gr@otherProperties$thousandsSeparator <- " "
   gr
 })
@@ -133,13 +137,18 @@ output$hyp_inter_export <- renderAmCharts({
 
 output$hyp_co2<- renderAmCharts({
   
-  tmp <- data.frame(date = colnames(hyp_co2)[-1], valeur = t(data.frame(hyp_co2[scenario %in% input$hyp_scenario, ][, scenario := NULL]))[, 1])
+  tmp <- data.frame(date = colnames(hyp_co2)[-1], historique = t(data.frame(hyp_co2[scenario %in% input$hyp_scenario, ][, scenario := NULL]))[, 1])
+  tmp$scenario <- tmp$historique
+  tmp$scenario[1:5] <- NA
+  tmp$historique[6:8] <- NA
   
-  amBarplot(x = "date", y = "valeur", data = tmp,
-            stack_type = "regular", legend = FALSE,
+  amBarplot(x = "date", y = c("historique", "scenario"), data = tmp,
+            stack_type = "regular", legend = TRUE,
             # main = paste0("Évolution des émissions de CO2 en France (scénario ", input$hyp_scenario, ")"),
             main = "Évolution des émissions de CO2 en France",
-            zoom = TRUE, export = TRUE, show_values = TRUE,
+            zoom = TRUE, show_values = TRUE,
             ylab = "Millions de tonnes (Mt)", horiz = FALSE,
-            labelRotation = 45)
+            labelRotation = 45, theme = "pattern", creditsPosition = "top-right")  %>%
+    setExport(enabled = TRUE, menu = ramcharts_menu_obj)
+  
 })

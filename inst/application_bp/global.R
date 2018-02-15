@@ -367,10 +367,21 @@ hyp_co2 <- data.table(read.delim(paste0(data_dir, "/co2.csv"), dec = ",",
 hyp_co2$scenario <- as.character(hyp_co2$scenario)
 Encoding(hyp_co2$scenario) <- "latin1"
 
-# tmp <- data.frame(date = colnames(hyp_co2)[-1], valeur = t(data.frame(hyp_co2[1, ][, scenario := NULL]))[, 1])
-# amBarplot(x = "date", y = "valeur", data = tmp,
-#                     stack_type = "regular", legend = FALSE,
-#                     main = "Évolution des émissions de CO2 en France (scénario ",
-#                     zoom = TRUE, export = TRUE, show_values = TRUE,
+# tmp <- data.frame(date = colnames(hyp_co2)[-1], historique = t(data.frame(hyp_co2[1, ][, scenario := NULL]))[, 1])
+# tmp$scenario <- tmp$historique
+# tmp$scenario[1:5] <- NA
+# tmp$historique[6:8] <- NA
+# amBarplot(x = "date", y = c("historique", "scenario"), data = tmp,
+#                     stack_type = "regular", legend = TRUE,
+#                     main = "Évolution des émissions de CO2 en France",
+#                     zoom = TRUE, show_values = TRUE,
 #                     ylab = "Millions de tonnes (Mt)", horiz = FALSE,
-#                     labelRotation = 45)
+#                     labelRotation = 45, theme = "pattern", creditsPosition = "top-right") %>%
+#   setExport(enabled = TRUE, menu = ramcharts_menu_obj)
+#   
+
+
+ramcharts_menu_obj <- list(list(class = "export-main",
+                                menu = list(
+                                  list(label = "Télécharger", menu = list("PNG", "JPG"))
+                                )))

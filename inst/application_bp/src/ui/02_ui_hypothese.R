@@ -33,7 +33,14 @@ tabPanel("Hypothèses",
            ) ,
            tabPanel("CO2", 
                     br(),
-                    amChartsOutput("hyp_co2", width = "100%", height = "650px")
+                    includeMarkdown("src/aide/hypotheses_co2_before.md"),
+                    br(),
+                    fluidRow(
+                      column(width = 6, offset = 3, amChartsOutput("hyp_co2", width = "100%", height = "500px"))
+                    ),
+                    br(),
+                    includeMarkdown("src/aide/hypotheses_co2_after.md")
+                    
            )
          )
 )
