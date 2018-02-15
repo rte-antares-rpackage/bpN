@@ -11,7 +11,7 @@ require(rAmCharts)
 #-------------
 #  options
 #-------------
-.is_shared_input <- TRUE
+.is_shared_input <- FALSE
 .ram_limit <- 2
 .data_module <- 200
 
@@ -112,16 +112,14 @@ setProdStackAlias(
 .global_shared_prodStack <- data.frame(
   module = "prodStack", 
   panel = "Production", 
-  input = c("dateRange", "unit", "mcYear", "mcYearh", "timeSteph5", "legend", "drawPoints", "stepPlot"),
-  type = c("dateRangeInput", "selectInput", "selectInput", "selectInput", "selectInput", 
-           "checkboxInput", "checkboxInput", "checkboxInput"), stringsAsFactors = FALSE)
+  input = c("dateRange", "mcYear", "mcYearh", "timeSteph5"),
+  type = c("dateRangeInput", "selectInput", "selectInput", "selectInput"), stringsAsFactors = FALSE)
 
 .global_shared_plotts <- data.frame(
   module = "plotts", 
   panel = "Chroniques", 
-  input = c("dateRange", "mcYear", "mcYearh", "timeSteph5", "legend", "drawPoints", "stepPlot"),
-  type = c("dateRangeInput", "selectInput", "selectInput", "selectInput", 
-           "checkboxInput", "checkboxInput", "checkboxInput"), stringsAsFactors = FALSE)
+  input = c("dateRange", "mcYear", "mcYearh", "timeSteph5"),
+  type = c("dateRangeInput", "selectInput", "selectInput", "selectInput"), stringsAsFactors = FALSE)
 
 
 .global_shared_plotMap <- data.frame(
@@ -133,9 +131,8 @@ setProdStackAlias(
 .global_shared_exchangesStack <- data.frame(
   module = "exchangesStack", 
   panel = "Echanges", 
-  input = c("dateRange", "unit", "mcYear", "mcYearh", "timeSteph5", "legend", "drawPoints", "stepPlot"),
-  type = c("dateRangeInput", "selectInput", "selectInput", "selectInput", "selectInput", 
-           "checkboxInput", "checkboxInput", "checkboxInput"), stringsAsFactors = FALSE)
+  input = c("dateRange", "mcYear", "mcYearh", "timeSteph5"),
+  type = c("dateRangeInput", "selectInput", "selectInput", "selectInput"), stringsAsFactors = FALSE)
 
 .global_shared_input <- rbind(.global_shared_prodStack, .global_shared_plotts, .global_shared_plotMap, .global_shared_exchangesStack)
 
