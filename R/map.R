@@ -198,8 +198,8 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       # BP 2017
       zeroCol = "#FFFFFF", # BP 2017
       posCol = rgb(raw$red, raw$green, raw$blue, maxColorValue = 255)))
-    
   }
+  
   if (is.null(mcYear)) mcYear <- "average"
   
   if(!is.null(compare) && "list" %in% class(x)){
@@ -490,23 +490,7 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
     x_in = mwSharedValue({
       .giveListFormat(x)
     }),
-    options = mwSharedValue({options}),
-    optionsT = mwSharedValue({
-      tmp_colAreaVar <- gsub("(_std$)|(_min$)|(_max$)", "", colAreaVar)
-      if(tmp_colAreaVar %in% colorsVars$Column & runScale){
-        raw <- colorsVars[Column == tmp_colAreaVar]
-        plotMapOptions(areaColorScaleOpts = colorScaleOptions(
-          negCol = "#FF0000",
-          # zeroCol = rgb(raw$red, raw$green, raw$blue,  maxColorValue = 255),
-          # posCol = rgb(raw$red/2, raw$green/2, raw$blue/2, maxColorValue = 255)),
-          # BP 2017
-          zeroCol = "#FFFFFF", # BP 2017
-          posCol = rgb(raw$red, raw$green, raw$blue, maxColorValue = 255))
-        )
-      }else{
-        options
-      }
-    }),
+    
     h5requestFiltering = mwSharedValue({h5requestFiltering}),
     
     paramsH5 = mwSharedValue({
@@ -518,8 +502,12 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       label = .getLabelLanguage("H5request", language),
       timeSteph5 = mwSelect(
         {
-          choices = paramsH5$timeStepS
-          names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
+          if(length(paramsH5) > 0){
+            choices = paramsH5$timeStepS
+            names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
+          } else {
+            choices <- NULL
+          }
           choices
         }, 
         # value =  paramsH5$timeStepS[1],
@@ -530,8 +518,12 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       ),
       tables = mwSelect( 
         {
-          choices = paramsH5[["tabl"]][paramsH5[["tabl"]] %in% c("areas", "links")]
-          names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
+          if(length(paramsH5) > 0){
+            choices = paramsH5[["tabl"]][paramsH5[["tabl"]] %in% c("areas", "links")]
+            names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
+          } else {
+            choices <- NULL
+          }
           choices
         },
         value = {
@@ -782,8 +774,31 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
     ),
     mapLayout = mwSharedValue(mapLayout),
     params = mwSharedValue({
-      .getDataForComp(x_tranform, NULL, compare, compareOpts, 
-                      processFun = processFun, mapLayout = mapLayout)
+      if(length(x_tranform) > 0 & length(mapLayout) > 0){
+        .getDataForComp(x_tranform, NULL, compare, compareOpts, 
+                        processFun = processFun, mapLayout = mapLayout)
+      } 
+    }),
+    options = mwSharedValue({options}),
+    optionsT = mwSharedValue({
+      if(length(colAreaVar) > 0){
+        tmp_colAreaVar <- gsub("(_std$)|(_min$)|(_max$)", "", colAreaVar)
+        if(tmp_colAreaVar %in% colorsVars$Column & runScale){
+          raw <- colorsVars[Column == tmp_colAreaVar]
+          plotMapOptions(areaColorScaleOpts = colorScaleOptions(
+            negCol = "#FF0000",
+            # zeroCol = rgb(raw$red, raw$green, raw$blue,  maxColorValue = 255),
+            # posCol = rgb(raw$red/2, raw$green/2, raw$blue/2, maxColorValue = 255)),
+            # BP 2017
+            zeroCol = "#FFFFFF", # BP 2017
+            posCol = rgb(raw$red, raw$green, raw$blue, maxColorValue = 255))
+          )
+        }else{
+          options
+        }
+      }else{
+        options
+      }
     }),
     .width = width,
     .height = height,
