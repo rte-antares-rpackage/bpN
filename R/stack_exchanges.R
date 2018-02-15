@@ -280,9 +280,13 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
       label = .getLabelLanguage("H5request", language),
       timeSteph5 = mwSelect(
         {
-          choices = paramsH5$timeStepS
-          names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
-          choices
+          if(length(paramsH5) > 0){
+            choices = paramsH5$timeStepS
+            names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
+            choices
+          } else {
+            NULL
+          }
         }, 
         value =  if(.initial)  paramsH5$timeStepS[1] else NULL,
         label = .getLabelLanguage("timeStep", language),

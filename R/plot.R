@@ -466,14 +466,17 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
     .h5ParamList(X_I = x_in, xyCompare = xyCompare, h5requestFilter = h5requestFiltering)
   }),
   
-  
   H5request = mwGroup(
     label = .getLabelLanguage("H5request", language),
     timeSteph5 = mwSelect(
       {
-        choices = paramsH5$timeStepS
-        names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
-        choices
+        if(length(paramsH5) > 0){
+          choices = paramsH5$timeStepS
+          names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
+          choices
+        } else {
+          NULL
+        }
       }, 
       value =  if(.initial) {paramsH5$timeStepS[1]}else{NULL},
       label = .getLabelLanguage("timeStep", language), 

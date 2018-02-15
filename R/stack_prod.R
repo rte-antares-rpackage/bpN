@@ -424,9 +424,9 @@ prodStack <- function(x,
       tables = mwSelect(
         {
           if(length(paramsH5) > 0){
-          choices = paramsH5[["tabl"]][paramsH5[["tabl"]]%in%c("areas", "districts")]
-          names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
-          choices
+            choices = paramsH5[["tabl"]][paramsH5[["tabl"]]%in%c("areas", "districts")]
+            names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
+            choices
           } else {
             NULL
           }
