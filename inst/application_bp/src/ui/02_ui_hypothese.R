@@ -26,10 +26,14 @@ tabPanel("Hypothèses",
            ),
            tabPanel("Interconnexions", 
                     br(),
+                    includeMarkdown("src/aide/hypotheses_interco_before.md"),
+                    br(),
                     fluidRow(
-                      column(6, amChartsOutput("hyp_inter_import", width = "100%", height = "650px")),
-                      column(6, amChartsOutput("hyp_inter_export", width = "100%", height = "650px"))
-                    )
+                        column(5, offset = 1,  amChartsOutput("hyp_inter_import", width = "100%", height = "450px")),
+                        column(5, amChartsOutput("hyp_inter_export", width = "100%", height = "450px"))
+                    ),
+                    br(),
+                    includeMarkdown("src/aide/hypotheses_interco_after.md")
            ),
            tabPanel("Bilans", 
                     "TO DO"

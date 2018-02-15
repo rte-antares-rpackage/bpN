@@ -256,6 +256,8 @@ names(cl_hyp_prod) <- unique(hyp_prod$filiere2)
 hyp_inter<- data.table(read.table(paste0(data_dir, "/Links.csv"), dec = ",", 
                                   sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
 
+# subset de colonnes
+hyp_inter <- hyp_inter[, c("from", "to", "concat", "hypothesis", "2016", "2022", "2025", "2030", "2035"), with = FALSE]
 getIntercoHypothesis <- function(data, sce_prod = NULL, scenario = "Hertz"){
   
   trj <- sce_prod[Pays %in% "France" & filiere1 %in% "interconnexions", get(scenario)]
