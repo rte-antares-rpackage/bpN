@@ -284,16 +284,16 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
           names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
           choices
         }, 
-        # value =  paramsH5$timeStepS[1], 
-        # BP 2017
-        value =  "daily",
+        value =  if(.initial)  paramsH5$timeStepS[1] else NULL,
         label = .getLabelLanguage("timeStep", language),
         multiple = FALSE, .display = !"timeSteph5" %in% hidden
       ),
       mcYearH5 = mwSelect(choices = c(paramsH5[["mcYearS"]]), 
-                          value = {
-                            if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
-                          }, 
+                          # value = {
+                          #   if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
+                          # }, 
+                          # BP 2017
+                          value = c(1:2),
                           label = .getLabelLanguage("mcYears to be imported", language),
                           multiple = TRUE, .display = !"timeSteph5" %in% hidden
       ),
@@ -372,9 +372,11 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
         ##Lock 7 days for hourly data
         if(!is.null(attributes(params$x[[1]]$x)$timeStep)){
           if(attributes(params$x[[1]]$x)$timeStep == "hourly"){
-            if(params$x[[1]]$dateRange[2] - params$x[[1]]$dateRange[1]>7){
-              res[1] <- params$x[[1]]$dateRange[2] - 7
-            }
+            # if(params$x[[1]]$dateRange[2] - params$x[[1]]$dateRange[1]>7){
+            #   res[1] <- params$x[[1]]$dateRange[2] - 7
+            # }
+            # BP 2017
+            res <- c("2029-01-15", "2029-01-21")
           }
         }
         res

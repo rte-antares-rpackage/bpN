@@ -475,9 +475,7 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
         names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
         choices
       }, 
-      # value =  paramsH5$timeStepS[1], 
-      # BP 2017
-      value =  "daily",
+      value =  if(.initial) {paramsH5$timeStepS[1]}else{NULL},
       label = .getLabelLanguage("timeStep", language), 
       multiple = FALSE, .display = !"timeSteph5" %in% hidden
     ),
@@ -496,9 +494,11 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
       .display = !"tables" %in% hidden
     ),
     mcYearH5 = mwSelect(choices = c(paramsH5[["mcYearS"]]), 
-                        value = {
-                          if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
-                        }, 
+                        # value = {
+                        #   if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
+                        # }, 
+                        # BP 2017
+                        value = c(1:2),
                         label = .getLabelLanguage("mcYears to be imported", language), multiple = TRUE, 
                         .display = !"mcYearH5" %in% hidden
     ),
@@ -621,9 +621,11 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
       ##Lock 7 days for hourly data
       if(!is.null(params$x[[1]][[table]]$timeStep)){
         if(params$x[[1]][[table]]$timeStep == "hourly"){
-          if(params$x[[1]][[table]]$dateRange[2] - params$x[[1]][[table]]$dateRange[1]>7){
-            res[1] <- params$x[[1]][[table]]$dateRange[2] - 7
-          }
+          # if(params$x[[1]][[table]]$dateRange[2] - params$x[[1]][[table]]$dateRange[1]>7){
+          #   res[1] <- params$x[[1]][[table]]$dateRange[2] - 7
+          # }
+          # BP 2017
+          res <- c("2029-01-15", "2029-01-21")
         }
       }
       res
