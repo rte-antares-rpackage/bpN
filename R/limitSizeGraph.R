@@ -11,13 +11,20 @@ limitSizeGraph <- function(size){
   options(antaresVizSizeGraph = size)
 }
 
-controlWidgetSize <- function(widget){
+#' @importFrom pryr object_size
+controlWidgetSize <- function(widget, language = "en"){
   if(is.null(getOption("antaresVizSizeGraph"))){
     options(antaresVizSizeGraph = 200)
   }
   
-  if(round(as.numeric(object.size(widget)) / 1048000, 1) > getOption("antaresVizSizeGraph")){
-    return(combineWidgets(antaresVizSizeGraphError))
+  if(round(as.numeric(pryr::object_size(widget)) / 1048000, 1) > getOption("antaresVizSizeGraph")){
+    return(
+      combineWidgets(
+        switch(language, 
+               "fr" = antaresVizSizeGraphError_fr,
+               antaresVizSizeGraphError)
+      )
+    )
   } else {
     widget
   }

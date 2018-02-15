@@ -124,7 +124,10 @@ colorsVars$colors <- rgb(colorsVars$red, colorsVars$green, colorsVars$blue, maxC
 
 # message limit size
 antaresVizSizeGraphError = "Too much data, please reduce selection. If you work with hourly data, you can reduce dateRange selection. 
-You can also use 'limitSizeGraph' function in R or 'Memory Controls' panel in shiny to update this."
+You can also use 'limitSizeGraph' function in R or 'Memory Controls' panel in shiny (if present) to update this."
+
+antaresVizSizeGraphError_fr = "Trop de données,veuillez réduire votre sélection. Si vous travaillez en données horaire, vous pouvez réduire la période de visualisation. 
+Il est également possible d'utiliser la fonction 'limitSizeGraph' en R ou l'onglet 'Memory Controls' dans shiny (si présent) pour changer la limite."
 
 # language for labels
 language_labels <- fread(input=system.file("language_labels.csv", package = "bpNumerique2018"), encoding = "UTF-8")
