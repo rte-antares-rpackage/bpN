@@ -5,6 +5,15 @@ tabPanel("Hypothèses",
                     br(),
                     uiOutput("md_gen")
            ),
+           tabPanel("Consommation", 
+                    br(),
+                    fluidRow(
+                      column(1,  div(h4("Type : "), align = "center")), 
+                      column(2,  selectInput("type_hyp_conso", NULL, choices = c("Secteur", "Usage"), 
+                                             selected = "Secteur", multiple = FALSE, width = "100%"))
+                    ),
+                    uiOutput("hyp_conso_graph")
+           ),
            tabPanel("Parc de production", 
                     br(),
                     fluidRow(
@@ -15,21 +24,15 @@ tabPanel("Hypothèses",
                     ),
                     amChartsOutput("hyp_prod", width = "100%", height = "650px")
            ),
-           tabPanel("Consommation", 
-                    br(),
-                    fluidRow(
-                      column(1,  div(h4("Type : "), align = "center")), 
-                      column(2,  selectInput("type_hyp_conso", NULL, choices = c("Secteur", "Usage"), 
-                                             selected = "Secteur", multiple = FALSE, width = "100%"))
-                    ),
-                    uiOutput("hyp_conso_graph")
-           ),
            tabPanel("Interconnexions", 
                     br(),
                     fluidRow(
                       column(6, amChartsOutput("hyp_inter_import", width = "100%", height = "650px")),
                       column(6, amChartsOutput("hyp_inter_export", width = "100%", height = "650px"))
                     )
+           ),
+           tabPanel("Bilans", 
+                    "TO DO"
            ) ,
            tabPanel("CO2", 
                     br(),
