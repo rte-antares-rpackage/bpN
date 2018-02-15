@@ -313,7 +313,7 @@ names(cl_hyp_interco) <- c("Belgique", "Suisse", "Allemagne", "Espagne", "Royaum
 # consommation
 #------------------
 # bug with fread
-hyp_conso <- data.table(read.delim(paste0(data_dir, "/BP17_hypothese_consommation_flat_4.csv"), dec = ",", 
+hyp_conso <- data.table(read.delim(paste0(data_dir, "/BP17_hypothese_consommation_flat_5.csv"), dec = ",", 
                                   sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
 
 # encoding
