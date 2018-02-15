@@ -304,7 +304,9 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
         if (is.null(type) || !variable %in% names(x)) {
           return(combineWidgets())
         }
-        if(variable[1] == "No Input") {return(combineWidgets("No data"))}
+        if(variable[1] == "No Input") {return(combineWidgets(switch(language, 
+                                                                    "fr" = "Pas de données",
+                                                                    "No data")))}
         dt <- .getTSData(
           x, dt, 
           variable = c(variable, variable2Axe), elements = elements, 
@@ -312,7 +314,9 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
           mcYear = mcYear, dateRange = dateRange, aggregate = aggregate
         )
         
-        if (nrow(dt) == 0) return(combineWidgets("No data"))
+        if (nrow(dt) == 0) return(combineWidgets(switch(language, 
+                                                        "fr" = "Pas de données",
+                                                        "No data")))
         
         if(type == "ts"){
           if(!is.null(dateRange))
@@ -427,13 +431,21 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
     .tryCloseH5()
     if(.id <= length(params$x)){
       
-      if(length(variable) == 0){return(combineWidgets(paste0("Please select some variables")))}
+      if(length(variable) == 0){return(combineWidgets(switch(language, 
+                                                             "fr" = "Veuillez sélectionner des variables",
+                                                             "Please select some variables")))}
       
-      if(length(elements) == 0){return(combineWidgets(paste0("Please select some elements")))}
+      if(length(elements) == 0){return(combineWidgets(switch(language, 
+                                                             "fr" = "Veuillez sélectionner des éléments",
+                                                             "Please select some elements")))}
       
-      if(length(params[["x"]][[max(1,.id)]]) == 0){return(combineWidgets(paste0("No data")))}
+      if(length(params[["x"]][[max(1,.id)]]) == 0){return(combineWidgets(switch(language, 
+                                                                                "fr" = "Pas de données",
+                                                                                "No data")))}
       
-      if(is.null(params[["x"]][[max(1,.id)]][[table]])){return(combineWidgets(paste0("Table ", table, " not exists in this study")))}
+      if(is.null(params[["x"]][[max(1,.id)]][[table]])){return(combineWidgets(switch(language, 
+                                                                                     "fr" = paste0("Table ", table, " absente de l'étude"),
+                                                                                     paste0("Table ", table, " not exists in this study"))))}
       
       if(!secondAxis){
         variable2Axe <- NULL
@@ -443,9 +455,11 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
       widget <- params[["x"]][[max(1,.id)]][[table]]$plotFun(mcYear, .id, variable, variable2Axe, elements, type, confInt, 
                                                              dateRange, minValue, maxValue, aggregate, legend, 
                                                              highlight, stepPlot, drawPoints, main)
-      controlWidgetSize(widget)
+      controlWidgetSize(widget, language)
     } else {
-      combineWidgets("No data for this selection")
+      combineWidgets(switch(language, 
+                            "fr" = "Pas de données pour cette sélection",
+                            "No data for this selection"))
     }
   },
   x = mwSharedValue({x}),

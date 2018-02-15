@@ -1,5 +1,5 @@
 .plotMonotone <- function(dt, timeStep, variable, variable2Axe = NULL, confInt = NULL, maxValue,
-                          main = NULL, ylab = NULL, highlight = FALSE, stepPlot = FALSE, drawPoints = FALSE, ...) {
+                          main = NULL, ylab = NULL, highlight = FALSE, stepPlot = FALSE, drawPoints = FALSE, language = "en", ...) {
   
   uniqueElements <- as.character(sort(unique(dt$element)))
   plotConfInt <- FALSE
@@ -31,7 +31,12 @@
   
   variable <- paste0(variable, collapse = " ; ")
   if (is.null(ylab)) ylab <- variable
-  if (is.null(main) | isTRUE(all.equal("", main))) main <- paste("Monotone of", variable)
+  if (is.null(main) | isTRUE(all.equal("", main))){
+    main <- switch(language, 
+                   "fr" = paste("Monotone de", variable),
+                   paste("Monotone of", variable)
+    )
+  }
   
   .plotStat(dt, ylab = ylab, main = main, uniqueElements = uniqueElements, variable2Axe = variable2Axe,
             highlight = highlight, stepPlot = stepPlot, drawPoints = drawPoints, ...)
@@ -39,7 +44,7 @@
 }
 
 .density <- function(dt, timeStep, variable, variable2Axe = NULL, minValue = NULL, maxValue = NULL, 
-                     main = NULL, ylab = NULL, highlight = FALSE, stepPlot = FALSE, drawPoints = FALSE, ...) {
+                     main = NULL, ylab = NULL, highlight = FALSE, stepPlot = FALSE, drawPoints = FALSE, language = "en", ...) {
   
   uniqueElements <- as.character(sort(unique(dt$element)))
   
@@ -54,8 +59,19 @@
   dt <- dt[, .getDensity(value), by = element]
   
   variable <- paste0(variable, collapse = " ; ")
-  if (is.null(ylab)) ylab <- "Density"
-  if (is.null(main) | isTRUE(all.equal("", main))) main <- paste("Density of", variable)
+  if (is.null(ylab)){
+    ylab <- switch(language, 
+                   "fr" = "Densité",
+                   "Density"
+    )
+  }
+  
+  if (is.null(main) | isTRUE(all.equal("", main))){
+    main <- switch(language, 
+                   "fr" = paste("Densité de", variable),
+                   paste("Density of", variable)
+    )
+  }
   
   .plotStat(dt, ylab = ylab, main = main, uniqueElements = uniqueElements,variable2Axe = variable2Axe, 
             highlight = highlight, stepPlot = stepPlot, drawPoints = drawPoints,...)
@@ -63,7 +79,7 @@
 }
 
 .cdf <- function(dt, timeStep, variable, variable2Axe = NULL, minValue = NULL, maxValue = NULL,
-                 main = NULL, ylab = NULL, highlight = FALSE, stepPlot = FALSE, drawPoints = FALSE, ...) {
+                 main = NULL, ylab = NULL, highlight = FALSE, stepPlot = FALSE, drawPoints = FALSE, language = "en", ...) {
   
   uniqueElements <- as.character(sort(unique(dt$element)))
   
@@ -77,8 +93,19 @@
   dt <- dt[, .getCDF(value), by = element]
   
   variable <- paste0(variable, collapse = " ; ")
-  if (is.null(ylab)) ylab <- "Proportion of time steps"
-  if (is.null(main) | isTRUE(all.equal("", main))) main <- paste("Cumulated distribution of", variable)
+  if (is.null(ylab)){
+    ylab <- switch(language, 
+                   "fr" = "Proportion du temps",
+                   "Proportion of time steps"
+    )
+  } 
+
+  if (is.null(main) | isTRUE(all.equal("", main))){
+    main <- switch(language, 
+                   "fr" = paste("Distribution cumulée de", variable),
+                   paste("Cumulated distribution of", variable)
+    )
+  } 
   
   .plotStat(dt, ylab = ylab, main = main, uniqueElements = uniqueElements, variable2Axe = variable2Axe,
             highlight = highlight, stepPlot = stepPlot, drawPoints = drawPoints, ...)

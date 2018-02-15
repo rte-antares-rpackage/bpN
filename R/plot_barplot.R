@@ -11,7 +11,7 @@
                      ylab = NULL,
                      legend = TRUE,
                      legendItemsPerRow = 5,
-                     width = NULL, height = NULL, ...) {
+                     width = NULL, height = NULL, language = "en", ...) {
   
   if (is.null(dt$mcYear)) {
     dt <- dt[, .(value = mean(value)), by = element] 
@@ -36,7 +36,12 @@
   dt[,"element" := as.character(element)]
   variable <- paste0(variable, collapse = " ; ")
   if (is.null(ylab)) ylab <- variable
-  if (is.null(main) | isTRUE(all.equal("", main))) main <- paste("Comparison of", variable)
+  if (is.null(main) | isTRUE(all.equal("", main))){
+    main <- switch(language, 
+                   "fr" = paste("Comparaison de", variable),
+                   paste("Comparison of", variable)
+    )
+  }
   
   g <- plot_ly(dt,  textfont = list(color = '#000000')) %>% 
     config(displayModeBar = FALSE) %>% 

@@ -194,8 +194,19 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
       }
       
       # Graphical parameters
-      if (is.null(main) | isTRUE(all.equal("", main))) main <- paste("Flows from/to", area)
-      if (is.null(ylab)) ylab <- sprintf("Flows (%s)", unit)
+      if (is.null(main) | isTRUE(all.equal("", main))){
+        main <- switch(language, 
+                       "fr" = paste("Flux arrivant/partant", area),
+                       paste("Flows from/to", area)
+        )
+      }
+      if (is.null(ylab)){
+        ylab <- switch(language, 
+                       "fr" = sprintf("Flux (%s)", unit),
+                       sprintf("Flows (%s)", unit)
+        )
+      }
+      
       if (is.null(colors)) {
         colors <- substring(rainbow(ncol(dt) - 1, s = 0.7, v = 0.7), 1, 7)
       } else {
@@ -203,7 +214,7 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
       }
       
       # BP 2017
-      main <- paste0("Echanges ", area, " (tirage ", mcYear, ")")
+      main <- paste0("Échanges ", area, " (tirage ", mcYear, ")")
       
       # Stack
       g <- .plotStack(dt, timeStep, opts, colors,
@@ -260,9 +271,11 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
       .tryCloseH5()
       if(.id <= length(params$x)){
         widget <- params$x[[max(1,.id)]]$plotFun(.id, area, dateRange, unit, mcYear, legend, stepPlot, drawPoints, main)
-        controlWidgetSize(widget)
+        controlWidgetSize(widget, language)
       } else {
-        combineWidgets("No data for this selection")
+        combineWidgets(switch(language, 
+                              "fr" = "Pas de données pour cette sélection",
+                              "No data for this selection"))
       }
     },
     x = mwSharedValue(x),

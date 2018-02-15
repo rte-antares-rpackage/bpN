@@ -58,7 +58,12 @@
   }
   
   if (is.null(ylab)) ylab <- variable
-  if (is.null(main) | isTRUE(all.equal("", main))) main <- paste("Evolution of", variable)
+  if (is.null(main) | isTRUE(all.equal("", main))){
+    main <- switch(language, 
+                   "fr" = paste("Évolution de", variable),
+                   paste("Evolution of", variable)
+    )
+  } 
   if (is.null(colors)) {
     colors <- substring(rainbow(length(uniqueElements), s = 0.7, v = 0.7), 1, 7)
   } else {

@@ -281,7 +281,10 @@ prodStack <- function(x,
     if (length(init_dateRange) < 2) init_dateRange <- dataDateRange
     
     plotWithLegend <- function(id, areas, main = "", unit, stack, dateRange, mcYear, legend, stepPlot, drawPoints) {
-      if (length(areas) == 0) return (combineWidgets("Please choose an area"))
+      if (length(areas) == 0) return (combineWidgets(switch(language, 
+                                                            "fr" = "Veuillez sélectionner une zone",
+                                                            "Please choose an area")))
+      
       stackOpts <- .aliasToStackOptions(stack)
       dt <- x[area %in% areas]
       
@@ -301,7 +304,9 @@ prodStack <- function(x,
       }
       
       if(nrow(dt) == 0){
-        return (combineWidgets("No data for this selection"))
+        return (combineWidgets(switch(language, 
+                                      "fr" = "Pas de données pour cette sélection",
+                                      "No data for this selection")))
       }
       
       # BP 2017
@@ -321,7 +326,12 @@ prodStack <- function(x,
                               stepPlot = stepPlot, drawPoints = drawPoints, language = language), silent = TRUE)
       
       if("try-error" %in% class(p)){
-        return (combineWidgets(paste0("Can't visualize stack '", stack, "'<br>", p[1])))
+        return (
+          combineWidgets(switch(language, 
+                                "fr" = paste0("Visualisation impossible '", stack, "'<br>", p[1]),
+                                paste0("Can't visualize stack '", stack, "'<br>", p[1])))
+          
+          )
       }
       
       if (legend) {
@@ -388,9 +398,11 @@ prodStack <- function(x,
                                                         unit, stack, dateRange,
                                                         mcYear, legend,
                                                         stepPlot, drawPoints)
-        controlWidgetSize(widget)
+        controlWidgetSize(widget, language)
       } else {
-        combineWidgets("No data for this selection")
+        return (combineWidgets(switch(language, 
+                                      "fr" = "Pas de données pour cette séléction",
+                                      "No data for this selection")))
       }
     },
     x = mwSharedValue({x}),

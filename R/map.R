@@ -380,10 +380,14 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
           map <- .initMap(x, mapLayout, options) %>% syncWith(group)
         }
       }
-      map %>% 
+      map <- map %>% 
         .redrawLinks(x, mapLayout, mcYear, t, colLinkVar, sizeLinkVar, popupLinkVars, options) %>% 
         .redrawCircles(x, mapLayout, mcYear, t, colAreaVar, sizeAreaVars, popupAreaVars, 
                        uniqueScale, showLabels, labelAreaVar, areaChartType, options, sizeMiniPlot)
+      
+      # combineWidgets(map, width = width, height = height) # bug
+      map
+      
     }
     
     # Create the interactive widget
@@ -457,7 +461,7 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
             tmp_options <-  plotMapOptions()
           }
           
-          params$x[[.id]]$plotFun(t = params$x[[.id]]$timeId,
+          widget <- params$x[[.id]]$plotFun(t = params$x[[.id]]$timeId,
                                   colAreaVar = colAreaVar,
                                   sizeAreaVars = sizeAreaVars,
                                   popupAreaVars = popupAreaVars,
@@ -477,9 +481,12 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
                                   sizeMiniPlot = sizeMiniPlot,
                                   options = tmp_options)
           
-          
+          # controlWidgetSize(widget, language) # bug due to leaflet and widget
+          widget
         } else {
-          combineWidgets("No data for this selection")
+          combineWidgets(switch(language, 
+                                "fr" = "Pas de données pour cette sélection",
+                                "No data for this selection"))
         }
       }else{
         combineWidgets()
