@@ -62,7 +62,7 @@ output$hyp_conso <- renderAmCharts({
                    stack_type = "regular", legend = TRUE,
                    groups_color = groups_color, 
                    # main = paste0("Hypothèses de consommation (scénario ", input$hyp_scenario, ")"),
-                   main = "Hypothèses de consommation",
+                   main = "Évolution de la consommation",
                    zoom = ifelse(type == "Branche", FALSE, TRUE), 
                    show_values = FALSE, ylab = "TWh",
                    # horiz = ifelse(type == "Branche", TRUE, FALSE),

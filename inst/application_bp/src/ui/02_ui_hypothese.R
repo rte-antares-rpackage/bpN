@@ -5,14 +5,18 @@ tabPanel("Hypothèses",
                     br(),
                     uiOutput("md_gen")
            ),
-           tabPanel("Consommation", 
+           tabPanel("Consommation",
+                    br(),
+                    includeMarkdown("src/aide/hypotheses_conso_before.md"),
                     br(),
                     fluidRow(
                       column(1,  div(h4("Type : "), align = "center")), 
                       column(2,  selectInput("type_hyp_conso", NULL, choices = c("Secteur", "Usage"), 
                                              selected = "Secteur", multiple = FALSE, width = "100%"))
                     ),
-                    uiOutput("hyp_conso_graph")
+                    uiOutput("hyp_conso_graph"),
+                    br(),
+                    includeMarkdown("src/aide/hypotheses_conso_after.md")
            ),
            tabPanel("Parc de production", 
                     br(),
