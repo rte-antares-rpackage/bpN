@@ -146,7 +146,7 @@ output$hyp_co2<- renderAmCharts({
             stack_type = "regular", legend = TRUE,
             # main = paste0("Évolution des émissions de CO2 en France (scénario ", input$hyp_scenario, ")"),
             main = "Évolution des émissions de CO2 en France",
-            zoom = TRUE, show_values = TRUE,
+            zoom = TRUE, show_values = FALSE,
             ylab = "Millions de tonnes (Mt)", horiz = FALSE,
             labelRotation = 45, theme = "pattern", creditsPosition = "top-right")  %>%
     setExport(enabled = TRUE, menu = ramcharts_menu_obj)
