@@ -554,7 +554,7 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
     mcYear = mwSelect(
       {
         allMcY <- c("average",  .compareOperation(lapply(params$x, function(vv){
-          unique(vv$x$mcYear)
+          unique(c(vv$x$areas$mcYear, vv$x$links$mcYear))
         }), xyCompare))
         names(allMcY) <- c(.getLabelLanguage("average", language), allMcY[-1])
         allMcY
