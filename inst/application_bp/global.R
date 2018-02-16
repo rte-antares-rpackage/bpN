@@ -341,6 +341,10 @@ Encoding(couleur_conso[["Nom"]] ) <- "latin1"
 secteur_col <- couleur_conso[Type %in% "Secteur", rgb(R, G, B, maxColorValue = 255)]
 names(secteur_col) <- couleur_conso[Type %in% "Secteur", Nom]
 
+usage_col <- couleur_conso[Type %in% "Usage", rgb(R, G, B, maxColorValue = 255)]
+names(usage_col) <- couleur_conso[Type %in% "Usage", Nom]
+
+# data <- hyp_conso
 getConsoHypothesis <- function(data, type = "Secteur", sce_prod = NULL, scenario = "Hertz"){
   
   trj <- sce_prod[Pays %in% "France" & filiere1 %in% "consommation", get(scenario)]
@@ -358,8 +362,22 @@ getConsoHypothesis <- function(data, type = "Secteur", sce_prod = NULL, scenario
   
   colnames(res)[-1] <- label
   
+  if(type == "Secteur"){
+    setcolorder(res, c("date", "Industrie", "Tertiaire", "Résidentiel", "Transport, agriculture et énergie", "Pertes"))
+  } else {
+    setcolorder(res, c("date", "Autres usages", "Bureautique et autres usages tertiaires", "Autres usages résidentiels", 
+                       "Produits gris & bruns résidentiels", "Lavage", "Froid", "Cuisson", "Eclairage intérieur", 
+                       "Climatisation & ventilation", "Eau chaude sanitaire", "Chauffage", "VE & VHR", "Pertes"))
+  }
   res
 }
+
+# amBarplot(x = "date", y = colnames(res)[-1], data = res,
+#           stack_type = "regular", legend = TRUE,
+#           main = paste0("Evolution des capacités d'import (scénario ", ")"),
+#           zoom = TRUE, export = TRUE, show_values = FALSE,
+#           ylab = "MWh", horiz = FALSE,
+#           labelRotation = 45, legendPosition = "bottom", height = "800")
 
 #------------------
 # co2

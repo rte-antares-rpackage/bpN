@@ -56,7 +56,7 @@ output$hyp_conso <- renderAmCharts({
   if(type == "Secteur"){
     groups_color = unname(secteur_col[colnames(res)[-1]])
   } else {
-    groups_color = unname(cl_hyp_prod[1:(ncol(res) - 1)])
+    groups_color = unname(usage_col[colnames(res)[-1]])
   }
   gr  <- amBarplot(x = "date", y = colnames(res)[-1], data = res, 
                    stack_type = "regular", legend = TRUE,
