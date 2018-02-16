@@ -170,10 +170,10 @@ setProdStackAlias(
 #------------------
 
 # production
-sce_prod <- fread(paste0(data_dir, "/Correspondance_scenarios.csv"), encoding = "Latin-1")
+sce_prod <- fread(paste0(data_dir, "/correspondance_scenarios_v2.csv"), encoding = "Latin-1")
 
 # bug with fread
-hyp_prod <- data.table(read.table(paste0(data_dir, "/BP2017_production_global.csv"), dec = ",", 
+hyp_prod <- data.table(read.table(paste0(data_dir, "/BP2017_production_hypothesis_global_v4.csv"), dec = ",", 
                                   sep = ";", header = T, encoding = "Latin-1"))
 
 hyp_prod$filiere2 <- as.character(hyp_prod$filiere2)
@@ -193,7 +193,7 @@ hyp_prod$filiere2 <- gsub("^waste$", "déchets", hyp_prod$filiere2)
 hyp_prod$filiere2 <- gsub("^wave$", "houlomotrice", hyp_prod$filiere2)
 
 # hyp_prod[, .N, list(filiere1, filiere2)]
-# hyp_prod[, .N, list(filiere1, trajectoire)]
+# hyp_prod[, .N, list(filiere1, filiere2, filiere3)]
 # data <- hyp_prod
 
 couleur_prod <- data.table(read.delim(paste0(data_dir, "/couleur_prod.csv"), dec = ",", 
@@ -204,9 +204,9 @@ Encoding(couleur_prod[[1]] ) <- "latin1"
 prod_col <- couleur_prod[, rgb(R, G, B, maxColorValue = 255)]
 names(prod_col) <- couleur_prod[[1]]
 
+# data <- hyp_prod
 getProductionHypothesis <- function(data, nodes = NULL, sce_prod = NULL, scenario = "Hertz"){
   
-
   enr_fr <- sce_prod[Pays %in% "France" & filiere1 %in% "enr", get(scenario)]
   enr_ue <- sce_prod[Pays %in% "Europe" & filiere1 %in% "enr", get(scenario)]
   
@@ -216,13 +216,27 @@ getProductionHypothesis <- function(data, nodes = NULL, sce_prod = NULL, scenari
   thermal_fr <- sce_prod[Pays %in% "France" & filiere1 %in% "thermal", get(scenario)]
   thermal_ue <- sce_prod[Pays %in% "Europe" & filiere1 %in% "thermal", get(scenario)]
   
-  data <- data[(node %in% "fr" & filiere1 %in% "enr" & trajectoire %in% enr_fr) |
+  enr_hydro_fr <- sce_prod[Pays %in% "France" & filiere3 %in% "hydro", get(scenario)]
+  enr_step_fr <- sce_prod[Pays %in% "France" & filiere3 %in% "step", get(scenario)]
+  
+  enr_hydro_ue <- sce_prod[Pays %in% "Europe" & filiere3 %in% "hydro", get(scenario)]
+  enr_step_ue <- sce_prod[Pays %in% "Europe" & filiere3 %in% "step", get(scenario)]
+  
+  # hors hydraulique
+  data_no_hydro <- data[((node %in% "fr" & filiere1 %in% "enr" & trajectoire %in% enr_fr) |
               (!node %in% "fr" & filiere1 %in% "enr" & trajectoire %in% enr_ue) |
                 (node %in% "fr" & filiere1 %in% "nuclear" & trajectoire %in% nuclear_fr) |
                 (!node %in% "fr" & filiere1 %in% "nuclear" & trajectoire %in% nuclear_ue) |
                 (node %in% "fr" & filiere1 %in% "thermal" & trajectoire %in% thermal_fr) |
-                (!node %in% "fr" & filiere1 %in% "thermal" & trajectoire %in% thermal_ue)]
+                (!node %in% "fr" & filiere1 %in% "thermal" & trajectoire %in% thermal_ue)) & !filiere2 %in% "hydraulique"]
   
+  # hydro
+  data_hydro <- data[(node %in% "fr" & filiere3 %in% "hydro" & trajectoire %in% enr_hydro_fr) |
+                       (!node %in% "fr" & filiere3 %in% "hydro" & trajectoire %in% enr_hydro_ue) |
+                       (node %in% "fr" & filiere3 %in% "step" & trajectoire %in% enr_step_fr) |
+                       (!node %in% "fr" & filiere3 %in% "step" & trajectoire %in% enr_step_ue) ]
+  
+  data <- rbindlist(list(data_no_hydro, data_hydro))
   if(is.null(nodes)){
     res <- data[, list(capa = sum(capacite)), by = list(date, filiere2)]
   } else {
