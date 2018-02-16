@@ -270,6 +270,11 @@ names(cl_hyp_prod) <- unique(hyp_prod$filiere2)
 hyp_inter<- data.table(read.table(paste0(data_dir, "/Links.csv"), dec = ",", 
                                   sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
 
+hyp_inter$hypothesis <- as.character(hyp_inter$hypothesis)
+hyp_inter$hypothesis <- gsub("^low$", "Bas", hyp_inter$hypothesis)
+hyp_inter$hypothesis <- gsub("^mid$", "Moyen", hyp_inter$hypothesis)
+hyp_inter$hypothesis <- gsub("^high$", "Haute", hyp_inter$hypothesis)
+
 # subset de colonnes
 hyp_inter <- hyp_inter[, c("from", "to", "concat", "hypothesis", "2016", "2022", "2025", "2030", "2035"), with = FALSE]
 getIntercoHypothesis <- function(data, sce_prod = NULL, scenario = "Hertz"){
