@@ -13,7 +13,7 @@ $(function() {
 });
 
 
-
+// for double pie on bilan
 AmCharts.addInitHandler(function(chart) {
   
   // init holder for nested charts
@@ -66,3 +66,16 @@ AmCharts.addInitHandler(function(chart) {
     });
   }
 }, ["pie"]);
+
+
+// This recieves messages of type "testmessage" from the server.
+Shiny.addCustomMessageHandler("rAmCharts_update_stack",
+  function(params) {
+    var chart = getAmChart(params[1]);
+    if(chart !== undefined){
+      chart.valueAxes[0].stackType = params[0];
+      chart.validateNow();
+    }
+  }
+);
+

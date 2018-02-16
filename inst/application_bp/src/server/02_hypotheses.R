@@ -45,6 +45,11 @@ output$hyp_prod <- renderAmCharts({
   })
 })
 
+observe({
+  session$sendCustomMessage(type = 'rAmCharts_update_stack',
+                            message = list(input$stack_hyp_prod, "hyp_prod"))
+})
+
 #------------
 # consommation
 #------------
@@ -78,6 +83,12 @@ output$hyp_conso <- renderAmCharts({
   }
   gr
 })
+
+observe({
+  session$sendCustomMessage(type = 'rAmCharts_update_stack',
+                            message = list(input$stack_hyp_conso, "hyp_conso"))
+})
+
 
 output$hyp_conso_graph <- renderUI({
   if(input$type_hyp_conso == "Branche"){
@@ -128,6 +139,15 @@ output$hyp_inter_export <- renderAmCharts({
   
   gr@otherProperties$thousandsSeparator <- " "
   gr
+})
+
+
+observe({
+  session$sendCustomMessage(type = 'rAmCharts_update_stack',
+                            message = list(input$stack_hyp_inter, "hyp_inter_import"))
+  
+  session$sendCustomMessage(type = 'rAmCharts_update_stack',
+                            message = list(input$stack_hyp_inter, "hyp_inter_export"))
 })
 
 

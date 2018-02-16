@@ -12,7 +12,10 @@ tabPanel("Principaux résultats et hypothèses",
                     fluidRow(
                       column(1,  div(h4("Type : "), align = "center")), 
                       column(2,  selectInput("type_hyp_conso", NULL, choices = c("Secteur", "Usage"), 
-                                             selected = "Secteur", multiple = FALSE, width = "100%"))
+                                             selected = "Secteur", multiple = FALSE, width = "100%")),
+                      column(1,  div(h4("Affichage : "), align = "center")), 
+                      column(2, selectInput("stack_hyp_conso", NULL, choices = c("Valeurs" = "regular", "Pourcentages" = "100%"), 
+                                            selected = "regular", multiple = FALSE, width = "100%"))
                     ),
                     uiOutput("hyp_conso_graph"),
                     br(),
@@ -24,7 +27,10 @@ tabPanel("Principaux résultats et hypothèses",
                       column(1,  div(h4("Pays : "), align = "center")),
                       column(2,  selectInput("area_hyp_prod", NULL, choices = unique(hyp_prod$node), 
                                              selected = "fr", multiple = TRUE, width = "100%")),
-                      column(2, div(actionButton("go_hyp_prod", "Valider"), align = "center"))
+                      column(2, div(actionButton("go_hyp_prod", "Valider"), align = "center")),
+                      column(1,  div(h4("Affichage : "), align = "center")), 
+                      column(2, selectInput("stack_hyp_prod", NULL, choices = c("Valeurs" = "regular", "Pourcentages" = "100%"), 
+                                            selected = "regular", multiple = FALSE, width = "100%"))
                     ),
                     amChartsOutput("hyp_prod", width = "100%", height = "650px")
            ),
@@ -33,8 +39,13 @@ tabPanel("Principaux résultats et hypothèses",
                     includeMarkdown("src/aide/hypotheses_interco_before.md"),
                     br(),
                     fluidRow(
-                        column(5, offset = 1,  amChartsOutput("hyp_inter_import", width = "100%", height = "450px")),
-                        column(5, amChartsOutput("hyp_inter_export", width = "100%", height = "450px"))
+                      column(1,  div(h4("Affichage : "), align = "center"), 
+                             selectInput("stack_hyp_inter", NULL, choices = c("Valeurs" = "regular", "Pourcentages" = "100%"), 
+                                         selected = "regular", multiple = FALSE, width = "100%")
+                      ), 
+                      
+                      column(5,  amChartsOutput("hyp_inter_import", width = "100%", height = "450px")),
+                      column(5, amChartsOutput("hyp_inter_export", width = "100%", height = "450px"))
                     ),
                     br(),
                     includeMarkdown("src/aide/hypotheses_interco_after.md")
