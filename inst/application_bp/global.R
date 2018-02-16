@@ -192,6 +192,9 @@ hyp_prod$filiere2 <- gsub("^hydrokinetic$", "hydrolien", hyp_prod$filiere2)
 hyp_prod$filiere2 <- gsub("^waste$", "déchets", hyp_prod$filiere2)
 hyp_prod$filiere2 <- gsub("^wave$", "houlomotrice", hyp_prod$filiere2)
 
+# remove 2036
+hyp_prod <- hyp_prod[date != 2036]
+
 # hyp_prod[, .N, list(filiere1, filiere2)]
 # hyp_prod[, .N, list(filiere1, filiere2, filiere3)]
 # data <- hyp_prod
