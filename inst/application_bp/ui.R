@@ -13,7 +13,7 @@ navbarPage(title = "Bilan prévisionnel 2017", id = "nav-id", theme = "css/custo
            
            source("src/ui/02_ui_hypothese.R", local = T)$value,
            
-           tabPanel("Résultats",
+           tabPanel("Analyse détaillée",
                     
                     source("src/ui/03_ui_data_selection.R", local = T)$value,
                     

@@ -1,4 +1,4 @@
-tabPanel("Hypothèses",
+tabPanel("Principaux résultats et hypothèses",
          selectInput("hyp_scenario", "Scénario : ", c("Ampère", "Hertz", "Volt", "Watt")),
          tabsetPanel(
            tabPanel("Généralités", 
@@ -43,7 +43,7 @@ tabPanel("Hypothèses",
                     
                     fluidRow(
                       
-                      column(1, offset = 1, br(), br(), img(src = "img/legend_bilan.png", height = "350px")),
+                      column(1, offset = 1, br(), br(), img(src = "img/legend_bilan_2.png", height = "350px")),
                       column(3,  
                              div(class = "bilan_charts", amChartsOutput("bilan_1_1"), amChartsOutput("bilan_1_2")),
                              uiOutput("info_bilan_1")
