@@ -152,3 +152,147 @@ output$hyp_co2<- renderAmCharts({
     setExport(enabled = TRUE, menu = ramcharts_menu_obj)
   
 })
+
+
+#-------------
+# bilan
+#-------------
+
+data_bilan <- reactive({
+  getBilan(hyp_bilan, hyp_co2, table_couleur_bilan)
+})
+
+output$bilan_1_1 <- renderAmCharts({
+  data_bilan <- data_bilan()
+  amPie(data = data_bilan$pie_conso_2025, show_values = TRUE, 
+        creditsPosition = "bottom-left",
+        innerRadius = 60, radius = 100,  legend = FALSE,
+        labelText =  "[[value]]",
+        labelRadius = -20, bringToFront = TRUE,
+        labelColor = "white")
+})
+
+output$bilan_1_2 <- renderAmCharts({
+  data_bilan <- data_bilan()
+  suppressWarnings(amPie(data = data_bilan$pie_prod_2025, show_values = TRUE, 
+                         innerRadius = 100, radius = 140, 
+                         legend = FALSE, creditsPosition = "bottom-left",
+                         labelText =  "[[value]]",
+                         labelRadius = -20, bringToFront = TRUE,
+                         labelColor = "white",
+                         allLabels = list(list(
+                           text = "Bilan énergétique en 2025",
+                           size = 18,
+                           color = "#404040",
+                           x = 0,
+                           align = "center",
+                           y =20), 
+                           list(
+                             text = paste(data_bilan$twh_2025, "TWh"),
+                             size = 18,
+                             color = "#404040",
+                             x = 0,
+                             align = "center",
+                             y = 190))
+  ))
+})
+
+
+output$info_bilan_1 <- renderUI({
+  data_bilan <- data_bilan()
+  fluidRow(
+    column(4, div(paste("CO2", data_bilan$co2_2025, "Mt"), style = "position: absolute; z-index : 100; width:90%;background-color: #ACA4A4; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center")),
+    column(4, div(icon("leaf"), paste(data_bilan$enr_2025, "%"), style = "position: absolute; z-index : 100; width:90%; background-color: #6DD19B; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center")),
+    column(4, div(icon("industry"), paste(data_bilan$nuc_2025, "%"), style = "position: absolute; z-index : 100; width:90%; background-color: #F8D71E; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center" ))
+  )
+})
+
+output$bilan_2_1 <- renderAmCharts({
+  data_bilan <- data_bilan()
+  amPie(data = data_bilan$pie_conso_2030, show_values = TRUE, 
+        creditsPosition = "bottom-left",
+        innerRadius = 60, radius = 100,  legend = FALSE,
+        labelText =  "[[value]]",
+        labelRadius = -20, bringToFront = TRUE,
+        labelColor = "white")
+})
+
+output$bilan_2_2 <- renderAmCharts({
+  data_bilan <- data_bilan()
+  suppressWarnings(amPie(data = data_bilan$pie_prod_2030, show_values = TRUE, 
+                         innerRadius = 100, radius = 140, 
+                         legend = FALSE, creditsPosition = "bottom-left",
+                         labelText =  "[[value]]",
+                         labelRadius = -20, bringToFront = TRUE,
+                         labelColor = "white",
+                         allLabels = list(list(
+                           text = "Bilan énergétique en 2030",
+                           size = 18,
+                           color = "#404040",
+                           x = 0,
+                           align = "center",
+                           y =20), 
+                           list(
+                             text = paste(data_bilan$twh_2030, "TWh"),
+                             size = 18,
+                             color = "#404040",
+                             x = 0,
+                             align = "center",
+                             y = 190))
+  ))
+})
+
+
+output$info_bilan_2 <- renderUI({
+  data_bilan <- data_bilan()
+  fluidRow(
+    column(4, div(paste("CO2", data_bilan$co2_2030, "Mt"), style = "position: absolute; z-index : 100; width:90%;background-color: #ACA4A4; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center")),
+    column(4, div(icon("leaf"), paste(data_bilan$enr_2030, "%"), style = "position: absolute; z-index : 100; width:90%; background-color: #6DD19B; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center")),
+    column(4, div(icon("industry"), paste(data_bilan$nuc_2030, "%"), style = "position: absolute; z-index : 100; width:90%; background-color: #F8D71E; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center" ))
+  )
+})
+
+output$bilan_3_1 <- renderAmCharts({
+  data_bilan <- data_bilan()
+  amPie(data = data_bilan$pie_conso_2035, show_values = TRUE, 
+        creditsPosition = "bottom-left",
+        innerRadius = 60, radius = 100,  legend = FALSE,
+        labelText =  "[[value]]",
+        labelRadius = -20, bringToFront = TRUE,
+        labelColor = "white")
+})
+
+output$bilan_3_2 <- renderAmCharts({
+  data_bilan <- data_bilan()
+  suppressWarnings(amPie(data = data_bilan$pie_prod_2035, show_values = TRUE, 
+                         innerRadius = 100, radius = 140, 
+                         legend = FALSE, creditsPosition = "bottom-left",
+                         labelText =  "[[value]]",
+                         labelRadius = -20, bringToFront = TRUE,
+                         labelColor = "white",
+                         allLabels = list(list(
+                           text = "Bilan énergétique en 2035",
+                           size = 18,
+                           color = "#404040",
+                           x = 0,
+                           align = "center",
+                           y =20), 
+                           list(
+                             text = paste(data_bilan$twh_2035, "TWh"),
+                             size = 18,
+                             color = "#404040",
+                             x = 0,
+                             align = "center",
+                             y = 190))
+  ))
+})
+
+
+output$info_bilan_3 <- renderUI({
+  data_bilan <- data_bilan()
+  fluidRow(
+    column(4, div(paste("CO2", data_bilan$co2_2035, "Mt"), style = "position: absolute; z-index : 100; width:90%;background-color: #ACA4A4; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center")),
+    column(4, div(icon("leaf"), paste(data_bilan$enr_2035, "%"), style = "position: absolute; z-index : 100; width:90%; background-color: #6DD19B; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center")),
+    column(4, div(icon("industry"), paste(data_bilan$nuc_2035, "%"), style = "position: absolute; z-index : 100; width:90%; background-color: #F8D71E; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center" ))
+  )
+})

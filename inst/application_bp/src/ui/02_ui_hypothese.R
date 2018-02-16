@@ -40,7 +40,24 @@ tabPanel("Hypothèses",
                     includeMarkdown("src/aide/hypotheses_interco_after.md")
            ),
            tabPanel("Bilans", 
-                    "TO DO"
+                    
+                    fluidRow(
+                      
+                      column(1, offset = 1, br(), br(), img(src = "img/legend_bilan.png", height = "350px")),
+                      column(3,  
+                             div(class = "bilan_charts", amChartsOutput("bilan_1_1"), amChartsOutput("bilan_1_2")),
+                             uiOutput("info_bilan_1")
+                      ),
+                      column(3,  
+                             div(class = "bilan_charts", amChartsOutput("bilan_2_1"), amChartsOutput("bilan_2_2")),
+                             uiOutput("info_bilan_2")
+                      ),
+                      column(3,  
+                             div(class = "bilan_charts", amChartsOutput("bilan_3_1"), amChartsOutput("bilan_3_2")),
+                             uiOutput("info_bilan_3")
+                      )
+                      
+                    )
            ) ,
            tabPanel("CO2", 
                     br(),

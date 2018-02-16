@@ -391,3 +391,83 @@ ramcharts_menu_obj <- list(list(class = "export-main",
                                 menu = list(
                                   list(label = "Télécharger", menu = list("PNG", "JPG"))
                                 )))
+
+#----------
+# Bilan
+#----------
+
+
+hyp_bilan <- data.table(read.delim(paste0(data_dir, "/bilans_energetiques.csv"), dec = ",", 
+                                 sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
+
+hyp_bilan$TWh <- as.character(hyp_bilan$TWh)
+Encoding(hyp_bilan$TWh) <- "latin1"
+
+table_couleur_bilan <- read.delim(paste0(data_dir, "/couleur_bilan.csv"), dec = ",", 
+                            sep = ";", header = T, encoding = "Latin-1", check.names = FALSE)
+
+table_couleur_bilan$Nom <- as.character(table_couleur_bilan$Nom)
+Encoding(table_couleur_bilan$Nom) <- "latin1"
+
+# couleur_bilan <- as.character(table_couleur_bilan$Couleur)
+# names(couleur_bilan) <- table_couleur_bilan$Nom
+
+
+getBilan <- function(data_bilan, data_co2, table_couleur_bilan, scenario = "Hertz"){
+  
+  bilan <- data_bilan[Scenario %in% scenario]
+  
+  bilan <- merge(bilan, table_couleur_bilan, by.x = "TWh", by.y = "Nom", all.x = T, sort = FALSE)
+  
+  # consommation
+  bilan_conso <- bilan[ TWh %in% c("Consommation France", "Echanges", "Pompage", "Energie déversée")]
+  
+  pie_conso_2025 <- bilan_conso[, c("TWh", "2025", "Couleur")]
+  colnames(pie_conso_2025) <- c("label", "value", "color")
+  
+  pie_conso_2030 <- bilan_conso[, c("TWh", "2030", "Couleur")]
+  colnames(pie_conso_2030) <- c("label", "value", "color")
+  
+  pie_conso_2035 <- bilan_conso[, c("TWh", "2035", "Couleur")]
+  colnames(pie_conso_2035) <- c("label", "value", "color")
+  
+  # production
+  bilan_prod <- bilan[ TWh %in% c("Nucléaire", "Cycles combinés au gaz", "Turbines à combustion", "Cogénérations",
+                                   "Autre thermique décentralisé", "Hydraulique", "Eolien", "Photovoltaïque", "Bioénergies")]
+  
+  pie_prod_2025 <- bilan_prod[, c("TWh", "2025", "Couleur")]
+  colnames(pie_prod_2025) <- c("label", "value", "color")
+  
+  pie_prod_2030 <- bilan_prod[, c("TWh", "2030", "Couleur")]
+  colnames(pie_prod_2030) <- c("label", "value", "color")
+  
+  pie_prod_2035 <- bilan_prod[, c("TWh", "2035", "Couleur")]
+  colnames(pie_prod_2035) <- c("label", "value", "color")
+  
+  # somme
+  twh_2025 <- as.data.frame(bilan[TWh %in% "Demande totale", c("2025")])[1, 1]
+  twh_2030 <- as.data.frame(bilan[TWh %in% "Demande totale", c("2030")])[1, 1]
+  twh_2035 <- as.data.frame(bilan[TWh %in% "Demande totale", c("2035")])[1, 1]
+  
+  # enr
+  enr_2025 <- as.data.frame(bilan[TWh %in% "Pourcentage EnR", c("2025")])[1, 1]
+  enr_2030 <- as.data.frame(bilan[TWh %in% "Pourcentage EnR", c("2030")])[1, 1]
+  enr_2035 <- as.data.frame(bilan[TWh %in% "Pourcentage EnR", c("2035")])[1, 1]
+  
+  # nucleaire
+  nuc_2025 <- round(as.data.frame(bilan[TWh %in% "Nucléaire", c("2025")])[1, 1] / twh_2025 * 100)
+  nuc_2030 <- round(as.data.frame(bilan[TWh %in% "Nucléaire", c("2030")])[1, 1] / twh_2030 * 100)
+  nuc_2035 <- round(as.data.frame(bilan[TWh %in% "Nucléaire", c("2035")])[1, 1] / twh_2035 * 100)
+  
+  # co2
+  co2_2025 <-  as.data.frame(data_co2[scenario %in% scenario, c("2025")])[1, 1]
+  co2_2030 <-  as.data.frame(data_co2[scenario %in% scenario, c("2030")])[1, 1]
+  co2_2035 <-  as.data.frame(data_co2[scenario %in% scenario, c("2035")])[1, 1]
+  
+  list(pie_conso_2025 = pie_conso_2025, pie_conso_2030 = pie_conso_2030, pie_conso_2035 = pie_conso_2035,
+       pie_prod_2025 = pie_prod_2025, pie_prod_2030 = pie_prod_2030, pie_prod_2035 = pie_prod_2035,
+       twh_2025 = twh_2025, twh_2030 = twh_2030, twh_2035 = twh_2035,
+       enr_2025 = enr_2025, enr_2030 = enr_2030, enr_2035 = enr_2035,
+       nuc_2025 = nuc_2025, nuc_2030 = nuc_2030, nuc_2035 = nuc_2035,
+       co2_2025 = co2_2025, co2_2030 = co2_2030, co2_2035= co2_2035)
+}
