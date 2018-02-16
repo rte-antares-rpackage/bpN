@@ -201,9 +201,9 @@ output$bilan_1_2 <- renderAmCharts({
 output$info_bilan_1 <- renderUI({
   data_bilan <- data_bilan()
   fluidRow(
-    column(4, div(paste("CO2", data_bilan$co2_2025, "Mt"), style = "position: absolute; z-index : 100; width:90%;background-color: #ACA4A4; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center")),
-    column(4, div(icon("leaf"), paste(data_bilan$enr_2025, "%"), style = "position: absolute; z-index : 100; width:90%; background-color: #6DD19B; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center")),
-    column(4, div(icon("industry"), paste(data_bilan$nuc_2025, "%"), style = "position: absolute; z-index : 100; width:90%; background-color: #F8D71E; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center" ))
+    column(4, div(paste("CO2", data_bilan$co2_2025, "Mt"), style = "position: absolute; z-index : 100; width:98%;background-color: #ACA4A4; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center")),
+    column(4, div(icon("leaf"), paste(data_bilan$enr_2025, "%"), style = "position: absolute; z-index : 100; width:98%; background-color: #6DD19B; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center")),
+    column(4, div(icon("industry"), paste(data_bilan$nuc_2025, "%"), style = "position: absolute; z-index : 100; width:98%; background-color: #F8D71E; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center" ))
   )
 })
 
@@ -246,9 +246,9 @@ output$bilan_2_2 <- renderAmCharts({
 output$info_bilan_2 <- renderUI({
   data_bilan <- data_bilan()
   fluidRow(
-    column(4, div(paste("CO2", data_bilan$co2_2030, "Mt"), style = "position: absolute; z-index : 100; width:90%;background-color: #ACA4A4; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center")),
-    column(4, div(icon("leaf"), paste(data_bilan$enr_2030, "%"), style = "position: absolute; z-index : 100; width:90%; background-color: #6DD19B; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center")),
-    column(4, div(icon("industry"), paste(data_bilan$nuc_2030, "%"), style = "position: absolute; z-index : 100; width:90%; background-color: #F8D71E; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center" ))
+    column(4, div(paste("CO2", data_bilan$co2_2030, "Mt"), style = "position: absolute; z-index : 100; width:98%;background-color: #ACA4A4; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center")),
+    column(4, div(icon("leaf"), paste(data_bilan$enr_2030, "%"), style = "position: absolute; z-index : 100; width:98%; background-color: #6DD19B; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center")),
+    column(4, div(icon("industry"), paste(data_bilan$nuc_2030, "%"), style = "position: absolute; z-index : 100; width:98%; background-color: #F8D71E; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center" ))
   )
 })
 
@@ -291,8 +291,8 @@ output$bilan_3_2 <- renderAmCharts({
 output$info_bilan_3 <- renderUI({
   data_bilan <- data_bilan()
   fluidRow(
-    column(4, div(paste("CO2", data_bilan$co2_2035, "Mt"), style = "position: absolute; z-index : 100; width:90%;background-color: #ACA4A4; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center")),
-    column(4, div(icon("leaf"), paste(data_bilan$enr_2035, "%"), style = "position: absolute; z-index : 100; width:90%; background-color: #6DD19B; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center")),
-    column(4, div(icon("industry"), paste(data_bilan$nuc_2035, "%"), style = "position: absolute; z-index : 100; width:90%; background-color: #F8D71E; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center" ))
+    column(4, div(paste("CO2", data_bilan$co2_2035, "Mt"), style = "position: absolute; z-index : 100; width:98%;background-color: #ACA4A4; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center")),
+    column(4, div(icon("leaf"), paste(data_bilan$enr_2035, "%"), style = "position: absolute; z-index : 100; width:98%; background-color: #6DD19B; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center")),
+    column(4, div(icon("industry"), paste(data_bilan$nuc_2035, "%"), style = "position: absolute; z-index : 100; width:98%; background-color: #F8D71E; margin-top: -120px; font-size:20px;font-weight: bold;color: white;", align = "center" ))
   )
 })
