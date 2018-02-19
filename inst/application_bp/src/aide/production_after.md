@@ -23,9 +23,3 @@ Le déversement correspond à de l'énergie produite "en trop" par les filières
 **Tirage**
 
 Un tirage correspond à une combinaison d'aléas simulés. Pour chaque coupe temporelle étudiée (2025, 2030 et 2035), 1000 combinaisons d'aléas différentes sont simulées afin de correctement représenter les rares épisodes de défaillances. Les 100 premiers tirages sont mis à la disposition des utilisateurs. Un tirage représente donc à une une combinaison d'aléas possible à l'horizon étudié.
-
-<br>
-
-#### A propos des données
-
-Les données présentées sont téléchargeables sur la plateforme <a href="https://opendata.reseaux-energies.fr/pages/accueil/" target="_blank">Open Data Réseaux Energies</a>

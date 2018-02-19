@@ -5,9 +5,12 @@ navbarPage(title = "Bilan prévisionnel 2017", id = "nav-id", theme = "css/custo
                                        target = "_blank", img(src = "img/RTE_logo.svg.png", class = "ribbon")),
              singleton(tags$script(src = 'events.js')),
              div(id = "import_busy", tags$img(src= "spinner.gif", height = 100,
-                                              style = "position: fixed;top: 50%;z-index:10;left: 48%;"))
+                                              style = "position: fixed;top: 50%;z-index:10;left: 48%;")),
              
-           # ), windowTitle = div(img(src="img/RTE_logo.svg.png"), "BP 2017 RTE - Accueil"),
+             div(class = "rte_footer", HTML("Plus d'informations sur la page <a href='http://www.rte-france.com/fr/article/bilan-previsionnel' target='_blank' style = 'color:black'>www.rte-france.com/fr/article/bilan-previsionnel</a>   
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Les données présentées sont téléchargeables sur la plateforme <a href='https://opendata.reseaux-energies.fr/pages/accueil/' target='_blank' style = 'color:black'>Open Data Réseaux Energies</a>"))
+             
+             # ), windowTitle = div(img(src="img/RTE_logo.svg.png"), "BP 2017 RTE - Accueil"),
            ),windowTitle = "BP 2017 RTE - Accueil",
            # source("src/ui/01_ui_syntheses.R", local = T)$value,
            
@@ -32,8 +35,8 @@ navbarPage(title = "Bilan prévisionnel 2017", id = "nav-id", theme = "css/custo
                     
                     
            ),
-           source("src/ui/08_ui_help.R", local = T)$value
-           # footer = div(hr(), actionButton("quit", "Quit application", icon = icon("sign-out")), align = "center")
+           source("src/ui/08_ui_help.R", local = T)$value,
+           footer = div(br(), br())
 )
 
 

@@ -23,10 +23,3 @@ Cette rubrique correspond aux consommations des secteurs industriel, de l'énerg
 **Pertes**
 
 Cette rubrique correspond aux pertes sur les réseaux de transport et de distribution.
-
-
-<br>
-
-#### A propos des données
-
-Les données présentées sont téléchargeables sur la plateforme <a href="https://opendata.reseaux-energies.fr/pages/accueil/" target="_blank">Open Data Réseaux Energies</a>

@@ -49,9 +49,10 @@ tabPanel("Principaux résultats et hypothèses",
                       
                       column(5,  offset = 1, amChartsOutput("hyp_inter_import", width = "100%", height = "450px")),
                       column(5, amChartsOutput("hyp_inter_export", width = "100%", height = "450px"))
-                    ),
-                    br(),
-                    includeMarkdown("src/aide/hypotheses_interco_after.md")
+                    )
+                    # ,
+                    # br()
+                    # includeMarkdown("src/aide/hypotheses_interco_after.md")
            ),
            tabPanel("Bilans", 
                     
@@ -79,9 +80,10 @@ tabPanel("Principaux résultats et hypothèses",
                     br(),
                     fluidRow(
                       column(width = 6, offset = 3, amChartsOutput("hyp_co2", width = "100%", height = "500px"))
-                    ),
-                    br(),
-                    includeMarkdown("src/aide/hypotheses_co2_after.md")
+                    )
+                    # ,
+                    # br(),
+                    # includeMarkdown("src/aide/hypotheses_co2_after.md")
                     
            )
          )

@@ -1,3 +1,17 @@
+.rte_footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: #CC0000;
+   border-color: #AA0000;
+   border-radius: 0;
+   background-image: url('../img/bp_background.png');
+   color: white;
+   text-align: center;
+   z-index: 99999;
+}
+
 .bilan_charts {
   height: 500px;
   width: 100%;
