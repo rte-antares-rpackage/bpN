@@ -202,7 +202,7 @@ output$hyp_co2<- renderAmCharts({
 #-------------
 
 data_bilan <- reactive({
-  getBilan(hyp_bilan, hyp_co2, table_couleur_bilan)
+  getBilan(hyp_bilan, hyp_co2, table_couleur_bilan, scenario = input$hyp_scenario)
 })
 
 output$bilan_1_1 <- renderAmCharts({

@@ -440,6 +440,10 @@ ramcharts_menu_obj <- list(list(class = "export-main",
 hyp_bilan <- data.table(read.delim(paste0(data_dir, "/bilans_energetiques.csv"), dec = ",", 
                                  sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
 
+hyp_bilan$Scenario <- as.character(hyp_bilan$Scenario)
+Encoding(hyp_bilan$Scenario) <- "latin1"
+
+
 hyp_bilan$TWh <- as.character(hyp_bilan$TWh)
 Encoding(hyp_bilan$TWh) <- "latin1"
 
