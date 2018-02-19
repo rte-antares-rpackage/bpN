@@ -39,12 +39,12 @@ tabPanel("Principaux résultats et hypothèses",
                     includeMarkdown("src/aide/hypotheses_interco_before.md"),
                     br(),
                     fluidRow(
-                      column(1,  div(h4("Affichage : "), align = "center"), 
-                             selectInput("stack_hyp_inter", NULL, choices = c("Valeurs" = "regular", "Pourcentages" = "100%"), 
-                                         selected = "regular", multiple = FALSE, width = "100%")
-                      ), 
+                      # column(1,  div(h4("Affichage : "), align = "center"), 
+                      #        selectInput("stack_hyp_inter", NULL, choices = c("Valeurs" = "regular", "Pourcentages" = "100%"), 
+                      #                    selected = "regular", multiple = FALSE, width = "100%")
+                      # ), 
                       
-                      column(5,  amChartsOutput("hyp_inter_import", width = "100%", height = "450px")),
+                      column(5,  offset = 1, amChartsOutput("hyp_inter_import", width = "100%", height = "450px")),
                       column(5, amChartsOutput("hyp_inter_export", width = "100%", height = "450px"))
                     ),
                     br(),
