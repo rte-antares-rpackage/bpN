@@ -571,11 +571,22 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
     ##Stop h5
     mcYear = mwSelect(
       {
-        allMcY <- c("average",  .compareOperation(lapply(params$x, function(vv){
+        # allMcY <- c("average",  .compareOperation(lapply(params$x, function(vv){
+        #   unique(c(vv$x$areas$mcYear, vv$x$links$mcYear))
+        # }), xyCompare))
+        # names(allMcY) <- c(.getLabelLanguage("average", language), allMcY[-1])
+        # allMcY
+        # BP 2017
+        allMcY <- .compareOperation(lapply(params$x, function(vv){
           unique(c(vv$x$areas$mcYear, vv$x$links$mcYear))
-        }), xyCompare))
-        names(allMcY) <- c(.getLabelLanguage("average", language), allMcY[-1])
+        }), xyCompare)
+        names(allMcY) <- allMcY
+        if(is.null(allMcY)){
+          allMcY <- "average"
+          names(allMcY) <- .getLabelLanguage("average", language)
+        }
         allMcY
+        
       }, 
       value = { if(.initial) mcYear else NULL}, 
       .display = any(unlist(lapply(params$x, function(X){X$showMcYear}))) & !"mcYear" %in% hidden, 

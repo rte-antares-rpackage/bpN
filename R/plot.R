@@ -572,15 +572,29 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
   
   mcYear = mwSelect(
     choices = {
-      tmp <- c("average", if(!is.null(params)){
-        as.character(.compareOperation(lapply(params$x, function(vv){
-          unique(vv[[table]]$uniqueMcYears)
-        }), xyCompare))})
-      names(tmp) <- sapply(tmp, function(x) .getLabelLanguage(x, language))
-      tmp
+      # tmp <- c("average", if(!is.null(params)){
+      #   as.character(.compareOperation(lapply(params$x, function(vv){
+      #     unique(vv[[table]]$uniqueMcYears)
+      #   }), xyCompare))})
+      # names(tmp) <- sapply(tmp, function(x) .getLabelLanguage(x, language))
+      # tmp
+      
+      # BP 2017
+      allMcY <- .compareOperation(lapply(params$x, function(vv){
+        unique(vv[[table]]$uniqueMcYears)
+      }), xyCompare)
+      names(allMcY) <- allMcY
+      if(is.null(allMcY)){
+        allMcY <- "average"
+        names(allMcY) <- .getLabelLanguage("average", language)
+      }
+      allMcY
+      
     },
     value = {
-      if(.initial) "average"
+      # if(.initial) "average"
+      # BP 2017
+      if(.initial) mcYear
       else NULL
     }, multiple = FALSE, 
     label = .getLabelLanguage("mcYear to be displayed", language), 

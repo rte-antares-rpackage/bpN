@@ -369,10 +369,11 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
       else NULL
     }, 
     .display = {
-      length(c("average", if(!is.null(params)){
-        as.character(.compareOperation(lapply(params$x, function(vv){
-          unique(vv$x$mcYear)
-        }), xyCompare))})) != 1 & !"mcYear" %in% hidden
+      # length(c("average", if(!is.null(params)){
+      #   as.character(.compareOperation(lapply(params$x, function(vv){
+      #     unique(vv$x$mcYear)
+      #   }), xyCompare))})) != 1 & 
+        !"mcYear" %in% hidden
     },
     label = .getLabelLanguage("mcYear to be displayed", language)
     ),
