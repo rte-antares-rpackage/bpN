@@ -26,6 +26,8 @@ tabPanel("Principaux résultats et hypothèses",
            ),
            tabPanel("Parc de production", 
                     br(),
+                    includeMarkdown("src/aide/hypotheses_parc_production.md"),
+                    br(),
                     fluidRow(
                       column(1,  div(h4("Pays : "), align = "center")),
                       column(2,  selectInput("area_hyp_prod", NULL, choices = unique(hyp_prod$node), 
