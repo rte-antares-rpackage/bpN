@@ -74,6 +74,14 @@ Shiny.addCustomMessageHandler("rAmCharts_update_stack",
     var chart = getAmChart(params[1]);
     if(chart !== undefined){
       chart.valueAxes[0].stackType = params[0];
+      
+      if(params[0] === "regular"){
+        chart.valueAxes[0].title = chart.legend.unit;
+        chart.legend.valueText = "[[value]] " + chart.legend.unit;
+      } else {
+        chart.valueAxes[0].title = "%";
+        chart.legend.valueText = "[[percents]]%";
+      }
       chart.validateNow();
     }
   }

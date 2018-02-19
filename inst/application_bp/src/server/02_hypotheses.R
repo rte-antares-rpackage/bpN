@@ -41,7 +41,17 @@ output$hyp_prod <- renderAmCharts({
       setExport(enabled = TRUE, menu = ramcharts_menu_obj)
     
     gr@otherProperties$thousandsSeparator <- " "
+    
+    gr@graphs <- lapply(gr@graphs, function(x){
+      x$balloonText <- gsub("[[value]]", "[[value]] MW ([[percents]]%)", fixed = TRUE, x$balloonText)
+      x
+    })
+    
+    gr@legend$valueText <- "[[value]] MW"
+    gr@legend$unit <- "MW"
+    
     gr
+    
   })
 })
 
@@ -81,6 +91,15 @@ output$hyp_conso <- renderAmCharts({
                          valueLineEnabled = TRUE, zoomable = TRUE, 
                          valueLineBalloonEnabled = TRUE, valueBalloonsEnabled = FALSE)
   }
+  
+  gr@graphs <- lapply(gr@graphs, function(x){
+    x$balloonText <- gsub("[[value]]", "[[value]] TWh ([[percents]]%)", fixed = TRUE, x$balloonText)
+    x
+  })
+  
+  gr@legend$valueText <- "[[value]] TWh"
+  gr@legend$unit <- "TWh"
+  
   gr
 })
 
