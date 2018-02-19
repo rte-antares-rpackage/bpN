@@ -1,3 +1,8 @@
+### Le bilan prévisionnel
+
+Plus d'informations sur la page <a href="http://www.rte-france.com/fr/article/bilan-previsionnel" target="_blank">www.rte-france.com/fr/article/bilan-previsionnel</a>.
+
+
 ### Le logiciel Antares
 
 Le modèle de marché utilisé depuis 2012 pour les études du bilan prévisionnel s’appelle <a href="https://antares.rte-france.com/?page_id=99&lang=en" target="_blank">Antares</a>. Il s’agit d’un logiciel développé par **RTE** pour simuler l’équilibre entre l’offre et la demande électrique dans un système interconnecté.

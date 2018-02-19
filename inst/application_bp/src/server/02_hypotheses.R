@@ -41,7 +41,7 @@ output$hyp_prod <- renderAmCharts({
                      # main = paste0("Évolution du parc installé (scénario ", input$hyp_scenario, ")"),
                      main = "Évolution du parc installé",
                      zoom = TRUE, show_values = FALSE, ylab = "MW",
-                     labelRotation = 45, legendPosition = "bottom", height = "800")  %>%
+                     labelRotation = 45, legendPosition = "bottom")  %>%
       setExport(enabled = TRUE, menu = ramcharts_menu_obj)
     
     gr@otherProperties$thousandsSeparator <- " "
@@ -85,7 +85,7 @@ output$hyp_conso <- renderAmCharts({
                    zoom = ifelse(type == "Branche", FALSE, TRUE), 
                    show_values = FALSE, ylab = "TWh",
                    # horiz = ifelse(type == "Branche", TRUE, FALSE),
-                   labelRotation = 45, legendPosition = "bottom", height = "800")  %>%
+                   labelRotation = 45, legendPosition = "bottom")  %>%
     setExport(enabled = TRUE, menu = ramcharts_menu_obj)
   
   gr@otherProperties$thousandsSeparator <- " "
@@ -140,7 +140,7 @@ output$hyp_inter_import <- renderAmCharts({
                    # main = paste0("Évolution des capacités d'import (scénario ", input$hyp_scenario, ")"),
                    main = "Évolution des capacités d'import",
                    zoom = TRUE, show_values = FALSE, ylab = "MW",
-                   labelRotation = 45, height = "800")  %>%
+                   labelRotation = 45)  %>%
     setExport(enabled = TRUE, menu = ramcharts_menu_obj)
   
   gr@otherProperties$thousandsSeparator <- " "
@@ -157,7 +157,7 @@ output$hyp_inter_export <- renderAmCharts({
                    # main = paste0("Évolution des capacités d'export (scénario ", input$hyp_scenario, ")"),
                    main = "Évolution des capacités d'export",
                    zoom = TRUE, show_values = FALSE, ylab = "MW",
-                   labelRotation = 45, height = "800")  %>%
+                   labelRotation = 45)  %>%
     setExport(enabled = TRUE, menu = ramcharts_menu_obj)
   
   gr@otherProperties$thousandsSeparator <- " "
@@ -165,13 +165,13 @@ output$hyp_inter_export <- renderAmCharts({
 })
 
 
-observe({
-  session$sendCustomMessage(type = 'rAmCharts_update_stack',
-                            message = list(input$stack_hyp_inter, "hyp_inter_import"))
-  
-  session$sendCustomMessage(type = 'rAmCharts_update_stack',
-                            message = list(input$stack_hyp_inter, "hyp_inter_export"))
-})
+# observe({
+#   session$sendCustomMessage(type = 'rAmCharts_update_stack',
+#                             message = list(input$stack_hyp_inter, "hyp_inter_import"))
+#   
+#   session$sendCustomMessage(type = 'rAmCharts_update_stack',
+#                             message = list(input$stack_hyp_inter, "hyp_inter_export"))
+# })
 
 
 #------------
