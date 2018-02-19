@@ -1,10 +1,10 @@
-## Principe
+#### Principe
 
 Le scénario repose sur un pilotage du mix vers l'objectif des 50 % de production nucléaire **dans le respect d'un plafond d'émissions de CO2**.
 
 Ce plafond correspond au niveau actuel des émissions du secteur électrique.
 
-## Résultats
+#### Résultats
 
 Le scénario permet une **diversification du mix de production plus rapide**. La cible des 50 % de production nucléaire peut être atteinte en 2030. Par rapport à la variante du scénario Ampère basée sur un niveau de déploiement d'énergies renouvelables comparable (rythme PPE), le développement de nouvelles centrales au gaz permet de « gagner » cinq ans pour atteindre la cible, et conduit à déclasser davantage de réacteurs nucléaires (27 contre 18).
 
@@ -19,4 +19,3 @@ Les moyens thermiques peuvent donc constituer **un outil de la transition du sec
 Dans tous les cas de figure, **l'économie d'un développement important de centrales au gaz repose sur des bases fragiles**. Dans le cas d'une fermeture importante de réacteurs nucléaires, il existe un espace économique pour des centrales à gaz, mais cet espace n'est pas garanti à long terme avec la progression des énergies renouvelables en France comme à l'étranger. Construire des installations prévues pour fonctionner 40 années alors que leurs débouchés ne semblent assurés que sur une période limitée interroge sur le coût à long terme d'un tel mix de production. **De ce fait, le bilan des échanges avec les pays voisins demeure exportateur, mais faiblement.**
 
 **Ce scénario permet une meilleure diversification des risques** pesant sur la sécurité d'approvisionnement par rapport à aujourd'hui car il conduit à remplacer une partie du parc nucléaire par d'autres moyens commandables.
-

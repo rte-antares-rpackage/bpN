@@ -5,16 +5,20 @@
 output$md_gen <- renderUI({
   switch(input$hyp_scenario, 
          "Ampère" = fluidRow(
-           column(12, includeMarkdown("src/aide/ampere_onglet_gen.md"))
+           column(5, img(src= "img/img_fiche_ampere.png", width = "100%")),
+           column(7, includeMarkdown("src/aide/hypotheses_generalites_ampere_2.md"))
          ), 
          "Hertz" = fluidRow(
-           column(12, includeMarkdown("src/aide/hertz_onglet_gen.md"))
+           column(5, img(src= "img/img_fiche_hertz.png", width = "100%")),
+           column(7, includeMarkdown("src/aide/hypotheses_generalites_hertz_2.md"))
          ), 
          "Volt" = fluidRow(
-           column(12, includeMarkdown("src/aide/volt_onglet_gen.md"))
+           column(5, img(src= "img/img_fiche_volt.png", width = "100%")),
+           column(7, includeMarkdown("src/aide/hypotheses_generalites_volt_2.md"))
          ), 
          "Watt" = fluidRow(
-           column(12, includeMarkdown("src/aide/watt_onglet_gen.md"))
+           column(5, img(src= "img/img_fiche_watt.png", width = "100%")),
+           column(7, includeMarkdown("src/aide/hypotheses_generalites_watt_2.md"))
          ))
 })
 
