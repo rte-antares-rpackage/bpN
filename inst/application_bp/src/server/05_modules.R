@@ -6,7 +6,7 @@ observe({
         showModal(modalDialog(
           easyClose = TRUE,
           footer = NULL,
-          "No study selected"
+          "Pas d'étude(s) sélectionnée(s)"
         ))
       } else {
         # plotts and prodStack
@@ -147,7 +147,7 @@ observe({
           showModal(modalDialog(
             easyClose = TRUE,
             footer = NULL,
-            "No study with at least one area and/or link selected"
+            "Pas d'étude(s) sélectionnée(s)"
           ))
         }
       }
