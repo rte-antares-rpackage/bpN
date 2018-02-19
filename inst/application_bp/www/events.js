@@ -26,7 +26,7 @@ AmCharts.addInitHandler(function(chart) {
         var chart = event.chart;
               
         var div = chart.div;
-        div.setAttribute('style', "width : 500px; height	: 400px; position: absolute; top: 0;left: 0;");
+        div.setAttribute('style', "height	: 400px; width: 100%; position: absolute; top: 0;left: 0;");
       
         var parent = div.parentNode;
 

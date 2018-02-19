@@ -1,6 +1,6 @@
 .bilan_charts {
-  width: 500px;
   height: 500px;
+  width: 100%;
   position: relative;
   margin: 0 auto;
   font-size: 8px;
