@@ -224,7 +224,7 @@ prodStack <- function(x,
   }
   
   # Check hidden
-  .validHidden(hidden, c("H5request", "timeSteph5", "tables", "mcYearhH5", "mcYear", "main", "dateRange", 
+  .validHidden(hidden, c("H5request", "timeSteph5", "tables", "mcYearH5", "mcYear", "main", "dateRange", 
                          "stack", "unit", "areas", "legend", "stepPlot", "drawPoints"))
   # Check compare
   .validCompare(compare,  c("mcYear", "main", "unit", "areas", "legend", "stack", "stepPlot", "drawPoints"))
@@ -381,7 +381,7 @@ prodStack <- function(x,
   table <- NULL
   
   ##remove notes
-  mcYearhH5 <- NULL
+  mcYearH5 <- NULL
   paramsH5 <- NULL
   sharerequest <- NULL
   timeStepdataload <- NULL
@@ -449,14 +449,25 @@ prodStack <- function(x,
         label = .getLabelLanguage("table", language), 
         multiple = FALSE, .display = !"tables" %in% hidden
       ),
-      mcYearhH5 = mwSelect(choices = c(paramsH5[["mcYearS"]]), 
+      # mcYearH5 = mwSelect(choices = c(paramsH5[["mcYearS"]]), 
+      #                      # value = {
+      #                      #   if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
+      #                      # }, 
+      #                      # BP 2017
+      #                      value = c(1:2),
+      #                      label = .getLabelLanguage("mcYears to be imported", language), 
+      #                      multiple = TRUE, .display = !"mcYearH5" %in% hidden
+      # ),
+      # BP 2017
+      mcYearH5 = mwSelectize(choices = c("moyenne" = "", paramsH5[["mcYearS"]]), 
                            # value = {
                            #   if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
                            # }, 
                            # BP 2017
                            value = c(1:2),
                            label = .getLabelLanguage("mcYears to be imported", language), 
-                           multiple = TRUE, .display = !"mcYearhH5" %in% hidden
+                           options = list(maxItems = 2),
+                           multiple = TRUE, .display = !"mcYearH5" %in% hidden
       ),
       .display = {
         any(unlist(lapply(x_in, .isSimOpts))) & !"H5request" %in% hidden
@@ -464,7 +475,7 @@ prodStack <- function(x,
     ),
     
     sharerequest = mwSharedValue({
-      list(timeSteph5_l = timeSteph5, mcYearh_l = mcYearhH5, tables_l = tables)
+      list(timeSteph5_l = timeSteph5, mcYearh_l = mcYearH5, tables_l = tables)
     }),
     
     

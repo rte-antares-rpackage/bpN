@@ -305,14 +305,25 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
         label = .getLabelLanguage("timeStep", language),
         multiple = FALSE, .display = !"timeSteph5" %in% hidden
       ),
-      mcYearH5 = mwSelect(choices = c(paramsH5[["mcYearS"]]), 
-                          # value = {
-                          #   if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
-                          # }, 
-                          # BP 2017
-                          value = c(1:2),
-                          label = .getLabelLanguage("mcYears to be imported", language),
-                          multiple = TRUE, .display = !"timeSteph5" %in% hidden
+      # mcYearH5 = mwSelect(choices = c(paramsH5[["mcYearS"]]), 
+      #                     # value = {
+      #                     #   if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
+      #                     # }, 
+      #                     # BP 2017
+      #                     value = c(1:2),
+      #                     label = .getLabelLanguage("mcYears to be imported", language),
+      #                     multiple = TRUE, .display = !"mcYearH5" %in% hidden
+      # ),
+      # BP 2017
+      mcYearH5 = mwSelectize(choices = c("moyenne" = "", paramsH5[["mcYearS"]]), 
+                              # value = {
+                              #   if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
+                              # }, 
+                              # BP 2017
+                              value = c(1:2),
+                              label = .getLabelLanguage("mcYears to be imported", language), 
+                              options = list(maxItems = 2),
+                              multiple = TRUE, .display = !"mcYearH5" %in% hidden
       ),
       .display = {
         any(unlist(lapply(x_in, .isSimOpts))) & !"H5request" %in% hidden
