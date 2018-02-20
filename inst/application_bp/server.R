@@ -33,18 +33,18 @@ function(input, output, session) {
   #----------------
   # Hypotheses
   #----------------
-  source("src/server/02_hypotheses.R", local = T)
+  source("src/server/02_hypotheses.R", local = T, encoding="UTF-8")
   
   #----------------
   # Dataset selection
   #----------------
-  source("src/server/03_data_selection.R", local = T)
+  source("src/server/03_data_selection.R", local = T, encoding="UTF-8")
   
   #----------------
   # shared inputs
   #----------------
   
-  source("src/server/04_shared_input.R", local = T)
+  source("src/server/04_shared_input.R", local = T, encoding="UTF-8")
   
   #-----------------
   # modules
@@ -76,13 +76,13 @@ function(input, output, session) {
   # prodStack, plotTS & stackExchange
   #------------------
   
-  source("src/server/05_modules.R", local = T)
+  source("src/server/05_modules.R", local = T, encoding="UTF-8")
   
   #------------
   # plotMap
   #------------
   
-  source("src/server/06_module_map.R", local = T)
+  source("src/server/06_module_map.R", local = T, encoding="UTF-8")
   
   #----------------
   # quit

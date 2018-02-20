@@ -14,7 +14,7 @@ navbarPage(title = "Bilan prévisionnel 2017", id = "nav-id", theme = "css/custo
            ),windowTitle = "BP 2017 RTE - Accueil",
            # source("src/ui/01_ui_syntheses.R", local = T)$value,
            
-           source("src/ui/02_ui_hypothese.R", local = T)$value,
+           source("src/ui/02_ui_hypothese.R", local = T, encoding="UTF-8")$value,
            
            tabPanel("Analyse détaillée",
                     
@@ -23,19 +23,19 @@ navbarPage(title = "Bilan prévisionnel 2017", id = "nav-id", theme = "css/custo
                     conditionalPanel(condition = "input.update_module > 0 && output.have_data_areas === true",
                                      tabsetPanel(id = "res_tab_id",
                                                  
-                                                 source("src/ui/04_ui_prodstack.R", local = T)$value,
+                                                 source("src/ui/04_ui_prodstack.R", local = T, encoding="UTF-8")$value,
                                                  
-                                                 source("src/ui/05_ui_exchange.R", local = T)$value,
+                                                 source("src/ui/05_ui_exchange.R", local = T, encoding="UTF-8")$value,
                                                  
-                                                 source("src/ui/06_ui_tsplot.R", local = T)$value,
+                                                 source("src/ui/06_ui_tsplot.R", local = T, encoding="UTF-8")$value,
                                                  
-                                                 source("src/ui/07_ui_map.R", local = T)$value
+                                                 source("src/ui/07_ui_map.R", local = T, encoding="UTF-8")$value
                                      )
                     )
                     
                     
            ),
-           source("src/ui/08_ui_help.R", local = T)$value,
+           source("src/ui/08_ui_help.R", local = T, encoding="UTF-8")$value,
            footer = div(br(), br())
 )
 
