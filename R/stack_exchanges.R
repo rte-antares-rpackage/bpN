@@ -74,8 +74,8 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
   }
   
   # Check language
-  if(!language %in% availableLanguages){
-    stop("Invalid 'language' argument. Must be in : ", paste(availableLanguages, collapse = ", "))  
+  if(!language %in% availableLanguages_labels){
+    stop("Invalid 'language' argument. Must be in : ", paste(availableLanguages_labels, collapse = ", "))  
   }
   
   # Check hidden
