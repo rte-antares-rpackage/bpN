@@ -57,7 +57,9 @@ tabPanel("Principaux résultats et hypothèses",
                     # includeMarkdown("src/aide/hypotheses_interco_after.md")
            ),
            tabPanel("Bilans", 
-                    
+                    br(),
+                    includeMarkdown("src/aide/hypotheses_bilans.md"),
+                    br(),
                     fluidRow(
                       
                       column(1, offset = 1, br(), br(), img(src = "img/legend_bilan.png", height = "350px")),
