@@ -151,7 +151,7 @@ output$hyp_inter_import <- renderAmCharts({
                    # main = paste0("Évolution des capacités d'import (scénario ", input$hyp_scenario, ")"),
                    main = "Évolution des capacités d'import",
                    zoom = TRUE, show_values = FALSE, ylab = "MW",
-                   labelRotation = 45)  %>%
+                   labelRotation = 45, ylim = c(0, 35000))  %>%
     setExport(enabled = TRUE, menu = ramcharts_menu_obj)
   
   gr@otherProperties$thousandsSeparator <- " "
@@ -168,7 +168,7 @@ output$hyp_inter_export <- renderAmCharts({
                    # main = paste0("Évolution des capacités d'export (scénario ", input$hyp_scenario, ")"),
                    main = "Évolution des capacités d'export",
                    zoom = TRUE, show_values = FALSE, ylab = "MW",
-                   labelRotation = 45)  %>%
+                   labelRotation = 45, ylim = c(0, 35000))  %>%
     setExport(enabled = TRUE, menu = ramcharts_menu_obj)
   
   gr@otherProperties$thousandsSeparator <- " "
