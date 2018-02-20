@@ -60,7 +60,7 @@ observe({
                                               "miniPlot", "tables", "sizeAreaVars"),
                                    colAreaVar ="LOAD", areaChartType = "pie", sizeMiniPlot = TRUE,
                                    sizeAreaVars = c("NUCLEAR", "LIGNITE", "COAL", "GAS", "OIL", "MIX. FUEL", "MISC. DTG", "H. STOR", "WIND", "SOLAR", "H. ROR", "MISC. NDG"),
-                                   colLinkVar = "CONG. FEE (ABS.)", sizeLinkVar = "FLOW LIN.",
+                                   colLinkVar = "CONG. PROB +", sizeLinkVar = "FLOW LIN.",
                                    xyCompare = "union", .runApp = FALSE)
             
             if("MWController" %in% class(modules$plotMap)){

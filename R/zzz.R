@@ -118,10 +118,6 @@ pkgEnv$prodStackAliases <- list(
 rm(graphicalCharter, formulas, colors)
 
 
-colorsVars <- fread(input=system.file("color.csv", package = "bpNumerique2018"))
-colorsVars$colors <- rgb(colorsVars$red, colorsVars$green, colorsVars$blue, maxColorValue = 255)
-
-
 # message limit size
 antaresVizSizeGraphError = "Too much data, please reduce selection. If you work with hourly data, you can reduce dateRange selection. 
 You can also use 'limitSizeGraph' function in R or 'Memory Controls' panel in shiny (if present) to update this."
@@ -157,6 +153,7 @@ Encoding(language_columns$fr) <- "latin1"
 language_columns$bp <- as.character(language_columns$bp)
 Encoding(language_columns$bp) <- "latin1"
 
+expand_language_columns <- copy(language_columns)
 #add _std _min _max
 language_columns[, tmp_row := 1:nrow(language_columns)]
 
@@ -180,3 +177,19 @@ language_columns[, tmp_row := NULL]
   }
   up_columns
 }
+
+# map color
+colorsVars <- fread(input=system.file("color.csv", package = "bpNumerique2018"))
+colorsVars <- unique(colorsVars, by = "Column")
+colorsVars$colors <- rgb(colorsVars$red, colorsVars$green, colorsVars$blue, maxColorValue = 255)
+
+# expand to bp / fr name
+expand_language_columns <- expand_language_columns[en %in% colorsVars$Column]
+
+ind_match <- match(expand_language_columns$en, colorsVars$Column)
+rev_ind_match <- match(colorsVars$Column, expand_language_columns$en)
+
+col_bp <- colorsVars[Column %in% expand_language_columns$en][, Column := expand_language_columns$bp[rev_ind_match[!is.na(rev_ind_match)]]]
+col_fr <- colorsVars[Column %in% expand_language_columns$en][, Column := expand_language_columns$fr[rev_ind_match[!is.na(rev_ind_match)]]]
+colorsVars <- unique(rbindlist(list(colorsVars, col_bp, col_fr)))
+

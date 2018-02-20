@@ -171,6 +171,17 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
     stop("Invalid 'language' argument. Must be in : ", paste(availableLanguages_labels, collapse = ", "))  
   }
   
+  if(language != "en"){
+    colAreaVar <- .getColumnsLanguage(colAreaVar, language)
+    sizeAreaVars <- .getColumnsLanguage(sizeAreaVars, language)
+    popupAreaVars <- .getColumnsLanguage(popupAreaVars, language)
+    labelAreaVar <- .getColumnsLanguage(labelAreaVar, language)
+    colLinkVar <- .getColumnsLanguage(colLinkVar, language)
+    sizeAreaVars <- .getColumnsLanguage(sizeAreaVars, language)
+    sizeLinkVar <- .getColumnsLanguage(sizeLinkVar, language)
+    popupLinkVars <- .getColumnsLanguage(popupLinkVars, language)
+  }
+  
   # Check hidden
   .validHidden(hidden, c("H5request", "timeSteph5", "tables", "mcYearH5", "mcYear", "dateRange", "Areas", "colAreaVar", 
                          "sizeAreaVars", "miniPlot", "areaChartType", "sizeMiniPlot", "uniqueScale", "showLabels",
@@ -390,7 +401,86 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       
     }
     
+
     # Create the interactive widget
+    if(language != "en"){
+      ind_to_change <- which(colnames(x$areas) %in% language_columns$en)
+      if(length(ind_to_change) > 0){
+        # new_name <- language_columns[en %in% colnames(x$areas), ]
+        # v_new_name <- new_name[[language]]
+        # names(v_new_name) <- new_name[["en"]]
+        # setnames(x$areas, colnames(x$areas)[ind_to_change], unname(v_new_name[colnames(x$areas)[ind_to_change]]))
+        # 
+        # BP 2017
+        # keep subset
+        ind_to_keep <- which(colnames(x$areas) %in% language_columns$en[language_columns$keep_bp])
+        x$areas <- x$areas[, c(.idCols(x$areas), colnames(x$areas)[ind_to_keep]), with = FALSE]
+        ind_to_change <- which(colnames(x$areas) %in% language_columns$en)
+        
+        new_name <- language_columns[en %in% colnames(x$areas), ]
+        v_new_name <- new_name[["bp"]]
+        names(v_new_name) <- new_name[["en"]]
+        setnames(x$areas, colnames(x$areas)[ind_to_change], unname(v_new_name[colnames(x$areas)[ind_to_change]]))
+      }
+      
+      ind_to_change <- which(colnames(syntx$areas) %in% language_columns$en)
+      if(length(ind_to_change) > 0){
+        # new_name <- language_columns[en %in% colnames(syntx$areas), ]
+        # v_new_name <- new_name[[language]]
+        # names(v_new_name) <- new_name[["en"]]
+        # setnames(syntx$areas, colnames(syntx$areas)[ind_to_change], unname(v_new_name[colnames(syntx$areas)[ind_to_change]]))
+        # 
+        # BP 2017
+        # keep subset
+        ind_to_keep <- which(colnames(syntx$areas) %in% language_columns$en[language_columns$keep_bp])
+        syntx$areas <- syntx$areas[, c(.idCols(syntx$areas), colnames(syntx$areas)[ind_to_keep]), with = FALSE]
+        ind_to_change <- which(colnames(syntx$areas) %in% language_columns$en)
+        
+        new_name <- language_columns[en %in% colnames(syntx$areas), ]
+        v_new_name <- new_name[["bp"]]
+        names(v_new_name) <- new_name[["en"]]
+        setnames(syntx$areas, colnames(syntx$areas)[ind_to_change], unname(v_new_name[colnames(syntx$areas)[ind_to_change]]))
+      }
+      
+      ind_to_change <- which(colnames(x$links) %in% language_columns$en)
+      if(length(ind_to_change) > 0){
+        # new_name <- language_columns[en %in% colnames(x$links), ]
+        # v_new_name <- new_name[[language]]
+        # names(v_new_name) <- new_name[["en"]]
+        # setnames(x$links, colnames(x$links)[ind_to_change], unname(v_new_name[colnames(x$links)[ind_to_change]]))
+        # 
+        # BP 2017
+        # keep subset
+        ind_to_keep <- which(colnames(x$links) %in% language_columns$en[language_columns$keep_bp])
+        x$links <- x$links[, c(.idCols(x$links), colnames(x$links)[ind_to_keep]), with = FALSE]
+        ind_to_change <- which(colnames(x$links) %in% language_columns$en)
+        
+        new_name <- language_columns[en %in% colnames(x$links), ]
+        v_new_name <- new_name[["bp"]]
+        names(v_new_name) <- new_name[["en"]]
+        setnames(x$links, colnames(x$links)[ind_to_change], unname(v_new_name[colnames(x$links)[ind_to_change]]))
+      }
+      
+      ind_to_change <- which(colnames(syntx$links) %in% language_columns$en)
+      if(length(ind_to_change) > 0){
+        # new_name <- language_columns[en %in% colnames(syntx$links), ]
+        # v_new_name <- new_name[[language]]
+        # names(v_new_name) <- new_name[["en"]]
+        # setnames(syntx$links, colnames(syntx$links)[ind_to_change], unname(v_new_name[colnames(syntx$links)[ind_to_change]]))
+        # 
+        # BP 2017
+        # keep subset
+        ind_to_keep <- which(colnames(syntx$links) %in% language_columns$en[language_columns$keep_bp])
+        syntx$links <- syntx$links[, c(.idCols(syntx$links), colnames(syntx$links)[ind_to_keep]), with = FALSE]
+        ind_to_change <- which(colnames(syntx$links) %in% language_columns$en)
+        
+        new_name <- language_columns[en %in% colnames(syntx$links), ]
+        v_new_name <- new_name[["bp"]]
+        names(v_new_name) <- new_name[["en"]]
+        setnames(syntx$links, colnames(syntx$links)[ind_to_change], unname(v_new_name[colnames(syntx$links)[ind_to_change]]))
+      }
+    }
+    
     areaValColumns <- setdiff(names(x$areas), .idCols(x$areas))
     areaValColumnsSynt <- setdiff(names(syntx$areas), .idCols(syntx$areas))
     
