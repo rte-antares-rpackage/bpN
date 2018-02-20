@@ -220,7 +220,7 @@ output$bilan_1_1 <- renderAmCharts({
   data_bilan <- data_bilan()
   amPie(data = data_bilan$pie_conso_2025, show_values = TRUE, 
         creditsPosition = "bottom-left",
-        innerRadius = 60, radius = 100,  legend = FALSE,
+        innerRadius = 40, radius = 80,  legend = FALSE,
         labelText =  "[[value]]",
         labelRadius = -20, bringToFront = TRUE,
         labelColor = "white")
@@ -229,7 +229,7 @@ output$bilan_1_1 <- renderAmCharts({
 output$bilan_1_2 <- renderAmCharts({
   data_bilan <- data_bilan()
   suppressWarnings(amPie(data = data_bilan$pie_prod_2025, show_values = TRUE, 
-                         innerRadius = 100, radius = 140, 
+                         innerRadius = 80, radius = 120, 
                          legend = FALSE, creditsPosition = "bottom-left",
                          labelText =  "[[value]]",
                          labelRadius = -20, bringToFront = TRUE,
@@ -243,7 +243,7 @@ output$bilan_1_2 <- renderAmCharts({
                            y =20), 
                            list(
                              text = paste(data_bilan$twh_2025, "TWh"),
-                             size = 18,
+                             size = 14,
                              color = "#404040",
                              x = 0,
                              align = "center",
@@ -267,7 +267,7 @@ output$bilan_2_1 <- renderAmCharts({
   data_bilan <- data_bilan()
   amPie(data = data_bilan$pie_conso_2030, show_values = TRUE, 
         creditsPosition = "bottom-left",
-        innerRadius = 60, radius = 100,  legend = FALSE,
+        innerRadius = 40, radius = 80,  legend = FALSE,
         labelText =  "[[value]]",
         labelRadius = -20, bringToFront = TRUE,
         labelColor = "white")
@@ -276,7 +276,7 @@ output$bilan_2_1 <- renderAmCharts({
 output$bilan_2_2 <- renderAmCharts({
   data_bilan <- data_bilan()
   suppressWarnings(amPie(data = data_bilan$pie_prod_2030, show_values = TRUE, 
-                         innerRadius = 100, radius = 140, 
+                         innerRadius = 80, radius = 120, 
                          legend = FALSE, creditsPosition = "bottom-left",
                          labelText =  "[[value]]",
                          labelRadius = -20, bringToFront = TRUE,
@@ -290,7 +290,7 @@ output$bilan_2_2 <- renderAmCharts({
                            y =20), 
                            list(
                              text = paste(data_bilan$twh_2030, "TWh"),
-                             size = 18,
+                             size = 14,
                              color = "#404040",
                              x = 0,
                              align = "center",
@@ -314,7 +314,7 @@ output$bilan_3_1 <- renderAmCharts({
   data_bilan <- data_bilan()
   amPie(data = data_bilan$pie_conso_2035, show_values = TRUE, 
         creditsPosition = "bottom-left",
-        innerRadius = 60, radius = 100,  legend = FALSE,
+        innerRadius = 40, radius = 80,  legend = FALSE,
         labelText =  "[[value]]",
         labelRadius = -20, bringToFront = TRUE,
         labelColor = "white")
@@ -323,7 +323,7 @@ output$bilan_3_1 <- renderAmCharts({
 output$bilan_3_2 <- renderAmCharts({
   data_bilan <- data_bilan()
   suppressWarnings(amPie(data = data_bilan$pie_prod_2035, show_values = TRUE, 
-                         innerRadius = 100, radius = 140, 
+                         innerRadius = 80, radius = 120, 
                          legend = FALSE, creditsPosition = "bottom-left",
                          labelText =  "[[value]]",
                          labelRadius = -20, bringToFront = TRUE,
@@ -337,7 +337,7 @@ output$bilan_3_2 <- renderAmCharts({
                            y =20), 
                            list(
                              text = paste(data_bilan$twh_2035, "TWh"),
-                             size = 18,
+                             size = 14,
                              color = "#404040",
                              x = 0,
                              align = "center",
