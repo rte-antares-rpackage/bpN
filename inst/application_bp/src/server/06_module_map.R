@@ -37,7 +37,7 @@ observe({
               mwModuleUI(id = id_plotMap, height = "800px")
             })
             
-            .compare <- setdiff(input$sel_compare, "areas")
+            .compare <- setdiff(.global_compare, "areas")
             
             if(length(.compare) > 0 & input$use_compare){
               list_compare <- vector("list", length(.compare))
