@@ -9,8 +9,9 @@ Vous avez la possibilité de modifier le tirage et la période à afficher via l
 **Pompage & Turbinage des STEP**
 
 Les "STEP" (stations de transfert d'énergie par pompage) sont des installations hydroélectriques qui puisent aux heures creuses de l'eau dans un bassin inférieur afin de remplir une retenue en amont (lac d'altitude). L'eau est ensuite turbinée aux heures pleines pour produire de l'électricité.
-<li>La rubrique **Turbinage** correspond à la puissance produite par l'eau turbinée.
-<li>La rubrique **Pompage** représente la puissance consommée par les STEP.
+
+- La rubrique **Turbinage** correspond à la puissance produite par l'eau turbinée.
+- La rubrique **Pompage** représente la puissance consommée par les STEP.
 
 **Autre renouvelable**
 
