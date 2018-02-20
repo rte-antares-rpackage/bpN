@@ -18,7 +18,7 @@ navbarPage(title = "Bilan prévisionnel 2017", id = "nav-id", theme = "css/custo
            
            tabPanel("Analyse détaillée",
                     
-                    source("src/ui/03_ui_data_selection.R", local = T)$value,
+                    source("src/ui/03_ui_data_selection.R", local = T, encoding="UTF-8")$value,
                     
                     conditionalPanel(condition = "input.update_module > 0 && output.have_data_areas === true",
                                      tabsetPanel(id = "res_tab_id",
