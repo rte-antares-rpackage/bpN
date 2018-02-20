@@ -22,7 +22,7 @@ bpNumerique2018::limitSizeGraph(.data_module)
 #--------------
 # data path
 #--------------
-data_dir <- "/home/benoit/bp2017"
+data_dir <- "data"
 
 # map layout
 # ml_data <- tryCatch(readRDS(paste0(data_dir, "/mapLayout-2018-01-19.RDS")), error = function(e) {NULL})

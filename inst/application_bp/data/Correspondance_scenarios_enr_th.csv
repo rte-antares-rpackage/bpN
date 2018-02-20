@@ -1,0 +1,7 @@
+Pays;filiere1;Ampère;Hertz;Volt;Watt
+France;enr;haut;moyen;moyen;haut
+Europe;enr;haut;haut;moyen;haut
+France;nuclear;ampere;hertz;volt;watt
+Europe;nuclear;base;base;base;base
+France;thermal;ampere;hertz;volt;watt
+Europe;thermal;base;base;base;base

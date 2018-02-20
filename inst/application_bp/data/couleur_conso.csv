@@ -1,0 +1,46 @@
+Nom;Type;R;G;B
+Résidentiel;Secteur;20;166;222
+Tertiaire;Secteur;162;199;58
+Industrie;Secteur;222;25;93
+Transport, agriculture et énergie;Secteur;247;170;75
+Pertes;Secteur;180;163;172
+Chauffage;Usage;20;166;222
+Climatisation & ventilation;Usage;113;45;124
+Autres usages résidentiels;Usage;129;204;239
+Bureautique et autres usages tertiaires;Usage;164;214;202
+Eclairage intérieur;Usage;247;170;75
+Eau chaude sanitaire;Usage;222;25;93
+Cuisson;Usage;162;199;58
+VE & VHR;Usage;4;81;137
+Pertes;Usage;180;163;172
+Autres usages;Usage;120;100;120
+Lavage;Usage;190;230;250
+Froid;Usage;220;240;250
+Produits gris & bruns résidentiels;Usage;219;129;179
+Raffinage et pétrole;Branche;147;81;35
+Production et distribution d'eau;Branche;239;118;96
+Chauffage urbain;Branche;247;170;75
+Autres;Branche;250;205;74
+Bureaux, administration;Branche;20;166;222
+Commerce;Branche;222;25;93
+Café, hôytel, restaurants;Branche;202;222;139
+Santé, action sociale;Branche;255;255;255
+Sport, loisirs, culture;Branche;155;212;242
+Enseignement, recherche;Branche;147;81;35
+Habitat communautaire;Branche;243;142;141
+Transport;Branche;4;81;137
+Agriculture;Branche;93;153;139
+Centre de données;Branche;113;45;124
+Centre de recheche énergétique;Branche;192;48;52
+Télécommunications;Branche;43;184;192
+Parties communes habitat/tertiaire;Branche;250;205;74
+Assainissement, gestion des déchets;Branche;162;199;58
+Autres branches tertiaires;Branche;180;163;172
+Industrie agroalimentaire;Branche;150;33;104
+Sidérurgie;Branche;86;75;75
+Métallurgie et mécanique (hors automobile);Branche;20;166;222
+Minéraux et matériaux;Branche;192;48;52
+Chimie et parachimie;Branche;239;118;96
+Construction automobile;Branche;247;170;75
+Industrie du papier et du carton;Branche;162;199;58
+Industries diverses;Branche;180;163;172
