@@ -37,7 +37,11 @@ tabPanel("Principaux résultats et hypothèses",
                       column(2, selectInput("stack_hyp_prod", NULL, choices = c("Valeurs" = "regular", "Pourcentages" = "100%"), 
                                             selected = "regular", multiple = FALSE, width = "100%"))
                     ),
-                    amChartsOutput("hyp_prod", width = "100%", height = "650px")
+                    
+                    fluidRow(
+                      column(6, offset = 3, amChartsOutput("hyp_prod", width = "100%", height = "500px"))
+                    )
+                    
            ),
            tabPanel("Interconnexions", 
                     br(),

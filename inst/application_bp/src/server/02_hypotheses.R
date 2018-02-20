@@ -41,7 +41,7 @@ output$hyp_prod <- renderAmCharts({
                      main = "Évolution du parc installé",
                      zoom = TRUE, show_values = FALSE, 
                      ylab = ifelse(isolate(input$stack_hyp_prod) == "regular", "MW", "%"),
-                     labelRotation = 45, legendPosition = "bottom", autoMargins = FALSE, 
+                     labelRotation = 45, legendPosition = "left", autoMargins = FALSE, 
                      marginLeft = 100, marginTop = 60, marginRight = 60, marginBottom = 60)  %>%
       setExport(enabled = TRUE, menu = ramcharts_menu_obj)
     

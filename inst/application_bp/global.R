@@ -173,7 +173,7 @@ setProdStackAlias(
 sce_prod <- fread(paste0(data_dir, "/correspondance_scenarios_v2.csv"), encoding = "Latin-1")
 
 # bug with fread
-hyp_prod <- data.table(read.table(paste0(data_dir, "/BP2017_production_hypothesis_global_v4.csv"), dec = ",", 
+hyp_prod <- data.table(read.table(paste0(data_dir, "/BP2017_production_hypothesis_v5_global.csv"), dec = ",", 
                                   sep = ";", header = T, encoding = "Latin-1"))
 
 hyp_prod$filiere2 <- as.character(hyp_prod$filiere2)
@@ -181,7 +181,7 @@ Encoding(hyp_prod$filiere2) <- "latin1"
 
 # renommage en francais
 unique(hyp_prod$filiere2)
-hyp_prod$filiere2 <- gsub("^other$", "Autre renouvelables", hyp_prod$filiere2)
+hyp_prod$filiere2 <- gsub("^other$", "autres_renouvelables", hyp_prod$filiere2)
 hyp_prod$filiere2 <- gsub("^wind$", "éolien", hyp_prod$filiere2)
 hyp_prod$filiere2 <- gsub("^solar$", "solaire", hyp_prod$filiere2)
 hyp_prod$filiere2 <- gsub("^biogas$", "biogaz", hyp_prod$filiere2)
@@ -193,7 +193,7 @@ hyp_prod$filiere2 <- gsub("^waste$", "déchets", hyp_prod$filiere2)
 hyp_prod$filiere2 <- gsub("^wave$", "houlomotrice", hyp_prod$filiere2)
 
 # remove 2036
-hyp_prod <- hyp_prod[date != 2036]
+# hyp_prod <- hyp_prod[date != 2036]
 
 # hyp_prod[, .N, list(filiere1, filiere2)]
 # hyp_prod[, .N, list(filiere1, filiere2, filiere3)]
@@ -241,9 +241,9 @@ getProductionHypothesis <- function(data, nodes = NULL, sce_prod = NULL, scenari
   
   data <- rbindlist(list(data_no_hydro, data_hydro))
   if(is.null(nodes)){
-    res <- data[, list(capa = sum(capacite)), by = list(date, filiere2)]
+    res <- data[, list(capa = sum(capacite)), by = list(date = date_BP_num, filiere2)]
   } else {
-    res <- data[node %in% nodes, list(capa = sum(capacite)), by = list(date, filiere2)]
+    res <- data[node %in% nodes, list(capa = sum(capacite)), by = list(date = date_BP_num, filiere2)]
   }
   
   # GW ?
