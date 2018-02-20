@@ -132,7 +132,7 @@ Il est également possible d'utiliser la fonction 'limitSizeGraph' en R ou l'ong
 # language for labels
 language_labels <- fread(input=system.file("language_labels.csv", package = "bpNumerique2018"), encoding = "UTF-8")
 
-availableLanguages <- colnames(language_labels)
+availableLanguages_labels <- colnames(language_labels)
 
 .getLabelLanguage <- function(label, language = "en"){
   if(language %in% colnames(language_labels)){
@@ -144,4 +144,39 @@ availableLanguages <- colnames(language_labels)
     up_label <- label
   }
   up_label
+}
+
+# language for columns
+language_columns <- fread(input=system.file("language_columns.csv", package = "bpNumerique2018"), encoding = "UTF-8")
+
+language_columns$en <- as.character(language_columns$en)
+
+language_columns$fr <- as.character(language_columns$fr)
+Encoding(language_columns$fr) <- "latin1"
+
+language_columns$bp <- as.character(language_columns$bp)
+Encoding(language_columns$bp) <- "latin1"
+
+#add _std _min _max
+language_columns[, tmp_row := 1:nrow(language_columns)]
+
+language_columns <- language_columns[, list(en = c(en, paste0(en, c("_std", "_min", "_max"))),
+                        bp = c(bp, paste0(bp, c("_std", "_min", "_max"))),
+                        fr = c(fr, paste0(fr, c("_std", "_min", "_max"))),
+                        keep_bp = rep(keep_bp, 4)), by = tmp_row]
+
+language_columns[, tmp_row := NULL]
+
+
+.getColumnsLanguage <- function(columns, language = "en"){
+  if(language %in% colnames(language_columns)){
+    ind_match <- match(columns, language_columns$en)
+    up_columns <- columns
+    if(any(!is.na(ind_match))){
+      up_columns[which(!is.na(ind_match))] <- language_columns[[language]][ind_match[!is.na(ind_match)]]
+    }
+  } else {
+    up_columns <- columns
+  }
+  up_columns
 }

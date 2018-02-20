@@ -1,0 +1,39 @@
+en;bp;fr;keep_bp
+OV. COST ;cout_total;cout_total;F
+OP. COST;cout_operationnel;cout_operationnel;T
+MRG. PRICE;prix_marginal;prix_marginal;T
+CO2 EMIS.;CO2;CO2;T
+BALANCE;echanges;echanges;T
+ROW BAL.;flux_fixe;flux_fixe;F
+PSP;pompage_turbinage;pompage_turbinage;F
+MISC. NDG;renouvelable_autre;renouvelable_autre;T
+LOAD;consommation;consommation;T
+H. ROR;hydraulique_fil;hydraulique_fil;T
+WIND;eolien;eolien;T
+SOLAR;solaire;solaire;T
+NUCLEAR;nucleaire;nucleaire;T
+LIGNITE;lignite;lignite;T
+COAL;charbon;charbon;T
+GAS;gaz;gaz;T
+OIL;fioul;fioul;T
+MIX. FUEL;thermique_mixte;thermique_mixte;T
+MISC. DTG;effacements;thermique_autre;T
+H. STOR;hydraulique_lac;hydraulique_lac;T
+UNSP. ENRG;energie_non_distribuee;energie_non_distribuee;T
+SPIL. ENRG;deversement;deversement;T
+LOLD;defaillance;defaillance;T
+LOLP;probabilite_defaillance;probabilite_defaillance;F
+AVL DTG;marge_disponible;marge_disponible;F
+DTG MRG;marge_pilotable;marge_pilotable;F
+MAX MRG;marge_maximum;marge_maximum;F
+NP COST ;cout_demarrage;cout_demarrage;F
+NODU;unite_demarre;unite_demarre;F
+FLOW LIN.;flux;flux;T
+UCAP LIN.;flux_absolu;flux_absolu;F
+FLOW QUAD.;flux_quadratique;flux_quadratique;F
+CONG. FEE (ALG.);cout_congestion;cout_congestion;F
+CONG. FEE (ABS.);cout_congesiton_absolu;cout_congesiton_absolu;F
+MARG. COST;cout_marginal;cout_marginal;F
+CONG. PROB +;congestion+;congestion+;T
+CONG. PROB -;congestion-;congestion-;T
+HURDLE COST;cout_interconnexion;cout_interconnexion;F

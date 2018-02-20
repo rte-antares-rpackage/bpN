@@ -201,8 +201,13 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
   }
   
   # Check language
-  if(!language %in% availableLanguages){
-    stop("Invalid 'language' argument. Must be in : ", paste(availableLanguages, collapse = ", "))  
+  if(!language %in% availableLanguages_labels){
+    stop("Invalid 'language' argument. Must be in : ", paste(availableLanguages_labels, collapse = ", "))  
+  }
+  
+  if(language != "en"){
+    variable <- .getColumnsLanguage(variable, language)
+    variable2Axe <- .getColumnsLanguage(variable2Axe, language)
   }
   
   # Check hidden
@@ -263,6 +268,27 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
     
     lapply(x, function(x) {
       idCols <- .idCols(x)
+      
+      if(language != "en"){
+        ind_to_change <- which(colnames(x) %in% language_columns$en)
+        if(length(ind_to_change) > 0){
+          # new_name <- language_columns[en %in% colnames(x), ]
+          # v_new_name <- new_name[[language]]
+          # names(v_new_name) <- new_name[["en"]]
+          # setnames(x, colnames(x)[ind_to_change], unname(v_new_name[colnames(x)[ind_to_change]]))
+          # 
+          # BP 2017
+          # keep subset
+          ind_to_keep <- which(colnames(x) %in% language_columns$en[language_columns$keep_bp])
+          x <- x[, c(idCols, colnames(x)[ind_to_keep]), with = FALSE]
+          ind_to_change <- which(colnames(x) %in% language_columns$en)
+          
+          new_name <- language_columns[en %in% colnames(x), ]
+          v_new_name <- new_name[["bp"]]
+          names(v_new_name) <- new_name[["en"]]
+          setnames(x, colnames(x)[ind_to_change], unname(v_new_name[colnames(x)[ind_to_change]]))
+        }
+      }
       valueCols <- setdiff(names(x), idCols)
       timeStep <- attr(x, "timeStep")
       opts <- simOptions(x)
@@ -611,9 +637,15 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
       }
     },
     value = {
-      if(.initial) as.character(.compareOperation(lapply(params$x, function(vv){
-        unique(vv[[table]]$valueCols)
-      }), xyCompare))[1]
+      if(.initial){
+        if(is.null(variable)){
+          as.character(.compareOperation(lapply(params$x, function(vv){
+            unique(vv[[table]]$valueCols)
+          }), xyCompare))[1]
+        } else {
+          variable
+        }
+      } 
       else NULL
     }, multiple = TRUE, 
     label = .getLabelLanguage("variable", language),
@@ -633,7 +665,7 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
                             }
                           },
                           value = {
-                            if(.initial) NULL
+                            if(.initial) variable2Axe
                             else NULL
                           }, multiple = TRUE, .display = secondAxis & !"variable2Axe" %in% hidden
   ),
