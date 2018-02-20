@@ -29,19 +29,20 @@ output$md_gen <- renderUI({
 # production
 #------------
 output$hyp_prod <- renderAmCharts({
-  
   input$hyp_scenario
   input$go_hyp_prod
   isolate({
     res <- getProductionHypothesis(data = hyp_prod, nodes = input$area_hyp_prod, sce_prod = sce_prod, scenario = input$hyp_scenario)
     
     gr  <- amBarplot(x = "date", y = colnames(res)[-1], data = res, 
-                     stack_type = "regular", legend = TRUE,
+                     stack_type = ifelse(isolate(input$stack_hyp_prod) == "regular", "regular", "100"), legend = TRUE,
                      groups_color = unname(prod_col[colnames(res)[-1]]), 
                      # main = paste0("Évolution du parc installé (scénario ", input$hyp_scenario, ")"),
                      main = "Évolution du parc installé",
-                     zoom = TRUE, show_values = FALSE, ylab = "MW",
-                     labelRotation = 45, legendPosition = "bottom")  %>%
+                     zoom = TRUE, show_values = FALSE, 
+                     ylab = ifelse(isolate(input$stack_hyp_prod) == "regular", "MW", "%"),
+                     labelRotation = 45, legendPosition = "bottom", autoMargins = FALSE, 
+                     marginLeft = 100, marginTop = 60, marginRight = 60, marginBottom = 60)  %>%
       setExport(enabled = TRUE, menu = ramcharts_menu_obj)
     
     gr@otherProperties$thousandsSeparator <- " "
@@ -51,7 +52,12 @@ output$hyp_prod <- renderAmCharts({
       x
     })
     
-    gr@legend$valueText <- "[[value]] MW"
+    if(isolate(input$stack_hyp_prod) == "regular"){
+      gr@legend$valueText <- "[[value]] MW"
+    } else {
+      gr@legend$valueText <- "[[percents]]%"
+    }
+   
     gr@legend$unit <- "MW"
     
     gr
@@ -68,7 +74,6 @@ observe({
 # consommation
 #------------
 output$hyp_conso <- renderAmCharts({
-  
   type <- input$type_hyp_conso
   res <- getConsoHypothesis(data = hyp_conso, type = type, sce_prod = sce_prod, scenario = input$hyp_scenario)
   
@@ -78,14 +83,15 @@ output$hyp_conso <- renderAmCharts({
     groups_color = unname(usage_col[colnames(res)[-1]])
   }
   gr  <- amBarplot(x = "date", y = colnames(res)[-1], data = res, 
-                   stack_type = "regular", legend = TRUE,
+                   stack_type = ifelse(isolate(input$stack_hyp_conso) == "regular", "regular", "100"), legend = TRUE,
                    groups_color = groups_color, 
                    # main = paste0("Hypothèses de consommation (scénario ", input$hyp_scenario, ")"),
                    main = "Évolution de la consommation",
                    zoom = ifelse(type == "Branche", FALSE, TRUE), 
-                   show_values = FALSE, ylab = "TWh",
+                   show_values = FALSE, ylab = ifelse(isolate(input$stack_hyp_conso) == "regular", "TWh", "%"),
                    # horiz = ifelse(type == "Branche", TRUE, FALSE),
-                   labelRotation = 45, legendPosition = "bottom")  %>%
+                   labelRotation = 45, legendPosition = "bottom", autoMargins = FALSE, 
+                   marginLeft = 100, marginTop = 60, marginRight = 60, marginBottom = 60)  %>%
     setExport(enabled = TRUE, menu = ramcharts_menu_obj)
   
   gr@otherProperties$thousandsSeparator <- " "
@@ -101,7 +107,12 @@ output$hyp_conso <- renderAmCharts({
     x
   })
   
-  gr@legend$valueText <- "[[value]] TWh"
+  if(isolate(input$stack_hyp_conso) == "regular"){
+    gr@legend$valueText <- "[[value]] TWh"
+  } else {
+    gr@legend$valueText <- "[[percents]]%"
+  }
+  
   gr@legend$unit <- "TWh"
   
   gr
