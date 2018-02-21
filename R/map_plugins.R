@@ -53,14 +53,15 @@ addShadows <- function(map) {
 #' @noRd
 addAntaresLegend <- function(map, htmlAreaColor = NULL, htmlAreaSize = NULL, 
                              htmlLinkColor = NULL, htmlLinkSize = NULL,
-                             onComplete = "", display = "choose") {
+                             onComplete = "", display = "choose", language = "en") {
   options <- list(
     htmlAreaColor = htmlAreaColor,
     htmlAreaSize = htmlAreaSize,
     htmlLinkColor = htmlLinkColor,
     htmlLinkSize = htmlLinkSize,
     onComplete = onComplete,
-    display = display
+    display = display,
+    language = language
   )
   
   map %>% requireDep("antaresLegend") %>% 

@@ -142,7 +142,7 @@
 
 # Initialize a map with all elements invisible: links, circles and bar or polar 
 # charts 
-.initMap <- function(x, ml, options) {
+.initMap <- function(x, ml, options, language = "en") {
   
   map <- plot(ml, areas = !is.null(x$areas), links = !is.null(x$links), 
               colAreas = options$areaDefaultCol,
@@ -151,7 +151,7 @@
               labelMaxSize = options$labelMaxSize,
               tilesURL = options$tilesURL, 
               preprocess = options$preprocess) %>% 
-    addAntaresLegend(display = options$legend)
+    addAntaresLegend(display = options$legend, language = language)
   
   addShadows(map)
 }

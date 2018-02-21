@@ -3,9 +3,9 @@ timeStep;Pas de temps
 mcYears to be imported;Tirage(s) à importer
 mcYear to be displayed;Tirage à visualiser
 H5request;Données
-area;Zone
-Areas;Zones
-areas;Zones
+area;Nœud
+Areas;Nœuds
+areas;Nœuds
 dateRange;Période
 unit;Unité
 legend;Légende
@@ -27,8 +27,8 @@ aggregate;Agrégation
 none;sans
 mean;moyenne
 sum;somme
-mean by areas;moyenne par zone
-sum by areas;somme par zone
+mean by areas;moyenne par nœud
+sum by areas;somme par nœud
 highlight;Surbrillance
 Color;Couleur
 Size;Taille

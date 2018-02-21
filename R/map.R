@@ -177,7 +177,6 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
     popupAreaVars <- .getColumnsLanguage(popupAreaVars, language)
     labelAreaVar <- .getColumnsLanguage(labelAreaVar, language)
     colLinkVar <- .getColumnsLanguage(colLinkVar, language)
-    sizeAreaVars <- .getColumnsLanguage(sizeAreaVars, language)
     sizeLinkVar <- .getColumnsLanguage(sizeLinkVar, language)
     popupLinkVars <- .getColumnsLanguage(popupLinkVars, language)
   }
@@ -379,16 +378,16 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       
       if (initial) {
         assign("currentMapLayout", mapLayout, envir = env_plotFun)
-        map <- .initMap(x, mapLayout, options) %>% syncWith(group)
+        map <- .initMap(x, mapLayout, options, language = language) %>% syncWith(group)
       } else if(!isTRUE(all.equal(mapLayout, get("currentMapLayout", envir = env_plotFun)))){
         assign("currentMapLayout", mapLayout)
-        map <- .initMap(x, mapLayout, options) %>% syncWith(group)
+        map <- .initMap(x, mapLayout, options, language = language) %>% syncWith(group)
       } else {
         # in some case, map doesn't existed yet....!
         if("output_1_zoom" %in% names(session$input)){
           map <- leafletProxy(outputId, session)
         } else {
-          map <- .initMap(x, mapLayout, options) %>% syncWith(group)
+          map <- .initMap(x, mapLayout, options, language = language) %>% syncWith(group)
         }
       }
       map <- map %>% 
