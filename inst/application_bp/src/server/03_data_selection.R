@@ -7,7 +7,8 @@ output$list_study <- renderUI({
     choices = names(list_data)
     names(choices) <- gsub(".h5$", "", choices)
     isolate({
-      selectInput("sel_study", label = NULL, choices = choices, selected = choices[1], multiple = TRUE, width = "100%")
+      selectizeInput("sel_study", label = NULL, choices = choices, selected = choices[1], multiple = TRUE, 
+                     width = "100%", options = list(maxItems = 4))
     })
   }
 })
