@@ -394,8 +394,7 @@ prodStack <- function(x,
   timeSteph5 <- NULL
   x_in <- NULL
   x_tranform <- NULL
-  
-  
+
   manipulateWidget(
     {
       .tryCloseH5()
@@ -565,6 +564,10 @@ prodStack <- function(x,
         .dateRangeJoin(params = params, xyCompare = xyCompare, "max", tabl = table)
       }
     }, 
+    language = eval(parse(text = "language")),
+    # BP 2017
+    format = "dd MM",
+    separator = " : ",
     label = .getLabelLanguage("dateRange", language), 
     .display = !"dateRange" %in% hidden
     ),

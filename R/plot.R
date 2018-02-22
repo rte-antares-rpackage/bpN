@@ -717,6 +717,10 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
       if(is.infinite(R)){NULL}else{R}
     }
   },
+  language = eval(parse(text = "language")),
+  # BP 2017
+  format = "dd MM",
+  separator = " : ",
   .display = timeStepdataload != "annual" & !"dateRange" %in% hidden, 
   label = .getLabelLanguage("dateRange", language)
   ),

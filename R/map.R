@@ -698,6 +698,10 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       },
       min = params$x[[1]]$dateRange[1], 
       max = params$x[[1]]$dateRange[2], 
+      language = eval(parse(text = "language")),
+      # BP 2017
+      format = "dd MM",
+      separator = " : ",
       label = .getLabelLanguage("dateRange", language), 
       .display = !"dateRange" %in% hidden
     ),

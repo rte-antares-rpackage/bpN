@@ -427,6 +427,10 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
         .dateRangeJoin(params = params, xyCompare = xyCompare, "max", tabl = NULL)
       }
     },
+    language = eval(parse(text = "language")),
+    # BP 2017
+    format = "dd MM",
+    separator = " : ",
     .display = timeStepdataload != "annual" & !"timeSteph5" %in% hidden,
     label = .getLabelLanguage("dateRange", language)
     ),
