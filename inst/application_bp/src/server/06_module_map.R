@@ -43,9 +43,9 @@ observe({
               list_compare <- vector("list", length(.compare))
               names(list_compare) <- .compare
               # set main with study names
-              if(length(ind_map) != 1){
-                list_compare$main <- names(list_data_all$antaresDataList[ind_map])
-              }
+              # if(length(ind_map) != 1){
+              #   list_compare$main <- names(list_data_all$antaresDataList[ind_map])
+              # }
               .compare <- list_compare
             } else {
               .compare = NULL

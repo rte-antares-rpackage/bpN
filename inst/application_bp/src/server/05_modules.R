@@ -33,7 +33,11 @@ observe({
             }
             .compare <- list_compare
           } else {
-            .compare = NULL
+            if(length(ind_areas) > 1){
+              .compare <- list(main = names(list_data_all$antaresDataList[ind_areas]))
+            } else {
+              .compare = NULL
+            }
           }
           mod_prodStack <- prodStack(list_data_all$antaresDataList[ind_areas], xyCompare = "union",
                                      # h5requestFiltering = list_data_all$params[ind_areas],
@@ -67,11 +71,15 @@ observe({
             names(list_compare) <- .compare
             # set main with study names
             if(length(ind_areas) != 1){
-              list_compare$main <- names(list_data_all$antaresDataList[ind_areas])
+              list_compare$main <- gsub(".h5$", "",names(list_data_all$antaresDataList[ind_areas]))
             }
             .compare <- list_compare
           } else {
-            .compare = NULL
+            if(length(ind_areas) > 1){
+              .compare <- list(main = gsub(".h5$", "",names(list_data_all$antaresDataList[ind_areas])))
+            } else {
+              .compare = NULL
+            }
           }
           mod_plotts <- plot(list_data_all$antaresDataList[ind_areas], xyCompare = "union",
                              h5requestFiltering = list_data_all$params[ind_areas],
@@ -118,8 +126,13 @@ observe({
             }
             .compare <- list_compare
           } else {
-            .compare = NULL
+            if(length(ind_links) > 1){
+              .compare <- list(main = names(list_data_all$antaresDataList[ind_links]))
+            } else {
+              .compare = NULL
+            }
           }
+          
           mod_exchangesStack <- exchangesStack(list_data_all$antaresDataList[ind_links], xyCompare = "union",
                                                h5requestFiltering = list_data_all$params[ind_links],
                                                interactive = TRUE, .updateBtn = TRUE, 

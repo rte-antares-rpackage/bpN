@@ -310,8 +310,14 @@ prodStack <- function(x,
       }
       
       # BP 2017
-      main <- paste0("Production ", areas, " (tirage ", mcYear, ")")
-      
+      if(length(main) > 0){
+        if(grepl("h5$", main)){
+          main <- paste0(gsub(".h5$", "", main), " : ", areas, " (tirage ", mcYear, ")")
+        } else {
+          main <- paste0("Production ", areas, " (tirage ", mcYear, ")")
+        }
+      }
+
       p <- try(.plotProdStack(dt,
                               stackOpts$variables,
                               stackOpts$colors,
