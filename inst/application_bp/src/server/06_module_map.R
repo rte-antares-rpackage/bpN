@@ -59,7 +59,7 @@ observe({
                                    hidden = c("showLabels", "popupLinkVars", "uniqueScale", "showLabels", "popupAreaVars", 
                                               "miniPlot", "tables", "sizeAreaVars", "Links"),
                                    colAreaVar ="LOAD", areaChartType = "pie", sizeMiniPlot = TRUE,
-                                   sizeAreaVars = c("NUCLEAR", "LIGNITE", "COAL", "GAS", "OIL", "MIX. FUEL", "MISC. DTG", "H. STOR", "WIND", "SOLAR", "H. ROR", "MISC. NDG"),
+                                   sizeAreaVars = c("NUCLEAR", "COAL", "GAS", "OIL", "MIX. FUEL", "MISC. DTG", "H. STOR", "WIND", "SOLAR", "H. ROR", "MISC. NDG"),
                                    colLinkVar = "congestion", sizeLinkVar = "FLOW LIN.",
                                    xyCompare = "union", .runApp = FALSE)
             

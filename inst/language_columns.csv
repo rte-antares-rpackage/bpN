@@ -1,7 +1,7 @@
 en;bp;fr;keep_bp
 OV. COST ;cout_total;cout_total;F
-OP. COST;cout_operationnel;cout_operationnel;T
-MRG. PRICE;prix_marginal;prix_marginal;T
+OP. COST;cout_operationnel;cout_operationnel;F
+MRG. PRICE;prix_marginal;prix_marginal;F
 CO2 EMIS.;CO2;CO2;T
 BALANCE;echanges;echanges;T
 ROW BAL.;flux_fixe;flux_fixe;F
@@ -12,7 +12,7 @@ H. ROR;hydraulique_fil;hydraulique_fil;T
 WIND;eolien;eolien;T
 SOLAR;solaire;solaire;T
 NUCLEAR;nucleaire;nucleaire;T
-LIGNITE;lignite;lignite;T
+LIGNITE;lignite;lignite;F
 COAL;charbon;charbon;T
 GAS;gaz;gaz;T
 OIL;fioul;fioul;T
