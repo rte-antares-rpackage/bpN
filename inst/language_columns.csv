@@ -12,7 +12,7 @@ H. ROR;hydraulique_fil;hydraulique_fil;T
 WIND;eolien;eolien;T
 SOLAR;solaire;solaire;T
 NUCLEAR;nucleaire;nucleaire;T
-LIGNITE;lignite;lignite;F
+LIGNITE;lignite;lignite;T
 COAL;charbon;charbon;T
 GAS;gaz;gaz;T
 OIL;fioul;fioul;T
