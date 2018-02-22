@@ -84,7 +84,7 @@
       
       domain <- rangevar 
       
-      if (colVar == "FLOW LIN.") colorScaleOpts$x <- abs(data[[colVar]])
+      if (colVar %in% c("FLOW LIN.", .getColumnsLanguage("FLOW LIN.", language = "fr"))) colorScaleOpts$x <- abs(data[[colVar]])
       else colorScaleOpts$x <- data[[colVar]]
       
       colorScaleOpts$domain <- domain
@@ -119,7 +119,11 @@
     res$dir <- sign(data$`FLOW LIN.`)
     #coords[, `FLOW LIN.` := abs(`FLOW LIN.`)]
   } else {
-    res$dir <- 0
+    if(.getColumnsLanguage("FLOW LIN.", language = "fr")  %in% names(data)){
+      res$dir <- sign(data[[.getColumnsLanguage("FLOW LIN.", language = "fr")]])
+    } else {
+      res$dir <- 0
+    }
   }
   
   # Pop-up
