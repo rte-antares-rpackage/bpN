@@ -38,7 +38,10 @@ add_h5_file <- lapply(1:length(h5_files), function(x){
   params <- list(
     areas = "all", links = "all", 
     clusters = "all", districts = "all",
-    select = NULL
+    select = c("OV. COST", "OP. COST", "MRG. PRICE", "CO2 EMIS.", "BALANCE", "ROW BAL.", "PSP", "MISC. NDG",
+               "LOAD", "H. ROR", "WIND", "SOLAR", "NUCLEAR", "LIGNITE", "COAL", "GAS", "OIL", "MIX. FUEL",
+               "MISC. DTG", "H. STOR", "UNSP. ENRG", "SPIL. ENRG", "LOLD", "LOLP", "AVL DTG", "DTG MRG", "MAX MRG", 
+               "NP COST", "NODU", "FLOW LIN.", "congestion")
   )
   
   # a .h5 file, so return opts...
@@ -87,26 +90,26 @@ setProdStackAlias(
   lineWidth = 2
 )
 
-# setProdStackAlias(
-#   name = "thermalFirst",
-#   variables = alist(
-#     "Pompage/turbinage" = PSP,
-#     "import/export" = -(BALANCE + `ROW BAL.`),
-#     "Nucléaire" = NUCLEAR,
-#     "Lignite" = LIGNITE,
-#     "Charbon" = COAL,
-#     "Gaz" = GAS,
-#     "Fioul" = OIL,
-#     "Autre thermique" = `MIX. FUEL`,
-#     "Effacement" = `MISC. DTG`,
-#     "Autre renouvelable" = `MISC. NDG`,
-#     "Eolien" = WIND,
-#     "Solaire" = SOLAR,
-#     "Hydraulique fil" = `H. ROR`,
-#     "Hydraulique lac" = `H. STOR`
-#   ),
-#   colors = c("#1147B9", "#969696", "#F5B300", "#B4822B", "#AC8C35", "#F30A0A", "#8356A2", "#7F549C", "#ADFF2F", "#166A57", "#74CDB9", "#F27406", "#3D607D", "#5497D0")
-# )
+setProdStackAlias(
+  name = "thermalFirst",
+  variables = alist(
+    "Pompage/turbinage" = PSP,
+    "import/export" = -(BALANCE + `ROW BAL.`),
+    "Nucléaire" = NUCLEAR,
+    "Lignite" = LIGNITE,
+    "Charbon" = COAL,
+    "Gaz" = GAS,
+    "Fioul" = OIL,
+    "Autre thermique" = `MIX. FUEL`,
+    "Effacement" = `MISC. DTG`,
+    "Autre renouvelable" = `MISC. NDG`,
+    "Eolien" = WIND,
+    "Solaire" = SOLAR,
+    "Hydraulique fil" = `H. ROR`,
+    "Hydraulique lac" = `H. STOR`
+  ),
+  colors = c("#1147B9", "#969696", "#F5B300", "#B4822B", "#AC8C35", "#F30A0A", "#8356A2", "#7F549C", "#ADFF2F", "#166A57", "#74CDB9", "#F27406", "#3D607D", "#5497D0")
+)
 
 
 # shared inputs

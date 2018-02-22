@@ -37,3 +37,4 @@ MARG. COST;cout_marginal;cout_marginal;F
 CONG. PROB +;congestion+;congestion+;T
 CONG. PROB -;congestion-;congestion-;T
 HURDLE COST;cout_interconnexion;cout_interconnexion;F
+congestion;congestion;congestion;T

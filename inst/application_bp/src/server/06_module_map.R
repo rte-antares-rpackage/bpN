@@ -57,10 +57,10 @@ observe({
                                    h5requestFiltering = list_data_all$params[ind_map],
                                    language = "fr", 
                                    hidden = c("showLabels", "popupLinkVars", "uniqueScale", "showLabels", "popupAreaVars", 
-                                              "miniPlot", "tables", "sizeAreaVars"),
+                                              "miniPlot", "tables", "sizeAreaVars", "Links"),
                                    colAreaVar ="LOAD", areaChartType = "pie", sizeMiniPlot = TRUE,
                                    sizeAreaVars = c("NUCLEAR", "LIGNITE", "COAL", "GAS", "OIL", "MIX. FUEL", "MISC. DTG", "H. STOR", "WIND", "SOLAR", "H. ROR", "MISC. NDG"),
-                                   colLinkVar = "CONG. PROB +", sizeLinkVar = "FLOW LIN.",
+                                   colLinkVar = "congestion", sizeLinkVar = "FLOW LIN.",
                                    xyCompare = "union", .runApp = FALSE)
             
             if("MWController" %in% class(modules$plotMap)){
