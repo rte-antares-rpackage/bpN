@@ -540,6 +540,11 @@ plot.mapLayout <- function(x, colAreas =  x$coords$color, dataAreas = 1,
   
   map <- leaflet(width = width, height = height, padding = 10) %>% addTiles(tilesURL) 
   
+  # fitBounds
+  if(!is.null(x$all_coords)){
+    map <- fitBounds(map, min(x$all_coords$x), min(x$all_coords$y), max(x$all_coords$x), max(x$all_coords$y))
+  }
+  
   # Add Polygons
   if (areas & !is.null(x$map)) {
     map <- addPolygons(map, data = x$map, layerId = x$coords$area, fillColor = colAreas, weight = 1,
