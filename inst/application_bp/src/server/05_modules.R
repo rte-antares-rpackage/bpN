@@ -44,7 +44,7 @@ observe({
                                      unit = "GWh", main = "Production", areas = "fr", mcYear = "1",
                                      interactive = TRUE, .updateBtn = TRUE, 
                                      .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE, 
-                                     language = "fr", hidden = c("stepPlot", "drawPoints", "main", "legend", "unit", "tables"))
+                                     language = "fr", hidden = c("stepPlot", "drawPoints", "main", "legend", "unit", "tables", "areas"))
           
           if("MWController" %in% class(modules$prodStack)){
             modules$prodStack$clear()
@@ -138,7 +138,7 @@ observe({
                                                interactive = TRUE, .updateBtn = TRUE, 
                                                mcYear = "1", main = "Echanges", unit = "GWh", area = "fr",
                                                stepPlot = TRUE, language = "fr", 
-                                               hidden = c("stepPlot", "legend", "unit", "main", "drawPoints"),
+                                               hidden = c("stepPlot", "legend", "unit", "main", "drawPoints", "area"),
                                                .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE)
           
           if("MWController" %in% class(modules$exchangesStack)){

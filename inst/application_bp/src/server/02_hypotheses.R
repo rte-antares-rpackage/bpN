@@ -30,10 +30,10 @@ output$md_gen <- renderUI({
 #------------
 output$hyp_prod <- renderAmCharts({
   input$hyp_scenario
-  input$go_hyp_prod
+  # input$go_hyp_prod
   isolate({
-    res <- getProductionHypothesis(data = hyp_prod, nodes = input$area_hyp_prod, sce_prod = sce_prod, scenario = input$hyp_scenario)
-    
+    # res <- getProductionHypothesis(data = hyp_prod, nodes = input$area_hyp_prod, sce_prod = sce_prod, scenario = input$hyp_scenario)
+    res <- getProductionHypothesis(data = hyp_prod, nodes = "fr", sce_prod = sce_prod, scenario = input$hyp_scenario)
     gr  <- amBarplot(x = "date", y = colnames(res)[-1], data = res, 
                      stack_type = ifelse(isolate(input$stack_hyp_prod) == "regular", "regular", "100"), legend = TRUE,
                      groups_color = unname(prod_col[colnames(res)[-1]]), 

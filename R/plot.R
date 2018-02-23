@@ -481,6 +481,7 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
       widget <- params[["x"]][[max(1,.id)]][[table]]$plotFun(mcYear, .id, variable, variable2Axe, elements, type, confInt, 
                                                              dateRange, minValue, maxValue, aggregate, legend, 
                                                              highlight, stepPlot, drawPoints, main)
+      
       controlWidgetSize(widget, language)
     } else {
       combineWidgets(switch(language, 
@@ -547,14 +548,14 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
     # ),
     # BP 2017
     mcYearH5 = mwSelectize(choices = c("moyenne" = "", paramsH5[["mcYearS"]]), 
-                            # value = {
-                            #   if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
-                            # }, 
-                            # BP 2017
-                            value = c(1:2),
-                            label = .getLabelLanguage("mcYears to be imported", language), 
-                            options = list(maxItems = 2),
-                            multiple = TRUE, .display = !"mcYearH5" %in% hidden
+                           # value = {
+                           #   if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
+                           # }, 
+                           # BP 2017
+                           value = c(1:2),
+                           label = .getLabelLanguage("mcYears to be imported", language), 
+                           options = list(maxItems = 2),
+                           multiple = TRUE, .display = !"mcYearH5" %in% hidden
     ),
     .display = {
       any(unlist(lapply(x_in, .isSimOpts))) & !"H5request" %in% hidden
@@ -645,8 +646,13 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
         } else {
           variable
         }
-      } 
-      else NULL
+      } else {
+        # NULL
+        # BP 2017
+        as.character(.compareOperation(lapply(params$x, function(vv){
+          unique(vv[[table]]$valueCols)
+        }), xyCompare))[1]
+      }
     }, multiple = TRUE, 
     label = .getLabelLanguage("variable", language),
     .display = !"variable" %in% hidden
@@ -740,21 +746,49 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
   
   elements = mwSelect(
     choices = {
-      c( if(!is.null(params)){
+      # c( if(!is.null(params)){
+      #   as.character(.compareOperation(lapply(params$x, function(vv){
+      #     unique(vv[[table]]$uniqueElem)
+      #   }), xyCompare))
+      # })
+      
+      # BP 2017
+      choix <- c(if(!is.null(params)){
         as.character(.compareOperation(lapply(params$x, function(vv){
           unique(vv[[table]]$uniqueElem)
         }), xyCompare))
       })
+      
+      choix[grepl("fr", choix)]
     },
     value = {
       if(.initial) {
         if(is.null(elements)){
-          as.character(.compareOperation(lapply(params$x, function(vv){
-            unique(vv[[table]]$uniqueElem)
-          }), xyCompare))[1]
+          # as.character(.compareOperation(lapply(params$x, function(vv){
+          #   unique(vv[[table]]$uniqueElem)
+          # }), xyCompare))[1]
+          # 
+          # BP 2017
+          choix <- c(if(!is.null(params)){
+            as.character(.compareOperation(lapply(params$x, function(vv){
+              unique(vv[[table]]$uniqueElem)
+            }), xyCompare))
+          })
+          
+          choix[grepl("fr", choix)][1]
+          
         }else {
           elements
         }
+      } else {
+        # BP 2017
+        choix <- c(if(!is.null(params)){
+          as.character(.compareOperation(lapply(params$x, function(vv){
+            unique(vv[[table]]$uniqueElem)
+          }), xyCompare))
+        })
+        
+        choix[grepl("fr", choix)][1]
       }
     }, 
     multiple = TRUE, 
