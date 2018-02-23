@@ -1,7 +1,7 @@
 tabPanel("Principaux résultats et hypothèses",
          fluidRow(
            column(2, div(h4("Scénario sélectionné :"), align = "left")),
-           column(2,  selectInput("hyp_scenario", NULL, c("Ampère", "Hertz", "Volt", "Watt")))
+           column(2,  selectInput("hyp_scenario", NULL, c("Ampère", "Hertz", "Volt", "Watt", "Ohm")))
          ),
          tabsetPanel(
            tabPanel("Généralités", 
@@ -65,29 +65,40 @@ tabPanel("Principaux résultats et hypothèses",
                     includeMarkdown("src/aide/hypotheses_bilans.md"),
                     br(),
                     fluidRow(
-                      
-                      column(1, offset = 1, br(), br(), img(src = "img/legend_bilan.png", height = "350px")),
+                      conditionalPanel(condition = "input.hyp_scenario !== 'Ohm'", 
+                                       column(1, offset = 1, br(), br(), img(src = "img/legend_bilan.png", height = "350px"))
+                      ),
+                      conditionalPanel(condition = "input.hyp_scenario === 'Ohm'", 
+                                       column(1, offset = 3, br(), br(), img(src = "img/legend_bilan.png", height = "350px"))
+                      ),
                       column(3,  
                              div(class = "bilan_charts", amChartsOutput("bilan_1_1"), amChartsOutput("bilan_1_2")),
                              uiOutput("info_bilan_1")
                       ),
-                      column(3,  
-                             div(class = "bilan_charts", amChartsOutput("bilan_2_1"), amChartsOutput("bilan_2_2")),
-                             uiOutput("info_bilan_2")
-                      ),
-                      column(3,  
-                             div(class = "bilan_charts", amChartsOutput("bilan_3_1"), amChartsOutput("bilan_3_2")),
-                             uiOutput("info_bilan_3")
+                      conditionalPanel(condition = "input.hyp_scenario !== 'Ohm'", 
+                                       column(3,  
+                                              div(class = "bilan_charts", amChartsOutput("bilan_2_1"), amChartsOutput("bilan_2_2")),
+                                              uiOutput("info_bilan_2")
+                                       ),
+                                       column(3,  
+                                              div(class = "bilan_charts", amChartsOutput("bilan_3_1"), amChartsOutput("bilan_3_2")),
+                                              uiOutput("info_bilan_3")
+                                       )
                       )
                       
                     )
-           ) ,
+           ),
            tabPanel("CO2", 
                     br(),
                     includeMarkdown("src/aide/hypotheses_co2_before.md"),
                     br(),
-                    fluidRow(
-                      column(width = 6, offset = 3, amChartsOutput("hyp_co2", width = "100%", height = "500px"))
+                    conditionalPanel(condition = "input.hyp_scenario !== 'Ohm'", 
+                                     fluidRow(
+                                       column(width = 6, offset = 3, amChartsOutput("hyp_co2", width = "100%", height = "500px"))
+                                     )
+                    ), 
+                    conditionalPanel(condition = "input.hyp_scenario === 'Ohm'", 
+                                     h3("En attente de données...")
                     )
                     # ,
                     # br(),

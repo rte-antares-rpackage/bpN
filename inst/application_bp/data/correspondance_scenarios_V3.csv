@@ -1,0 +1,8 @@
+Pays;filiere1;filiere2;filiere3;Ampère;Hertz;Volt;Watt;Ohm
+France;enr;;;haut;moyen;moyen;haut;haut
+France;enr;hydro;hydro;moyen;moyen;moyen;moyen;moyen
+France;enr;hydro;step;moyen;bas;bas;haut;moyen
+France;nuclear;;;ampere;hertz;volt;watt;ohm
+France;thermal;;;ampere;hertz;volt;watt;ohm
+France;consommation;;;Haute;Haute;Intermédiaire 3;Intermédiaire 2;Haute
+France;interconnexions;;;Haute;Moyen;Haute;Moyen;Moyen

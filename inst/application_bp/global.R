@@ -173,10 +173,10 @@ setProdStackAlias(
 #------------------
 
 # production
-sce_prod <- fread(paste0(data_dir, "/correspondance_scenarios_v2.csv"), encoding = "Latin-1")
+sce_prod <- fread(paste0(data_dir, "/correspondance_scenarios_V3.csv"), encoding = "Latin-1")
 
 # bug with fread
-hyp_prod <- data.table(read.table(paste0(data_dir, "/BP2017_production_hypothesis_v5_global.csv"), dec = ",", 
+hyp_prod <- data.table(read.table(paste0(data_dir, "/BP2017_production_hypothesis_v6_global.csv"), dec = ",", 
                                   sep = ";", header = T, encoding = "Latin-1"))
 
 hyp_prod$filiere2 <- as.character(hyp_prod$filiere2)
@@ -440,7 +440,7 @@ ramcharts_menu_obj <- list(list(class = "export-main",
 #----------
 
 
-hyp_bilan <- data.table(read.delim(paste0(data_dir, "/bilans_energetiques.csv"), dec = ",", 
+hyp_bilan <- data.table(read.delim(paste0(data_dir, "/bilans_energetiques_V2.csv"), dec = ",", 
                                  sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
 
 hyp_bilan$Scenario <- as.character(hyp_bilan$Scenario)
@@ -480,7 +480,8 @@ getBilan <- function(data_bilan, data_co2, table_couleur_bilan, scenario = "Hert
   
   # production
   bilan_prod <- bilan[ TWh %in% c("Nucléaire", "Cycles combinés au gaz", "Turbines à combustion", "Cogénérations",
-                                   "Autre thermique décentralisé", "Hydraulique", "Eolien", "Photovoltaïque", "Bioénergies")]
+                                   "Autre thermique décentralisé", "Hydraulique", "Eolien", "Photovoltaïque", "Bioénergies", 
+                                  "Charbon", "Energies marines")]
   
   pie_prod_2025 <- bilan_prod[, c("TWh", "2025", "Couleur")]
   colnames(pie_prod_2025) <- c("label", "value", "color")
@@ -507,9 +508,10 @@ getBilan <- function(data_bilan, data_co2, table_couleur_bilan, scenario = "Hert
   nuc_2035 <- round(as.data.frame(bilan[TWh %in% "Nucléaire", c("2035")])[1, 1] / twh_2035 * 100)
   
   # co2
-  co2_2025 <-  as.data.frame(data_co2[scenario %in% scenario, c("2025")])[1, 1]
-  co2_2030 <-  as.data.frame(data_co2[scenario %in% scenario, c("2030")])[1, 1]
-  co2_2035 <-  as.data.frame(data_co2[scenario %in% scenario, c("2035")])[1, 1]
+  data_co2 <- as.data.frame(data_co2)
+  co2_2025 <-  data_co2[data_co2$scenario %in% scenario, c("2025")]
+  co2_2030 <-  data_co2[data_co2$scenario %in% scenario, c("2030")]
+  co2_2035 <-  data_co2[data_co2$scenario %in% scenario, c("2035")]
   
   list(pie_conso_2025 = pie_conso_2025, pie_conso_2030 = pie_conso_2030, pie_conso_2035 = pie_conso_2035,
        pie_prod_2025 = pie_prod_2025, pie_prod_2030 = pie_prod_2030, pie_prod_2035 = pie_prod_2035,

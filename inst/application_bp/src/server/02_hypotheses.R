@@ -19,6 +19,10 @@ output$md_gen <- renderUI({
          "Watt" = fluidRow(
            column(5, img(src= "img/img_fiche_watt.png", width = "100%")),
            column(7, includeMarkdown("src/aide/hypotheses_generalites_watt_2.md"))
+         ),
+         "Ohm" = fluidRow(
+           column(5, img(src= "img/img_fiche_ohm.png", width = "100%")),
+           column(7, includeMarkdown("src/aide/hypotheses_generalites_ohm.md"))
          ))
 })
 
