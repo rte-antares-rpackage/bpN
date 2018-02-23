@@ -216,9 +216,11 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
       # BP 2017
       if(length(main) > 0){
         if(grepl("h5$", main)){
-          main <- paste0(gsub(".h5$", "", main), " : ", area, " (tirage ", mcYear, ")")
+          # main <- paste0(gsub(".h5$", "", main), " : ", area, " (tirage ", mcYear, ")")
+          main <- paste0(gsub(".h5$", "", main), " : Tirage ", mcYear)
         } else {
-          main <- paste0("Échanges ", area, " (tirage ", mcYear, ")")
+          # main <- paste0("Échanges ", area, " (tirage ", mcYear, ")")
+          main <- paste0("Tirage ", mcYear)
         }
       }
       

@@ -312,9 +312,11 @@ prodStack <- function(x,
       # BP 2017
       if(length(main) > 0){
         if(grepl("h5$", main)){
-          main <- paste0(gsub(".h5$", "", main), " : ", areas, " (tirage ", mcYear, ")")
+          # main <- paste0(gsub(".h5$", "", main), " : ", areas, " (tirage ", mcYear, ")")
+          main <- paste0(gsub(".h5$", "", main), " : Tirage ", mcYear)
         } else {
-          main <- paste0("Production ", areas, " (tirage ", mcYear, ")")
+          # main <- paste0("Production ", areas, " (tirage ", mcYear, ")")
+          main <- paste0("Tirage ", mcYear)
         }
       }
 
