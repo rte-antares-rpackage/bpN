@@ -636,7 +636,7 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       #                     .display = !"mcYearH5" %in% hidden
       # ),
       # BP 2017
-      mcYearH5 = mwSelectize(choices = c("moyenne" = "", paramsH5[["mcYearS"]]), 
+      mcYearH5 = mwSelectize(choices = c("moyen" = "", paramsH5[["mcYearS"]]), 
                               # value = {
                               #   if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
                               # }, 

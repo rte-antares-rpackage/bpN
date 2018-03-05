@@ -372,6 +372,17 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
         
         variable2Axe <- apply(expand.grid(elements, variable2Axe), 1, function(X){paste(X, collapse = " __ ")})
         
+        # BP 2017
+        if(length(main) > 0){
+          mcYear <- ifelse(mcYear == "average", "moyen", mcYear)
+          if(grepl("h5$", main)){
+            # main <- paste0(gsub(".h5$", "", main), " : ", areas, " (tirage ", mcYear, ")")
+            main <- paste0(gsub(".h5$", "", main), " : Tirage ", mcYear)
+          } else {
+            # main <- paste0("Production ", areas, " (tirage ", mcYear, ")")
+            main <- paste0("Tirage ", mcYear)
+          }
+        }
         
         f(
           dt, 
@@ -550,7 +561,7 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
     #                     .display = !"mcYearH5" %in% hidden
     # ),
     # BP 2017
-    mcYearH5 = mwSelectize(choices = c("moyenne" = "", paramsH5[["mcYearS"]]), 
+    mcYearH5 = mwSelectize(choices = c("moyen" = "", paramsH5[["mcYearS"]]), 
                            # value = {
                            #   if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
                            # }, 

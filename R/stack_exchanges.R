@@ -215,6 +215,7 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
       
       # BP 2017
       if(length(main) > 0){
+        mcYear <- ifelse(mcYear == "average", "moyen", mcYear)
         if(grepl("h5$", main)){
           # main <- paste0(gsub(".h5$", "", main), " : ", area, " (tirage ", mcYear, ")")
           main <- paste0(gsub(".h5$", "", main), " : Tirage ", mcYear)
@@ -323,7 +324,7 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
       #                     multiple = TRUE, .display = !"mcYearH5" %in% hidden
       # ),
       # BP 2017
-      mcYearH5 = mwSelectize(choices = c("moyenne" = "", paramsH5[["mcYearS"]]), 
+      mcYearH5 = mwSelectize(choices = c("moyen" = "", paramsH5[["mcYearS"]]), 
                               # value = {
                               #   if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
                               # }, 

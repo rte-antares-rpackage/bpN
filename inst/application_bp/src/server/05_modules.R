@@ -71,12 +71,12 @@ observe({
             names(list_compare) <- .compare
             # set main with study names
             if(length(ind_areas) != 1){
-              list_compare$main <- gsub(".h5$", "",names(list_data_all$antaresDataList[ind_areas]))
+              list_compare$main <- names(list_data_all$antaresDataList[ind_areas])
             }
             .compare <- list_compare
           } else {
             if(length(ind_areas) > 1){
-              .compare <- list(main = gsub(".h5$", "",names(list_data_all$antaresDataList[ind_areas])))
+              .compare <- list(main = names(list_data_all$antaresDataList[ind_areas]))
             } else {
               .compare = NULL
             }

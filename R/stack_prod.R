@@ -311,6 +311,7 @@ prodStack <- function(x,
       
       # BP 2017
       if(length(main) > 0){
+        mcYear <- ifelse(mcYear == "average", "moyen", mcYear)
         if(grepl("h5$", main)){
           # main <- paste0(gsub(".h5$", "", main), " : ", areas, " (tirage ", mcYear, ")")
           main <- paste0(gsub(".h5$", "", main), " : Tirage ", mcYear)
@@ -466,7 +467,7 @@ prodStack <- function(x,
       #                      multiple = TRUE, .display = !"mcYearH5" %in% hidden
       # ),
       # BP 2017
-      mcYearH5 = mwSelectize(choices = c("moyenne" = "", paramsH5[["mcYearS"]]), 
+      mcYearH5 = mwSelectize(choices = c("moyen" = "", paramsH5[["mcYearS"]]), 
                            # value = {
                            #   if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
                            # }, 
