@@ -38,13 +38,15 @@ output$hyp_prod <- renderAmCharts({
   isolate({
     # res <- getProductionHypothesis(data = hyp_prod, nodes = input$area_hyp_prod, sce_prod = sce_prod, scenario = input$hyp_scenario)
     res <- getProductionHypothesis(data = hyp_prod, nodes = "fr", sce_prod = sce_prod, scenario = input$hyp_scenario)
+    res <- res[, c("date", order_hyp_prod)]
+    
     gr  <- amBarplot(x = "date", y = colnames(res)[-1], data = res, 
                      stack_type = ifelse(isolate(input$stack_hyp_prod) == "regular", "regular", "100"), legend = TRUE,
-                     groups_color = unname(prod_col[colnames(res)[-1]]), 
+                     groups_color = unname(cl_hyp_prod[colnames(res)[-1]]), 
                      # main = paste0("Évolution du parc installé (scénario ", input$hyp_scenario, ")"),
                      main = "Évolution du parc installé",
                      zoom = TRUE, show_values = FALSE, 
-                     ylab = ifelse(isolate(input$stack_hyp_prod) == "regular", "MW", "%"),
+                     ylab = ifelse(isolate(input$stack_hyp_prod) == "regular", "GW", "%"),
                      labelRotation = 45, legendPosition = "left", autoMargins = FALSE, 
                      marginLeft = 100, marginTop = 60, marginRight = 60, marginBottom = 60)  %>%
       setExport(enabled = TRUE, menu = ramcharts_menu_obj)
@@ -52,17 +54,17 @@ output$hyp_prod <- renderAmCharts({
     gr@otherProperties$thousandsSeparator <- " "
     
     gr@graphs <- lapply(gr@graphs, function(x){
-      x$balloonText <- gsub("[[value]]", "[[value]] MW ([[percents]]%)", fixed = TRUE, x$balloonText)
+      x$balloonText <- gsub("[[value]]", "[[value]] GW ([[percents]]%)", fixed = TRUE, x$balloonText)
       x
     })
     
     if(isolate(input$stack_hyp_prod) == "regular"){
-      gr@legend$valueText <- "[[value]] MW"
+      gr@legend$valueText <- "[[value]] GW"
     } else {
       gr@legend$valueText <- "[[percents]]%"
     }
    
-    gr@legend$unit <- "MW"
+    gr@legend$unit <- "GW"
     
     gr
     

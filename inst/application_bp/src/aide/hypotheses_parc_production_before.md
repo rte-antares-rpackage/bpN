@@ -1,4 +1,3 @@
-
 Pour couvrir la consommation, l'offre disponible en France est constituée d'installations de production et de capacités d'effacement de consommation.
 
 Les moyens de production peuvent être distingués selon leurs caractéristiques et contraintes de fonctionnements :
@@ -7,5 +6,3 @@ Les moyens de production peuvent être distingués selon leurs caractéristiques
 - **la production de « base »** destinée à fonctionner toute l'année. C'est le cas de la filière nucléaire ;
 - **les productions dites de « semi-base »** (centrales au charbon et cycles combinés au
 gaz pour l'essentiel) **et de « pointe »** (groupes fioul et turbines à combustion, qui ne sont utilisés que quelques heures par an). Ces moyens de production, plus flexibles, s'adaptent aux variations de la demande résiduelle, à savoir la demande électrique défalquée de la production fatale. 
-
-Les données présentées sont les capacités installées au 1er janvier.

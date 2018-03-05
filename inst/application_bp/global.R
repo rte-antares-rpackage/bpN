@@ -176,24 +176,31 @@ setProdStackAlias(
 sce_prod <- fread(paste0(data_dir, "/correspondance_scenarios_V3.csv"), encoding = "Latin-1")
 
 # bug with fread
-hyp_prod <- data.table(read.table(paste0(data_dir, "/BP2017_production_hypothesis_v6_global.csv"), dec = ",", 
+hyp_prod <- data.table(read.table(paste0(data_dir, "/BP2017_production_hypothesis_v7_global.csv"), dec = ",", 
                                   sep = ";", header = T, encoding = "Latin-1"))
 
 hyp_prod$filiere2 <- as.character(hyp_prod$filiere2)
 Encoding(hyp_prod$filiere2) <- "latin1"
 
+hyp_prod$filiere_BP_num <- as.character(hyp_prod$filiere_BP_num)
+Encoding(hyp_prod$filiere_BP_num) <- "latin1"
+
+hyp_prod <- hyp_prod[filiere_BP_num != "Autre thermique décentralisé EnR"]
+# # renommage en francais
+# unique(hyp_prod$filiere2)
+# hyp_prod$filiere2 <- gsub("^other$", "autres_renouvelables", hyp_prod$filiere2)
+# hyp_prod$filiere2 <- gsub("^wind$", "éolien", hyp_prod$filiere2)
+# hyp_prod$filiere2 <- gsub("^solar$", "solaire", hyp_prod$filiere2)
+# hyp_prod$filiere2 <- gsub("^biogas$", "biogaz", hyp_prod$filiere2)
+# hyp_prod$filiere2 <- gsub("^biomass$", "biomasse", hyp_prod$filiere2)
+# hyp_prod$filiere2 <- gsub("^geothermal$", "géothermie", hyp_prod$filiere2)
+# hyp_prod$filiere2 <- gsub("^hydro$", "hydraulique", hyp_prod$filiere2)
+# hyp_prod$filiere2 <- gsub("^hydrokinetic$", "hydrolien", hyp_prod$filiere2)
+# hyp_prod$filiere2 <- gsub("^waste$", "déchets", hyp_prod$filiere2)
+# hyp_prod$filiere2 <- gsub("^wave$", "houlomotrice", hyp_prod$filiere2)
+
 # renommage en francais
-unique(hyp_prod$filiere2)
-hyp_prod$filiere2 <- gsub("^other$", "autres_renouvelables", hyp_prod$filiere2)
-hyp_prod$filiere2 <- gsub("^wind$", "éolien", hyp_prod$filiere2)
-hyp_prod$filiere2 <- gsub("^solar$", "solaire", hyp_prod$filiere2)
-hyp_prod$filiere2 <- gsub("^biogas$", "biogaz", hyp_prod$filiere2)
-hyp_prod$filiere2 <- gsub("^biomass$", "biomasse", hyp_prod$filiere2)
-hyp_prod$filiere2 <- gsub("^geothermal$", "géothermie", hyp_prod$filiere2)
-hyp_prod$filiere2 <- gsub("^hydro$", "hydraulique", hyp_prod$filiere2)
-hyp_prod$filiere2 <- gsub("^hydrokinetic$", "hydrolien", hyp_prod$filiere2)
-hyp_prod$filiere2 <- gsub("^waste$", "déchets", hyp_prod$filiere2)
-hyp_prod$filiere2 <- gsub("^wave$", "houlomotrice", hyp_prod$filiere2)
+unique(hyp_prod$filiere_BP_num)
 
 # remove 2036
 # hyp_prod <- hyp_prod[date != 2036]
@@ -204,11 +211,17 @@ hyp_prod$filiere2 <- gsub("^wave$", "houlomotrice", hyp_prod$filiere2)
 
 couleur_prod <- data.table(read.delim(paste0(data_dir, "/couleur_prod.csv"), dec = ",", 
                                        sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
+
+couleur_prod <- couleur_prod[Type %in% "production"]
 couleur_prod[[1]] <- as.character(couleur_prod[[1]])
 Encoding(couleur_prod[[1]] ) <- "latin1"
 
-prod_col <- couleur_prod[, rgb(R, G, B, maxColorValue = 255)]
-names(prod_col) <- couleur_prod[[1]]
+couleur_prod$color <- rgb(couleur_prod$R, couleur_prod$G, couleur_prod$B, maxColorValue = 255)
+
+cl_hyp_prod <- couleur_prod$color
+names(cl_hyp_prod) <- couleur_prod$Nom
+
+order_hyp_prod <- couleur_prod[order(Ordre), Nom]
 
 # data <- hyp_prod
 getProductionHypothesis <- function(data, nodes = NULL, sce_prod = NULL, scenario = "Hertz"){
@@ -244,23 +257,23 @@ getProductionHypothesis <- function(data, nodes = NULL, sce_prod = NULL, scenari
   
   data <- rbindlist(list(data_no_hydro, data_hydro))
   if(is.null(nodes)){
-    res <- data[, list(capa = sum(capacite)), by = list(date = date_BP_num, filiere2)]
+    res <- data[, list(capa = sum(capacite)), by = list(date = date_BP_num, filiere_BP_num)]
   } else {
-    res <- data[node %in% nodes, list(capa = sum(capacite)), by = list(date = date_BP_num, filiere2)]
+    res <- data[node %in% nodes, list(capa = sum(capacite)), by = list(date = date_BP_num, filiere_BP_num)]
   }
   
-  # GW ?
-  # res[, capa := round(capa/1000)]
+  res[, capa := round(capa/1000, 1)]
+
+  col_names <- sort(unique(res$filiere_BP_num))
+  res <- data.frame(dcast(res, date ~ filiere_BP_num, fun=sum, value.var = "capa"))
   
-  res[, capa := round(capa)]
-  
-  res <- data.frame(dcast(res, date ~ filiere2, fun=sum, value.var = "capa"))
+  colnames(res)[-1] <- col_names
   res$date <- as.character(res$date)
   res
 }
 
-cl_hyp_prod <- c(brewer.pal(n = 12, name = "Set3"), brewer.pal(n = 5, name = "Set1"))
-names(cl_hyp_prod) <- unique(hyp_prod$filiere2)
+# cl_hyp_prod <- c(brewer.pal(n = 12, name = "Set3"), brewer.pal(n = 5, name = "Set1"))
+# names(cl_hyp_prod) <- unique(hyp_prod$filiere2)
 
 
 # amBarplot(x = "date", y = colnames(res)[-1], data = res,
@@ -469,15 +482,14 @@ Encoding(hyp_bilan$Scenario) <- "latin1"
 hyp_bilan$TWh <- as.character(hyp_bilan$TWh)
 Encoding(hyp_bilan$TWh) <- "latin1"
 
-table_couleur_bilan <- read.delim(paste0(data_dir, "/couleur_bilan.csv"), dec = ",", 
-                            sep = ";", header = T, encoding = "Latin-1", check.names = FALSE)
+table_couleur_bilan <- read.delim(paste0(data_dir, "/couleur_prod.csv"), dec = ",", 
+                                  sep = ";", header = T, encoding = "Latin-1", check.names = FALSE)
 
-table_couleur_bilan$Nom <- as.character(table_couleur_bilan$Nom)
-Encoding(table_couleur_bilan$Nom) <- "latin1"
+table_couleur_bilan[[1]] <- as.character(table_couleur_bilan[[1]])
+Encoding(table_couleur_bilan[[1]] ) <- "latin1"
 
-# couleur_bilan <- as.character(table_couleur_bilan$Couleur)
-# names(couleur_bilan) <- table_couleur_bilan$Nom
-
+table_couleur_bilan$Couleur <- rgb(table_couleur_bilan$R, table_couleur_bilan$G, table_couleur_bilan$B, maxColorValue = 255)
+table_couleur_bilan <- table_couleur_bilan[, c("Nom", "Couleur")]
 
 getBilan <- function(data_bilan, data_co2, table_couleur_bilan, scenario = "Hertz"){
   

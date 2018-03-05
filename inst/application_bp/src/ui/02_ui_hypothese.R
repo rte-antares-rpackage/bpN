@@ -27,7 +27,7 @@ tabPanel("Principaux résultats et hypothèses",
            ),
            tabPanel("Parc de production", 
                     br(),
-                    includeMarkdown("src/aide/hypotheses_parc_production.md"),
+                    includeMarkdown("src/aide/hypotheses_parc_production_before.md"),
                     br(),
                     fluidRow(
                       # column(1,  div(h4("Pays : "), align = "center")),
@@ -41,8 +41,11 @@ tabPanel("Principaux résultats et hypothèses",
                     
                     fluidRow(
                       column(6, offset = 3, amChartsOutput("hyp_prod", width = "100%", height = "500px"))
-                    )
+                    ),
                     
+                    br(),
+                    includeMarkdown("src/aide/hypotheses_parc_production_after.md")
+    
            ),
            tabPanel("Interconnexions", 
                     br(),
