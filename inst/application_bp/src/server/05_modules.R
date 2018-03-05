@@ -83,8 +83,10 @@ observe({
           }
           mod_plotts <- plot(list_data_all$antaresDataList[ind_areas], xyCompare = "union",
                              h5requestFiltering = list_data_all$params[ind_areas],
+                             variable = "consommation",
                              interactive = TRUE, .updateBtn = TRUE, language = "fr", elements = "fr",
-                             hidden = c("main", "highlight", "stepPlot", "legend", "drawPoints", "confInt"), 
+                             hidden = c("main", "highlight", "stepPlot", "legend", "drawPoints", "confInt", 
+                                        "aggregate", "secondAxis"), 
                              highlight = TRUE,
                              .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE)
           

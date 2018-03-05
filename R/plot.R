@@ -438,10 +438,13 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
     
   }
   
-  typeChoices <- c("ts", "barplot",  "monotone", "density", "cdf", "heatmap")
-  names(typeChoices) <- c(.getLabelLanguage("time series", language), .getLabelLanguage("barplot", language), 
-                          .getLabelLanguage("monotone", language), .getLabelLanguage("density", language),
-                          .getLabelLanguage("cdf", language), .getLabelLanguage("heatmap", language))
+  # typeChoices <- c("ts", "barplot",  "monotone", "density", "cdf", "heatmap")
+  # names(typeChoices) <- c(.getLabelLanguage("time series", language), .getLabelLanguage("barplot", language), 
+  #                         .getLabelLanguage("monotone", language), .getLabelLanguage("density", language),
+  #                         .getLabelLanguage("cdf", language), .getLabelLanguage("heatmap", language))
+  # BP 2017
+  typeChoices <- c("ts","monotone")
+  names(typeChoices) <- c(.getLabelLanguage("time series", language), .getLabelLanguage("monotone", language))
   
   ##remove notes
   table <- NULL
@@ -679,7 +682,7 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
     choices = {
       if (timeStepdataload == "annual") "barplot"
       else if (timeStepdataload %in% c("hourly", "daily")) typeChoices
-      else typeChoices[1:5]
+      else setdiff(typeChoices, "heatmap")
     },
     value = {
       if(.initial) type

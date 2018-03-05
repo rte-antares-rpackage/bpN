@@ -3,7 +3,11 @@ tabPanel("Chroniques",
            column(12,
                   conditionalPanel(condition = "output.have_data",
                                    conditionalPanel(condition = "output.have_data_areas",
-                                                    uiOutput("plotts_ui")
+                                                    includeMarkdown("src/aide/chroniques_before.md"),
+                                                    br(),
+                                                    uiOutput("plotts_ui"),
+                                                    br(),
+                                                    includeMarkdown("src/aide/chroniques_after.md")
                                    ),
                                    conditionalPanel(condition = "output.have_data_areas === false",
                                                     conditionalPanel(condition = "input.update_module === 0",
