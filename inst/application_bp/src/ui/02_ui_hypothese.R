@@ -66,7 +66,7 @@ tabPanel("Principaux résultats et hypothèses",
            ),
            tabPanel("Bilans", 
                     br(),
-                    includeMarkdown("src/aide/hypotheses_bilans.md"),
+                    includeMarkdown("src/aide/hypotheses_bilans_before.md"),
                     br(),
                     fluidRow(
                       conditionalPanel(condition = "input.hyp_scenario !== 'Ohm'", 
@@ -90,7 +90,9 @@ tabPanel("Principaux résultats et hypothèses",
                                        )
                       )
                       
-                    )
+                    ),
+                    br(),
+                    includeMarkdown("src/aide/hypotheses_bilans_after.md")
            ),
            tabPanel("CO2", 
                     br(),
