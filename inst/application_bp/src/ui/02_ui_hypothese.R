@@ -1,7 +1,8 @@
 tabPanel("Principaux résultats et hypothèses",
          fluidRow(
            column(2, div(h4("Scénario sélectionné :"), align = "left")),
-           column(2,  selectInput("hyp_scenario", NULL, c("Ampère", "Hertz", "Volt", "Watt", "Ohm")))
+           column(2,  selectInput("hyp_scenario", NULL, choices = c("Ohm", "Ampère", "Hertz", "Volt", "Watt"), 
+                                  selected = "Ampère"))
          ),
          tabsetPanel(
            tabPanel("Généralités", 
