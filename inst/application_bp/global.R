@@ -226,8 +226,8 @@ order_hyp_prod <- couleur_prod[order(Ordre), Nom]
 # data <- hyp_prod
 getProductionHypothesis <- function(data, nodes = NULL, sce_prod = NULL, scenario = "Hertz"){
   
-  enr_fr <- sce_prod[Pays %in% "France" & filiere1 %in% "enr", get(scenario)]
-  enr_ue <- sce_prod[Pays %in% "Europe" & filiere1 %in% "enr", get(scenario)]
+  enr_fr <- sce_prod[Pays %in% "France" & filiere1 %in% "enr" & filiere2 %in% c("", NA), get(scenario)]
+  enr_ue <- sce_prod[Pays %in% "Europe" & filiere1 %in% "enr" & filiere2 %in% c("", NA), get(scenario)]
   
   nuclear_fr <- sce_prod[Pays %in% "France" & filiere1 %in% "nuclear", get(scenario)]
   nuclear_ue <- sce_prod[Pays %in% "Europe" & filiere1 %in% "nuclear", get(scenario)]
