@@ -92,13 +92,9 @@ tabPanel("Principaux résultats et hypothèses",
                     br(),
                     includeMarkdown("src/aide/hypotheses_co2_before.md"),
                     br(),
-                    conditionalPanel(condition = "input.hyp_scenario !== 'Ohm'", 
-                                     fluidRow(
-                                       column(width = 6, offset = 3, amChartsOutput("hyp_co2", width = "100%", height = "500px"))
-                                     )
-                    ), 
-                    conditionalPanel(condition = "input.hyp_scenario === 'Ohm'", 
-                                     h3("En attente de données...")
+                    
+                    fluidRow(
+                      column(width = 6, offset = 3, amChartsOutput("hyp_co2", width = "100%", height = "500px"))
                     )
                     # ,
                     # br(),

@@ -409,7 +409,7 @@ getConsoHypothesis <- function(data, type = "Secteur", sce_prod = NULL, scenario
 #------------------
 # bug with fread
 
-hyp_co2 <- data.table(read.delim(paste0(data_dir, "/co2.csv"), dec = ",", 
+hyp_co2 <- data.table(read.delim(paste0(data_dir, "/co2_V2.csv"), dec = ",", 
                                    sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
 
 

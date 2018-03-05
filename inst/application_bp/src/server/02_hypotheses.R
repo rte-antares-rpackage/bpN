@@ -196,10 +196,11 @@ output$hyp_inter_export <- renderAmCharts({
 output$hyp_co2<- renderAmCharts({
   
   tmp <- data.frame(date = colnames(hyp_co2)[-1], historique = t(data.frame(hyp_co2[scenario %in% input$hyp_scenario, ][, scenario := NULL]))[, 1])
+  tmp <- tmp[!is.na(tmp$historique),]
   tmp$scenario <- tmp$historique
   tmp$scenario[1:5] <- NA
-  tmp$historique[6:8] <- NA
-  
+  tmp$historique[-c(1:5)] <- NA
+
   amBarplot(x = "date", y = c("scenario", "historique"), data = tmp,
             stack_type = "regular", legend = TRUE,
             # main = paste0("Évolution des émissions de CO2 en France (scénario ", input$hyp_scenario, ")"),
