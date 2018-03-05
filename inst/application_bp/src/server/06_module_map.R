@@ -57,7 +57,7 @@ observe({
                                    h5requestFiltering = list_data_all$params[ind_map],
                                    language = "fr", 
                                    hidden = c("showLabels", "popupLinkVars", "uniqueScale", "showLabels", "popupAreaVars", 
-                                              "miniPlot", "tables", "sizeAreaVars", "Links"),
+                                              "miniPlot", "tables", "Areas", "Links"),
                                    colAreaVar ="LOAD", areaChartType = "pie", sizeMiniPlot = TRUE,
                                    sizeAreaVars = c("NUCLEAR", "LIGNITE", "COAL", "GAS", "OIL", "MIX. FUEL", "MISC. DTG", "H. STOR", "WIND", "SOLAR", "H. ROR", "MISC. NDG"),
                                    colLinkVar = "congestion", sizeLinkVar = "FLOW LIN.",

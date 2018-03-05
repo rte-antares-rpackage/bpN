@@ -7,7 +7,11 @@ tabPanel("Carte",
                                    ),
                                    conditionalPanel(condition = "input.update_module > 0",
                                                     conditionalPanel(condition = "output.must_print_map", 
-                                                                     uiOutput("plotMap_ui")
+                                                                     includeMarkdown("src/aide/carte_before.md"),
+                                                                     br(),
+                                                                     uiOutput("plotMap_ui"),
+                                                                     br(),
+                                                                     includeMarkdown("src/aide/carte_after.md")
                                                     ), 
                                                     conditionalPanel(condition = "output.must_print_map === false", 
                                                                      h3("Erreur lors de l'importation du fond de carte...")
