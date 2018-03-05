@@ -148,14 +148,15 @@ res_inter <- reactive({
 output$hyp_inter_import <- renderAmCharts({
   
   res <- res_inter()$import
+  res <- res[, c("date", order_hyp_interco)]
   
   gr  <- amBarplot(x = "date", y = colnames(res)[-1], data = res, 
                    stack_type = "regular", legend = TRUE,
                    groups_color = unname(cl_hyp_interco[1:(ncol(res) - 1)]), 
                    # main = paste0("Évolution des capacités d'import (scénario ", input$hyp_scenario, ")"),
                    main = "Évolution des capacités d'import",
-                   zoom = TRUE, show_values = FALSE, ylab = "MW",
-                   labelRotation = 45, ylim = c(0, 35000))  %>%
+                   zoom = TRUE, show_values = FALSE, ylab = "GW",
+                   labelRotation = 45, ylim = c(0, 35))  %>%
     setExport(enabled = TRUE, menu = ramcharts_menu_obj)
   
   gr@otherProperties$thousandsSeparator <- " "
@@ -165,14 +166,15 @@ output$hyp_inter_import <- renderAmCharts({
 output$hyp_inter_export <- renderAmCharts({
   
   res <- res_inter()$export
+  res <- res[, c("date", order_hyp_interco)]
   
   gr  <- amBarplot(x = "date", y = colnames(res)[-1], data = res, 
                    stack_type = "regular", legend = TRUE,
                    groups_color = unname(cl_hyp_interco[1:(ncol(res) - 1)]), 
                    # main = paste0("Évolution des capacités d'export (scénario ", input$hyp_scenario, ")"),
                    main = "Évolution des capacités d'export",
-                   zoom = TRUE, show_values = FALSE, ylab = "MW",
-                   labelRotation = 45, ylim = c(0, 35000))  %>%
+                   zoom = TRUE, show_values = FALSE, ylab = "GW",
+                   labelRotation = 45, ylim = c(0, 35))  %>%
     setExport(enabled = TRUE, menu = ramcharts_menu_obj)
   
   gr@otherProperties$thousandsSeparator <- " "

@@ -281,8 +281,31 @@ hyp_inter$hypothesis <- gsub("^low$", "Bas", hyp_inter$hypothesis)
 hyp_inter$hypothesis <- gsub("^mid$", "Moyen", hyp_inter$hypothesis)
 hyp_inter$hypothesis <- gsub("^high$", "Haute", hyp_inter$hypothesis)
 
+# GW
+hyp_inter[["2016"]] <- round(hyp_inter[["2016"]] / 1000, 1)
+hyp_inter[["2022"]] <- round(hyp_inter[["2022"]] / 1000, 1)
+hyp_inter[["2025"]] <- round(hyp_inter[["2025"]] / 1000, 1)
+hyp_inter[["2030"]] <- round(hyp_inter[["2030"]] / 1000, 1)
+hyp_inter[["2035"]] <- round(hyp_inter[["2035"]] / 1000, 1)
+
 # subset de colonnes
 hyp_inter <- hyp_inter[, c("from", "to", "concat", "hypothesis", "2016", "2022", "2025", "2030", "2035"), with = FALSE]
+
+# couleur et ordre
+couleur_inter <- data.table(read.delim(paste0(data_dir, "/couleur_interco.csv"), dec = ",", 
+                                       sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
+
+colnames(couleur_inter)[1] <- "Nom"
+couleur_inter[["Nom"]] <- as.character(couleur_inter[["Nom"]])
+Encoding(couleur_inter[["Nom"]] ) <- "latin1"
+
+couleur_inter$color <- rgb(couleur_inter$R, couleur_inter$G, couleur_inter$B, maxColorValue = 255)
+
+cl_hyp_interco <- couleur_inter$color
+names(cl_hyp_interco) <- couleur_inter$Nom
+
+order_hyp_interco <- couleur_inter[order(Ordre), Nom]
+
 getIntercoHypothesis <- function(data, sce_prod = NULL, scenario = "Hertz"){
   
   trj <- sce_prod[Pays %in% "France" & filiere1 %in% "interconnexions", get(scenario)]
@@ -321,10 +344,6 @@ getIntercoHypothesis <- function(data, sce_prod = NULL, scenario = "Hertz"){
   list(import = res_import, export = res_export)
   
 }
-
-
-cl_hyp_interco <- c("#886A08", "#FE9A2E", "#190707", "#FFFF00", "#B40431", "#BFFF00", "#298A08")
-names(cl_hyp_interco) <- c("Belgique", "Suisse", "Allemagne", "Espagne", "Royaume-Uni", "Irlande", "Italie")
 
 # amBarplot(x = "date", y = colnames(res_import)[-1], data = res_import,
 #           stack_type = "regular", legend = TRUE,
