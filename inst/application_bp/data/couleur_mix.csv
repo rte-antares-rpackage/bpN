@@ -1,0 +1,17 @@
+Nom;R;G;B
+Consommation;0;0;0
+Export;150;150;150
+Pompage STEP;20;70;140
+Nucléaire;248;202;77
+Charbon;191;171;116
+Autre renouvelable;0;128;0
+Gaz;246;102;53
+Hydraulique;104;156;201
+Turbinage STEP;20;70;140
+Fioul;168;137;190
+Import;150;150;150
+Eolien;158;220;206
+Solaire;246;158;81
+Effacements;80;80;80
+Défaillance;255;0;0
+Déversement;252;215;215

@@ -61,56 +61,48 @@ add_h5_file <- lapply(1:length(h5_files), function(x){
 # new prodStack alias
 #--------------
 
+couleur_mix <- data.table(read.delim(paste0(data_dir, "/couleur_mix.csv"), dec = ",", 
+                                      sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
+
+couleur_mix[[1]] <- as.character(couleur_mix[[1]])
+Encoding(couleur_mix[[1]] ) <- "latin1"
+
+couleur_mix$color <- rgb(couleur_mix$R, couleur_mix$G, couleur_mix$B, maxColorValue = 255)
+
+cl_mix <- couleur_mix$color
+names(cl_mix) <- couleur_mix$Nom
+
 # change eco2mix alias
+
+# dans l'ordre, de bas en haut
+tmp_var <- alist(
+  "Déversement" = -(`SPIL. ENRG`),
+  "Export" = - pmax(0, (BALANCE + `ROW BAL.`)),
+  "Pompage STEP" = - pmax(0, -PSP),
+  "Nucléaire" = NUCLEAR,
+  "Charbon" = COAL,
+  "Autre renouvelable" = `MISC. NDG`,
+  "Gaz" = GAS,
+  "Hydraulique" = `H. ROR` + `H. STOR`,
+  "Turbinage STEP" = pmax(0, PSP),
+  "Fioul" = OIL,
+  "Import" = pmax(0, -(BALANCE + `ROW BAL.`)),
+  "Eolien" = WIND,
+  "Solaire" = SOLAR,
+  "Effacements" = `MISC. DTG`,
+  "Défaillance" = `UNSP. ENRG`
+)
+
 setProdStackAlias(
   name = "eco2mix",
-  variables = alist(
-    "Pompage/turbinage" = PSP,
-    "Import/export" = -(BALANCE + `ROW BAL.`),
-    "Autre renouvelable" = `MISC. NDG`,
-    "Eolien" = WIND,
-    "Solaire" = SOLAR,
-    "Nucléaire" = NUCLEAR,
-    "Hydraulique" = `H. ROR` + `H. STOR`,
-    "Gaz" = GAS,
-    "Charbon" = COAL,
-    "Lignite" = LIGNITE,
-    "Fioul" = OIL,
-    "Défaillance" = `UNSP. ENRG`,
-    "Déversement" = `SPIL. ENRG`,
-    "Effacement" = `MISC. DTG` + `MIX. FUEL`
-  ),
-  colors = c("#1147B9", "#969696", "#166A57", "#74CDB9", "#F27406", "#F5B300", "#2772B2", "#F30A0A", "#AC8C35", 
-             "#B4822B", "#8356A2", "#DBA9A9",  "#FCD8B9", "#ADFF2F"),
+  variables = tmp_var,
+  colors = unname(cl_mix[names(tmp_var)]),
   lines = alist(
-    "Consommation" = LOAD + `SPIL. ENRG`,
-    "Production" = NUCLEAR + LIGNITE + COAL + GAS + OIL + `MIX. FUEL` + `MISC. DTG` + WIND + SOLAR + `H. ROR` + `H. STOR` + `MISC. NDG` + pmax(0, PSP) + `UNSP. ENRG`
+    "Consommation" = LOAD
   ),
-  lineColors = c("#875627", "#EB9BA6"),
+  lineColors = unname(cl_mix["Consommation"]),
   lineWidth = 2
 )
-
-setProdStackAlias(
-  name = "thermalFirst",
-  variables = alist(
-    "Pompage/turbinage" = PSP,
-    "import/export" = -(BALANCE + `ROW BAL.`),
-    "Nucléaire" = NUCLEAR,
-    "Lignite" = LIGNITE,
-    "Charbon" = COAL,
-    "Gaz" = GAS,
-    "Fioul" = OIL,
-    "Autre thermique" = `MIX. FUEL`,
-    "Effacement" = `MISC. DTG`,
-    "Autre renouvelable" = `MISC. NDG`,
-    "Eolien" = WIND,
-    "Solaire" = SOLAR,
-    "Hydraulique fil" = `H. ROR`,
-    "Hydraulique lac" = `H. STOR`
-  ),
-  colors = c("#1147B9", "#969696", "#F5B300", "#B4822B", "#AC8C35", "#F30A0A", "#8356A2", "#7F549C", "#ADFF2F", "#166A57", "#74CDB9", "#F27406", "#3D607D", "#5497D0")
-)
-
 
 # shared inputs
 .global_shared_prodStack <- data.frame(
