@@ -242,8 +242,8 @@ getProductionHypothesis <- function(data, nodes = NULL, sce_prod = NULL, scenari
   enr_step_ue <- sce_prod[Pays %in% "Europe" & filiere3 %in% "step", get(scenario)]
   
   # hors hydraulique
-  data_no_hydro <- data[((node %in% "fr" & filiere1 %in% "enr" & trajectoire %in% enr_fr) |
-              (!node %in% "fr" & filiere1 %in% "enr" & trajectoire %in% enr_ue) |
+  data_no_hydro <- data[((node %in% "fr" & filiere1 %in% "enr" & !filiere2 %in% "hydro" & trajectoire %in% enr_fr) |
+              (!node %in% "fr" & filiere1 %in% "enr" & !filiere2 %in% "hydro" & trajectoire %in% enr_ue) |
                 (node %in% "fr" & filiere1 %in% "nuclear" & trajectoire %in% nuclear_fr) |
                 (!node %in% "fr" & filiere1 %in% "nuclear" & trajectoire %in% nuclear_ue) |
                 (node %in% "fr" & filiere1 %in% "thermal" & trajectoire %in% thermal_fr) |
