@@ -276,11 +276,13 @@ getProductionHypothesis <- function(data, nodes = NULL, sce_prod = NULL, scenari
 # names(cl_hyp_prod) <- unique(hyp_prod$filiere2)
 
 
-# amBarplot(x = "date", y = colnames(res)[-1], data = res,
+# a <- amBarplot(x = "date", y = colnames(res)[-1], data = res,
 #           stack_type = "regular", legend = TRUE,
 #           zoom = TRUE, export = TRUE, show_values = FALSE,
 #           labelRotation = 45, legendPosition = "bottom", height = "800")
-
+# 
+# a@legend$reversedOrder = TRUE
+# a
 
 #------------------
 # interconnexion

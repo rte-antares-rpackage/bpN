@@ -65,7 +65,8 @@ output$hyp_prod <- renderAmCharts({
     }
    
     gr@legend$unit <- "GW"
-    
+    gr@legend$reversedOrder <- TRUE
+
     gr
     
   })
@@ -162,6 +163,8 @@ output$hyp_inter_import <- renderAmCharts({
     setExport(enabled = TRUE, menu = ramcharts_menu_obj)
   
   gr@otherProperties$thousandsSeparator <- " "
+  gr@legend$reversedOrder <- TRUE
+  
   gr
 })
 
@@ -180,6 +183,8 @@ output$hyp_inter_export <- renderAmCharts({
     setExport(enabled = TRUE, menu = ramcharts_menu_obj)
   
   gr@otherProperties$thousandsSeparator <- " "
+  gr@legend$reversedOrder <- TRUE
+  
   gr
 })
 
@@ -205,7 +210,7 @@ output$hyp_co2<- renderAmCharts({
   tmp$scenario[1:5] <- NA
   tmp$historique[-c(1:5)] <- NA
 
-  amBarplot(x = "date", y = c("scenario", "historique"), data = tmp,
+  gr <- amBarplot(x = "date", y = c("scenario", "historique"), data = tmp,
             stack_type = "regular", legend = TRUE,
             # main = paste0("Évolution des émissions de CO2 en France (scénario ", input$hyp_scenario, ")"),
             main = "Évolution des émissions de CO2 en France",
@@ -214,6 +219,9 @@ output$hyp_co2<- renderAmCharts({
             labelRotation = 45, theme = "pattern", creditsPosition = "top-right")  %>%
     setExport(enabled = TRUE, menu = ramcharts_menu_obj)
   
+  gr@legend$reversedOrder <- TRUE
+  
+  gr
 })
 
 
