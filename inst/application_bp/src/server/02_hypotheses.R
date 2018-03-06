@@ -27,7 +27,28 @@ output$md_gen <- renderUI({
 })
 
 
+#------------
+# variantes
+#------------
 
+output$img_var <- renderUI({
+  switch(input$hyp_scenario, 
+         "Ampère" = fluidRow(
+           column(10, offset = 1, div(img(src= "img/img_bingo_ampere.png", width = "100%"), align = "center"))
+         ), 
+         "Hertz" = fluidRow(
+           column(10, offset = 1, div(img(src= "img/img_bingo_hertz.png", width = "100%"), align = "center"))
+         ), 
+         "Volt" = fluidRow(
+           column(10, offset = 1, div(img(src= "img/img_bingo_volt.png", width = "100%"), align = "center"))
+         ), 
+         "Watt" = fluidRow(
+           column(10, offset = 1, div(img(src= "img/img_bingo_watt.png", width = "100%"), align = "center"))
+         ),
+         "Ohm" = fluidRow(
+           column(10, offset = 1, div(img(src= "img/img_bingo_ohm.png", width = "100%"), align = "center"))
+         ))
+})
 
 #------------
 # production

@@ -9,6 +9,10 @@ tabPanel("Principaux résultats et hypothèses",
                     br(),
                     uiOutput("md_gen")
            ),
+           tabPanel("Variantes", 
+                    br(),
+                    uiOutput("img_var")
+           ),
            tabPanel("Consommation",
                     br(),
                     includeMarkdown("src/aide/hypotheses_conso_before.md"),
