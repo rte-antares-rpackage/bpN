@@ -44,7 +44,7 @@ observe({
                                      unit = "GWh", main = "Production", areas = "fr", mcYear = "1",
                                      interactive = TRUE, .updateBtn = TRUE, 
                                      .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE, 
-                                     language = "fr", hidden = c("stepPlot", "drawPoints", "main", "legend", "unit", "tables", "areas"))
+                                     language = "fr", hidden = c("stepPlot", "drawPoints", "main", "legend", "unit", "tables", "areas", "stack"))
           
           if("MWController" %in% class(modules$prodStack)){
             modules$prodStack$clear()
