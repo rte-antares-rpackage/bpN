@@ -256,6 +256,10 @@ getProductionHypothesis <- function(data, nodes = NULL, sce_prod = NULL, scenari
                        (!node %in% "fr" & filiere3 %in% "step" & trajectoire %in% enr_step_ue) ]
   
   data <- rbindlist(list(data_no_hydro, data_hydro))
+  
+  if(scenario %in% "Ohm"){
+    data <- data[date_BP_num <= 2025]
+  }
   if(is.null(nodes)){
     res <- data[, list(capa = sum(capacite)), by = list(date = date_BP_num, filiere_BP_num)]
   } else {
