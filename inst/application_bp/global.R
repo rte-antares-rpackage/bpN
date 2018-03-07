@@ -108,7 +108,7 @@ names(cl_mix) <- couleur_mix$Nom
 # dans l'ordre, de bas en haut
 tmp_var <- alist(
   "Pompage STEP" = - pmax(0, -PSP),
-  "Export" = - pmax(0, (BALANCE + `ROW BAL.`)),
+  "Export" = - pmax(0, BALANCE + pmax(0, -`ROW BAL.`)),
   "Déversement" = -(`SPIL. ENRG`),
   "Nucléaire" = NUCLEAR,
   "Charbon" = COAL,
@@ -117,7 +117,7 @@ tmp_var <- alist(
   "Hydraulique" = `H. ROR` + `H. STOR`,
   "Turbinage STEP" = pmax(0, PSP),
   "Fioul" = OIL,
-  "Import" = pmax(0, -(BALANCE + `ROW BAL.`)),
+  "Import" = pmax(0, - (BALANCE) + pmax(0, `ROW BAL.`)),
   "Eolien" = WIND,
   "Solaire" = SOLAR,
   "Effacements" = effacement,
