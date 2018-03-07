@@ -40,7 +40,7 @@ observe({
             }
           }
           mod_prodStack <- prodStack(list_data_all$antaresDataList[ind_areas], xyCompare = "union",
-                                     # h5requestFiltering = list_data_all$params[ind_areas],
+                                     h5requestFiltering = list_data_all$params[ind_areas],
                                      unit = "GWh", main = "Production", areas = "fr", mcYear = "1",
                                      interactive = TRUE, .updateBtn = TRUE, 
                                      .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE, 

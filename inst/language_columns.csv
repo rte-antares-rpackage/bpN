@@ -17,7 +17,7 @@ COAL;charbon;charbon;T
 GAS;gaz;gaz;T
 OIL;fioul;fioul;T
 MIX. FUEL;thermique_mixte;thermique_mixte;T
-MISC. DTG;effacements;thermique_autre;T
+MISC. DTG;effacements;thermique_autre;F
 H. STOR;hydraulique_lac;hydraulique_lac;T
 UNSP. ENRG;energie_non_distribuee;energie_non_distribuee;T
 SPIL. ENRG;deversement;deversement;T
@@ -38,3 +38,4 @@ CONG. PROB +;congestion+;congestion+;T
 CONG. PROB -;congestion-;congestion-;T
 HURDLE COST;cout_interconnexion;cout_interconnexion;F
 congestion;congestion;congestion;T
+effacement;effacement;effacement;T

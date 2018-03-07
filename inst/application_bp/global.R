@@ -36,16 +36,17 @@ h5_files <- list.files(data_dir, full.names = FALSE, pattern = ".h5$")
 
 add_h5_file <- lapply(1:length(h5_files), function(x){
   params <- list(
-    areas = "all", links = "all", 
+    areas = "all", links = "all",
     clusters = "all", districts = "all",
     select = c("OV. COST", "OP. COST", "MRG. PRICE", "CO2 EMIS.", "BALANCE", "ROW BAL.", "PSP", "MISC. NDG",
                "LOAD", "H. ROR", "WIND", "SOLAR", "NUCLEAR", "LIGNITE", "COAL", "GAS", "OIL", "MIX. FUEL",
-               "MISC. DTG", "H. STOR", "UNSP. ENRG", "SPIL. ENRG", "LOLD", "LOLP", "AVL DTG", "DTG MRG", "MAX MRG", 
-               "NP COST", "NODU", "FLOW LIN.", "congestion")
+               "H. STOR", "UNSP. ENRG", "SPIL. ENRG", "LOLD", "LOLP", "AVL DTG", "DTG MRG", "MAX MRG",
+               "NP COST", "NODU", "FLOW LIN.", "congestion", "effacement")
   )
   
   # a .h5 file, so return opts...
   opts <- setSimulationPath(paste0(data_dir, "/", h5_files[x]))
+  
   .list_data_all$antaresDataList[[x]] <<- opts
   .list_data_all$params[[x]] <<- params
   .list_data_all$opts[[x]] <<- opts
@@ -57,12 +58,42 @@ add_h5_file <- lapply(1:length(h5_files), function(x){
   invisible()
 })
 
+
+# add_h5_file <- lapply(1:length(h5_files), function(x){
+#   
+#   # a .h5 file, so return opts...
+#   opts <- setSimulationPath(paste0(data_dir, "/", h5_files[x]))
+#   
+#   for(ts in c("hourly", "daily", "weekly", "monthly", "annual")){ 
+#     # addProcessingH5(mcY = "mcAll",
+#     #                 timeStep = ts,
+#     #                 evalAreas = list(effacement = "`MISC. DTG` + `fr_dsr_4h` + `de_dsr_4h`  + `ie_dsr_4h`  + `ni_dsr_4h` + `gb_dsr_4h`"),
+#     #                 evalLinks = list(congestion = "(`CONG. PROB +` + `CONG. PROB -`)/100"))
+#     # 
+#     # addProcessingH5(mcY = "mcInd",
+#     #                 timeStep = ts,
+#     #                 evalAreas = list(effacement = "`MISC. DTG` + `fr_dsr_4h` + `de_dsr_4h`  + `ie_dsr_4h`  + `ni_dsr_4h` + `gb_dsr_4h`"),
+#     #                 evalLinks = list(congestion = "(`CONG. PROB +` + `CONG. PROB -`)/100"))
+#     # 
+#     addProcessingH5(mcY = "mcAll",
+#                     timeStep = ts,
+#                     evalAreas = list(effacement = "`MISC. DTG` + `fr_dsr_4h`"),
+#                     evalLinks = list(congestion = "(`CONG. PROB +` + `CONG. PROB -`)/100"))
+#     
+#     addProcessingH5(mcY = "mcInd",
+#                     timeStep = ts,
+#                     evalAreas = list(effacement = "`MISC. DTG` + `fr_dsr_4h`"),
+#                     evalLinks = list(congestion = "(`CONG. PROB +` + `CONG. PROB -`)/100"))
+#   }
+#   
+# })
+
 #--------------
 # new prodStack alias
 #--------------
 
 couleur_mix <- data.table(read.delim(paste0(data_dir, "/couleur_mix.csv"), dec = ",", 
-                                      sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
+                                     sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
 
 couleur_mix[[1]] <- as.character(couleur_mix[[1]])
 Encoding(couleur_mix[[1]] ) <- "latin1"
@@ -89,7 +120,7 @@ tmp_var <- alist(
   "Import" = pmax(0, -(BALANCE + `ROW BAL.`)),
   "Eolien" = WIND,
   "Solaire" = SOLAR,
-  "Effacements" = `MISC. DTG`,
+  "Effacements" = effacement,
   "Défaillance" = `UNSP. ENRG`
 )
 
@@ -202,7 +233,7 @@ unique(hyp_prod$filiere_BP_num)
 # data <- hyp_prod
 
 couleur_prod <- data.table(read.delim(paste0(data_dir, "/couleur_prod.csv"), dec = ",", 
-                                       sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
+                                      sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
 
 couleur_prod <- couleur_prod[Type %in% "production"]
 couleur_prod[[1]] <- as.character(couleur_prod[[1]])
@@ -235,11 +266,11 @@ getProductionHypothesis <- function(data, nodes = NULL, sce_prod = NULL, scenari
   
   # hors hydraulique
   data_no_hydro <- data[((node %in% "fr" & filiere1 %in% "enr" & !filiere2 %in% "hydro" & trajectoire %in% enr_fr) |
-              (!node %in% "fr" & filiere1 %in% "enr" & !filiere2 %in% "hydro" & trajectoire %in% enr_ue) |
-                (node %in% "fr" & filiere1 %in% "nuclear" & trajectoire %in% nuclear_fr) |
-                (!node %in% "fr" & filiere1 %in% "nuclear" & trajectoire %in% nuclear_ue) |
-                (node %in% "fr" & filiere1 %in% "thermal" & trajectoire %in% thermal_fr) |
-                (!node %in% "fr" & filiere1 %in% "thermal" & trajectoire %in% thermal_ue)) & !filiere2 %in% "hydraulique"]
+                           (!node %in% "fr" & filiere1 %in% "enr" & !filiere2 %in% "hydro" & trajectoire %in% enr_ue) |
+                           (node %in% "fr" & filiere1 %in% "nuclear" & trajectoire %in% nuclear_fr) |
+                           (!node %in% "fr" & filiere1 %in% "nuclear" & trajectoire %in% nuclear_ue) |
+                           (node %in% "fr" & filiere1 %in% "thermal" & trajectoire %in% thermal_fr) |
+                           (!node %in% "fr" & filiere1 %in% "thermal" & trajectoire %in% thermal_ue)) & !filiere2 %in% "hydraulique"]
   
   # hydro
   data_hydro <- data[(node %in% "fr" & filiere3 %in% "hydro" & trajectoire %in% enr_hydro_fr) |
@@ -259,7 +290,7 @@ getProductionHypothesis <- function(data, nodes = NULL, sce_prod = NULL, scenari
   }
   
   res[, capa := round(capa/1000, 1)]
-
+  
   col_names <- sort(unique(res$filiere_BP_num))
   res <- data.frame(dcast(res, date ~ filiere_BP_num, fun=sum, value.var = "capa"))
   
@@ -369,7 +400,7 @@ getIntercoHypothesis <- function(data, sce_prod = NULL, scenario = "Hertz"){
 #------------------
 # bug with fread
 hyp_conso <- data.table(read.delim(paste0(data_dir, "/BP17_hypothese_consommation_flat_5.csv"), dec = ",", 
-                                  sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
+                                   sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
 
 # encoding
 for(v in c("Trajectoire", "Secteur", "Branche", "Branche2", "Usage", "Usage2")){
@@ -389,7 +420,7 @@ hyp_conso <- hyp_conso[hyp_conso[["Année"]] != 2036]
 # hyp_conso[, .N, list(Secteur, Usage)]
 
 couleur_conso <- data.table(read.delim(paste0(data_dir, "/couleur_conso.csv"), dec = ",", 
-                            sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
+                                       sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
 couleur_conso[["Nom"]] <- as.character(couleur_conso[["Nom"]])
 Encoding(couleur_conso[["Nom"]] ) <- "latin1"
 
@@ -440,7 +471,7 @@ getConsoHypothesis <- function(data, type = "Secteur", sce_prod = NULL, scenario
 # bug with fread
 
 hyp_co2 <- data.table(read.delim(paste0(data_dir, "/co2_V2.csv"), dec = ",", 
-                                   sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
+                                 sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
 
 
 hyp_co2$scenario <- as.character(hyp_co2$scenario)
@@ -471,7 +502,7 @@ ramcharts_menu_obj <- list(list(class = "export-main",
 
 
 hyp_bilan <- data.table(read.delim(paste0(data_dir, "/bilans_energetiques_V2.csv"), dec = ",", 
-                                 sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
+                                   sep = ";", header = T, encoding = "Latin-1", check.names = FALSE))
 
 hyp_bilan$Scenario <- as.character(hyp_bilan$Scenario)
 Encoding(hyp_bilan$Scenario) <- "latin1"
@@ -509,7 +540,7 @@ getBilan <- function(data_bilan, data_co2, table_couleur_bilan, scenario = "Hert
   
   # production
   bilan_prod <- bilan[ TWh %in% c("Nucléaire", "Cycles combinés au gaz", "Turbines à combustion", "Cogénérations",
-                                   "Autre thermique décentralisé", "Hydraulique", "Eolien", "Photovoltaïque", "Bioénergies", 
+                                  "Autre thermique décentralisé", "Hydraulique", "Eolien", "Photovoltaïque", "Bioénergies", 
                                   "Charbon", "Energies marines")]
   
   pie_prod_2025 <- bilan_prod[, c("TWh", "2025", "Couleur")]
