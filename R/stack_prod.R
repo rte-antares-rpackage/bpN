@@ -472,9 +472,9 @@ prodStack <- function(x,
                            #   if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
                            # }, 
                            # BP 2017
-                           value = c(1:2),
+                           value = c(1),
                            label = .getLabelLanguage("mcYears to be imported", language), 
-                           options = list(maxItems = 2),
+                           options = list(maxItems = 1),
                            multiple = TRUE, .display = !"mcYearH5" %in% hidden
       ),
       .display = {
