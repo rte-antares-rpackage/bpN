@@ -636,7 +636,7 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       #                     .display = !"mcYearH5" %in% hidden
       # ),
       # BP 2017
-      mcYearH5 = mwSelectize(choices = c("moyen" = "", paramsH5[["mcYearS"]]), 
+      mcYearH5 = mwSelectize(choices = c("moyen" = "", bp_mcy_params_labels), 
                               # value = {
                               #   if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
                               # }, 
@@ -693,8 +693,11 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
     ),
     dateRange = mwDateRange(
       value = {
-        if(.initial) params$x[[1]]$dateRange
-        else NULL
+        # if(.initial) params$x[[1]]$dateRange
+        # else NULL
+        # BP 2017
+        tmp_mcYear <- as.character(mcYear)
+        c(bp_mcy_params[mcYear == tmp_mcYear, date_start], bp_mcy_params[mcYear == tmp_mcYear, date_end])
       },
       min = params$x[[1]]$dateRange[1], 
       max = params$x[[1]]$dateRange[2], 

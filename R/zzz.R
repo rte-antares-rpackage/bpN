@@ -193,3 +193,10 @@ col_bp <- colorsVars[Column %in% expand_language_columns$en][, Column := expand_
 col_fr <- colorsVars[Column %in% expand_language_columns$en][, Column := expand_language_columns$fr[rev_ind_match[!is.na(rev_ind_match)]]]
 colorsVars <- unique(rbindlist(list(colorsVars, col_bp, col_fr)))
 
+# BP 2017 : mcYear params
+bp_mcy_params <- fread(input=system.file("bp_years_params.csv", package = "bpNumerique2018"))
+bp_mcy_params[, c("Label", "mcYear", "date_start", "date_end") := list(
+  as.character(Label), as.character(mcYear), as.Date(date_start), as.Date(date_end))]
+
+bp_mcy_params_labels <- bp_mcy_params$mcYear
+names(bp_mcy_params_labels) <- bp_mcy_params$Label

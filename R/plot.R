@@ -561,7 +561,7 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
     #                     .display = !"mcYearH5" %in% hidden
     # ),
     # BP 2017
-    mcYearH5 = mwSelectize(choices = c("moyen" = "", paramsH5[["mcYearS"]]), 
+    mcYearH5 = mwSelectize(choices = c("moyen" = "", bp_mcy_params_labels), 
                            # value = {
                            #   if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
                            # }, 
@@ -704,26 +704,30 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
   ),
   
   dateRange = mwDateRange(value = {
-    if(.initial){
-      res <- NULL
-      if(!is.null(params) & ! is.null(table)){
-        res <- c(.dateRangeJoin(params = params, xyCompare = xyCompare, "min", tabl = table),
-                 .dateRangeJoin(params = params, xyCompare = xyCompare, "max", tabl = table))
-        if(any(is.infinite(c(res))))
-        {res <- NULL}
-      }
-      ##Lock 7 days for hourly data
-      if(!is.null(params$x[[1]][[table]]$timeStep)){
-        if(params$x[[1]][[table]]$timeStep == "hourly"){
-          # if(params$x[[1]][[table]]$dateRange[2] - params$x[[1]][[table]]$dateRange[1]>7){
-          #   res[1] <- params$x[[1]][[table]]$dateRange[2] - 7
-          # }
-          # BP 2017
-          res <- c("2029-01-15", "2029-01-21")
-        }
-      }
-      res
-    }else{NULL}
+    # if(.initial){
+    #   res <- NULL
+    #   if(!is.null(params) & ! is.null(table)){
+    #     res <- c(.dateRangeJoin(params = params, xyCompare = xyCompare, "min", tabl = table),
+    #              .dateRangeJoin(params = params, xyCompare = xyCompare, "max", tabl = table))
+    #     if(any(is.infinite(c(res))))
+    #     {res <- NULL}
+    #   }
+    #   ##Lock 7 days for hourly data
+    #   if(!is.null(params$x[[1]][[table]]$timeStep)){
+    #     if(params$x[[1]][[table]]$timeStep == "hourly"){
+    #       # if(params$x[[1]][[table]]$dateRange[2] - params$x[[1]][[table]]$dateRange[1]>7){
+    #       #   res[1] <- params$x[[1]][[table]]$dateRange[2] - 7
+    #       # }
+    #       # BP 2017
+    #       res <- c("2029-01-15", "2029-01-21")
+    #     }
+    #   }
+    #   res
+    # }else{NULL}
+    
+    # BP 2017
+    tmp_mcYear <- as.character(mcYear)
+    c(bp_mcy_params[mcYear == tmp_mcYear, date_start], bp_mcy_params[mcYear == tmp_mcYear, date_end])
   }, 
   min = {      
     if(!is.null(params) & ! is.null(table)){
