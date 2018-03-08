@@ -6,6 +6,7 @@ require(data.table)
 require(RColorBrewer)
 require(rAmCharts)
 require(magrittr)
+require(rhdf5)
 
 # manipulateWidget:::mwDebug()
 
