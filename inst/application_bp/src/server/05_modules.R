@@ -42,7 +42,7 @@ observe({
           mod_prodStack <- prodStack(list_data_all$antaresDataList[ind_areas], xyCompare = "union",
                                      h5requestFiltering = list_data_all$params[ind_areas],
                                      unit = "GWh", main = "Production", areas = "fr", mcYear = "1",
-                                     interactive = TRUE, .updateBtn = TRUE, 
+                                     interactive = TRUE, .updateBtn = TRUE, .showCompare = FALSE,
                                      .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE, 
                                      language = "fr", hidden = c("stepPlot", "drawPoints", "main", 
                                                                  "mcYear", "legend", "unit", "tables", "areas", "stack"))
@@ -88,7 +88,7 @@ observe({
                              interactive = TRUE, .updateBtn = TRUE, language = "fr", elements = "fr",
                              hidden = c("main", "highlight", "stepPlot", "legend", "drawPoints", 
                                         "confInt", "mcYear", "aggregate", "secondAxis"), 
-                             highlight = TRUE,
+                             highlight = TRUE, .showCompare = FALSE,
                              .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE)
           
           if("MWController" %in% class(modules$plotts)){
@@ -140,7 +140,7 @@ observe({
                                                h5requestFiltering = list_data_all$params[ind_links],
                                                interactive = TRUE, .updateBtn = TRUE, 
                                                mcYear = "1", main = "Echanges", unit = "GWh", area = "fr",
-                                               stepPlot = TRUE, language = "fr", 
+                                               stepPlot = TRUE, language = "fr", .showCompare = FALSE,
                                                hidden = c("stepPlot", "legend", "unit", "main", "drawPoints", "area", "mcYear"),
                                                .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE)
           

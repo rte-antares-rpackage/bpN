@@ -55,7 +55,7 @@ observe({
                                    interactive = TRUE, .updateBtn = TRUE, 
                                    .updateBtnInit = TRUE, compare = .compare,
                                    h5requestFiltering = list_data_all$params[ind_map],
-                                   language = "fr", 
+                                   language = "fr", .showCompare = FALSE,
                                    hidden = c("showLabels", "popupLinkVars", "uniqueScale", "showLabels", 
                                               "popupAreaVars", "miniPlot", "tables", "Areas", "Links", "mcYear"),
                                    colAreaVar ="LOAD", areaChartType = "pie", sizeMiniPlot = TRUE,
