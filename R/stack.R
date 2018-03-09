@@ -106,7 +106,7 @@
     dyOptions(
       stackedGraph = TRUE, 
       colors = rev(colors), 
-      fillAlpha = 0.6,
+      fillAlpha = 0.85,
       includeZero = TRUE, 
       gridLineColor = gray(0.8), 
       axisLineColor = gray(0.6), 
