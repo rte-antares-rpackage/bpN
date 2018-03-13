@@ -4,7 +4,13 @@
 
 **Un croisement de nombreuses variantes visant à tester les débouchés physiques et économiques** de la production d'électricité française compétitive sur les marchés est réalisé et permet de déterminer l'évolution de la part du nucléaire. Elle ne vise pas à atteindre un pourcentage fixé ex ante de production nucléaire dans le mix de production électrique.
 
-Les différentes variantes testées **intègrent notamment les configurations défavorables pour la production décarbonée** afin de renforcer la robustesse de l'analyse : (i) retard dans le développement des interconnexions, (ii) faible prix du CO2 et des combustibles, (iii) augmentation du volume des énergies renouvelables en France et dans les pays étrangers, (iv) augmentation de la production nucléaire en Grande-Bretagne, (v) maintien du parc charbon et lignite en Allemagne et des moyens thermiques en Italie et en Espagne.
+Les différentes variantes testées **intègrent notamment les configurations défavorables pour la production décarbonée** afin de renforcer la robustesse de l'analyse : 
+
+- retard dans le développement des interconnexions,
+- faible prix du CO2 et des combustibles,
+- augmentation du volume des énergies renouvelables en France et dans les pays étrangers,
+- augmentation de la production nucléaire en Grande-Bretagne,
+- maintien du parc charbon et lignite en Allemagne et des moyens thermiques en Italie et en Espagne.
 
 #### Résultats
 
@@ -24,6 +30,6 @@ Du point de vue de l'économie générale du système électrique, **il est donc
 
 Ce scénario est **le plus performant du point de vue des émissions de CO2**. Les émissions du mix électrique français sont diminuées de plus de 60 % par rapport à la situation actuelle et s'établissent à 9 millions de tonnes en fin de période. Au niveau européen, le parc français permet d'éviter la production d'émissions de CO2 européenne à hauteur de 53 millions de tonnes.
 
-**L'économie du scénario repose, comme dans le scénario Ampère, sur des investissements importants dans toutes les composantes du système électrique**, notamment sur le parc de production. L'hypothèse sur le prix du CO2 est déterminante : une valeur d'environ 30 ???/tCO2 permet d'assurer l'équilibre, tandis qu'une valeur plus basse est problématique. Les choix énergétiques des pays voisins sont également déterminants, ainsi une forte augmentation de la production nucléaire en Grande-Bretagne réduirait les débouchés pour le nucléaire français.
+**L'économie du scénario repose, comme dans le scénario Ampère, sur des investissements importants dans toutes les composantes du système électrique**, notamment sur le parc de production. L'hypothèse sur le prix du CO2 est déterminante : une valeur d'environ 30 €/tCO2 permet d'assurer l'équilibre, tandis qu'une valeur plus basse est problématique. Les choix énergétiques des pays voisins sont également déterminants, ainsi une forte augmentation de la production nucléaire en Grande-Bretagne réduirait les débouchés pour le nucléaire français.
 
 **La sécurité d'alimentation française est assurée** et demeure largement tributaire de la performance du parc nucléaire. Les moyens de stockage ou les possibilités de modulation de la consommation permettant de gérer les situations de « surplus » de production électrique bon marché présentent un fort intérêt économique pour assurer l'équilibre en temps réel du système électrique français, majoritairement composé de moyens peu flexibles (énergies renouvelables intermittentes et nucléaire).
