@@ -4,6 +4,8 @@ navbarPage(title = "Bilan prévisionnel 2017", id = "nav-id", theme = "css/custo
              br(), br(), br(), br(), a(href = "http://www.rte-france.com/fr/article/bilan-previsionnel",
                                        target = "_blank", img(src = "img/RTE_logo.svg.png", class = "ribbon")),
              singleton(tags$script(src = 'events.js')),
+             singleton(tags$script(src = 'is.min.js')),
+             tags$script(type="text/javascript", 'if(is.ie()){ alert("Ce site n\'est pas optimisé pour Internet Explorer");};'),
              div(id = "import_busy", tags$img(src= "spinner.gif", height = 100,
                                               style = "position: fixed;top: 50%;z-index:10;left: 48%;")),
              
