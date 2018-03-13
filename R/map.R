@@ -184,7 +184,7 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
   # Check hidden
   .validHidden(hidden, c("H5request", "timeSteph5", "tables", "mcYearH5", "mcYear", "dateRange", "Areas", "colAreaVar", 
                          "sizeAreaVars", "miniPlot", "areaChartType", "sizeMiniPlot", "uniqueScale", "showLabels",
-                         "popupAreaVars", "labelAreaVar", "Links", "colLinkVar", "sizeLinkVar", "popupLinkVars"))
+                         "popupAreaVars", "labelAreaVar", "Links", "colLinkVar", "sizeLinkVar", "popupLinkVars","type"))
   
   #Check compare
   .validCompare(compare,  c("mcYear", "type", "colAreaVar", "sizeAreaVars", "areaChartType", "showLabels",
@@ -636,20 +636,44 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       #                     .display = !"mcYearH5" %in% hidden
       # ),
       # BP 2017
-      mcYearH5 = mwSelectize(choices = c("moyen" = "", bp_mcy_params_labels), 
-                              # value = {
-                              #   if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
-                              # }, 
-                              # BP 2017
-                              value = c(1),
-                              label = .getLabelLanguage("mcYears to be imported", language), 
-                              options = list(maxItems = 1),
-                              multiple = TRUE, .display = !"mcYearH5" %in% hidden
+      eventsH5 = mwSelect(choices =  {
+        if(length(paramsH5) > 0){
+          choices = c("By mcYear", "By event")
+          names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
+          choices
+        } else {
+          NULL
+        }
+      }, value = {
+        if(.initial) "By event"
+        else NULL
+      }, multiple = FALSE, label = .getLabelLanguage("Selection", language), .display = !"eventsH5" %in% hidden),
+      meanYearH5 = mwCheckbox(value = FALSE, 
+                              label = .getLabelLanguage("Average mcYear", language),
+                              .display = !"meanYearH5" %in% hidden & length(intersect("By mcYear", eventsH5)) > 0),
+      mcYearH5 = mwSelect(choices = {
+        if(eventsH5 %in% "By event"){
+          bp_mcy_params_labels
+        } else {
+          paramsH5[["mcYearS"]]
+        }
+      },
+      label = .getLabelLanguage("mcYears to be imported", language), 
+      .display = (!"mcYearH5" %in% hidden & eventsH5 %in% "By mcYear" & !meanYearH5) | 
+        (!"mcYearH5" %in% hidden & eventsH5 %in% "By event")
       ),
       .display = {any(unlist(lapply(x_in, .isSimOpts))) &  !"H5request" %in% hidden}
     ),
     sharerequest = mwSharedValue({
-      list(timeSteph5_l = timeSteph5, mcYearh_l = mcYearH5, tables_l = tables)
+      if(length(meanYearH5) > 0 & length(eventsH5) > 0){
+        if(meanYearH5 & eventsH5 %in% "By mcYear"){
+          list(timeSteph5_l = timeSteph5, mcYearh_l = NULL, tables_l = tables)
+        } else {
+          list(timeSteph5_l = timeSteph5, mcYearh_l = mcYearH5, tables_l = tables)
+        }
+      } else {
+        list(timeSteph5_l = timeSteph5, mcYearh_l = mcYearH5, tables_l = tables)
+      }
     }),
     x_tranform = mwSharedValue({
       sapply(1:length(x_in),function(zz){
@@ -696,8 +720,12 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
         # if(.initial) params$x[[1]]$dateRange
         # else NULL
         # BP 2017
-        tmp_mcYear <- as.character(mcYear)
-        c(bp_mcy_params[mcYear == tmp_mcYear, date_start], bp_mcy_params[mcYear == tmp_mcYear, date_end])
+        if(eventsH5 %in% "By event"){
+          tmp_mcYear <- as.character(mcYear)
+          c(bp_mcy_params[mcYear == tmp_mcYear, date_start], bp_mcy_params[mcYear == tmp_mcYear, date_end])
+        } else if(.initial){
+          c("2029-01-15", "2029-01-21")
+        }
       },
       min = params$x[[1]]$dateRange[1], 
       max = params$x[[1]]$dateRange[2], 

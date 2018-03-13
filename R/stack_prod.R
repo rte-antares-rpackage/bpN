@@ -320,7 +320,7 @@ prodStack <- function(x,
           main <- paste0("Tirage ", mcYear)
         }
       }
-
+      
       p <- try(.plotProdStack(dt,
                               stackOpts$variables,
                               stackOpts$colors,
@@ -340,7 +340,7 @@ prodStack <- function(x,
                                 "fr" = paste0("Visualisation impossible '", stack, "'<br>", p[1]),
                                 paste0("Can't visualize stack '", stack, "'<br>", p[1])))
           
-          )
+        )
       }
       
       if (legend) {
@@ -397,7 +397,7 @@ prodStack <- function(x,
   timeSteph5 <- NULL
   x_in <- NULL
   x_tranform <- NULL
-
+  
   manipulateWidget(
     {
       .tryCloseH5()
@@ -467,15 +467,35 @@ prodStack <- function(x,
       #                      multiple = TRUE, .display = !"mcYearH5" %in% hidden
       # ),
       # BP 2017
-      mcYearH5 = mwSelectize(choices = c("moyen" = "", bp_mcy_params_labels), 
-                           # value = {
-                           #   if(.initial){paramsH5[["mcYearS"]][1]}else{NULL}
-                           # }, 
-                           # BP 2017
-                           value = c(1),
-                           label = .getLabelLanguage("mcYears to be imported", language), 
-                           options = list(maxItems = 1),
-                           multiple = TRUE, .display = !"mcYearH5" %in% hidden
+      eventsH5 = mwSelect(choices =  {
+        if(length(paramsH5) > 0){
+          choices = c("By mcYear", "By event")
+          names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
+          choices
+        } else {
+          NULL
+        }
+      }, value = {
+        if(.initial) "By event"
+        else NULL
+      }, multiple = FALSE, label = .getLabelLanguage("Selection", language), .display = !"eventsH5" %in% hidden),
+      meanYearH5 = mwCheckbox(value = FALSE, 
+                              label = .getLabelLanguage("Average mcYear", language),
+                              .display = !"meanYearH5" %in% hidden & length(intersect("By mcYear", eventsH5)) > 0),
+      mcYearH5 = mwSelect(choices = {
+        if(length(eventsH5) > 0){
+          if(eventsH5 %in% "By event"){
+            bp_mcy_params_labels
+          } else {
+            paramsH5[["mcYearS"]]
+          }
+        } else {
+          NULL
+        }
+      },
+      label = .getLabelLanguage("mcYears to be imported", language), 
+      .display = (!"mcYearH5" %in% hidden & eventsH5 %in% "By mcYear" & !meanYearH5) | 
+        (!"mcYearH5" %in% hidden & eventsH5 %in% "By event")
       ),
       .display = {
         any(unlist(lapply(x_in, .isSimOpts))) & !"H5request" %in% hidden
@@ -483,10 +503,16 @@ prodStack <- function(x,
     ),
     
     sharerequest = mwSharedValue({
-      list(timeSteph5_l = timeSteph5, mcYearh_l = mcYearH5, tables_l = tables)
+      if(length(meanYearH5) > 0 & length(eventsH5) > 0){
+        if(meanYearH5 & eventsH5 %in% "By mcYear"){
+          list(timeSteph5_l = timeSteph5, mcYearh_l = NULL, tables_l = tables)
+        } else {
+          list(timeSteph5_l = timeSteph5, mcYearh_l = mcYearH5, tables_l = tables)
+        }
+      } else {
+        list(timeSteph5_l = timeSteph5, mcYearh_l = mcYearH5, tables_l = tables)
+      }
     }),
-    
-    
     
     x_tranform = mwSharedValue({
       
@@ -558,8 +584,12 @@ prodStack <- function(x,
       # }else{NULL}
       
       # BP 2017
-      tmp_mcYear <- as.character(mcYear)
-      c(bp_mcy_params[mcYear == tmp_mcYear, date_start], bp_mcy_params[mcYear == tmp_mcYear, date_end])
+      if(eventsH5 %in% "By event"){
+        tmp_mcYear <- as.character(mcYear)
+        c(bp_mcy_params[mcYear == tmp_mcYear, date_start], bp_mcy_params[mcYear == tmp_mcYear, date_end])
+      } else if(.initial){
+        c("2029-01-15", "2029-01-21")
+      }
     }, 
     min = {      
       if(!is.null(params)){
