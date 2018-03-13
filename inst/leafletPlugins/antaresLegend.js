@@ -26,9 +26,11 @@ L.AntaresLegend = L.Control.extend({
       links_names = "Links";
     }
     
+    var btn = createEl("button", "btn btn-link btn-xs pull-left", container);
+        
     var content = createEl("div", "", container);
     content.innerHTML = '\
-      <div id = "legend-area" class="legend">\
+      <br><div id = "legend-area" class="legend">\
         <h2>' + areas_name + '</h2>\
         <div id="area-color" class="legend-section"></div>\
         <div id="area-size" class="legend-section"></div>\
@@ -41,8 +43,6 @@ L.AntaresLegend = L.Control.extend({
         <div style="clear:both;"></div>\
       </div>\
     ';
-    
-    var btn = createEl("button", "btn btn-link btn-xs pull-right", container);
     
     this._content = content;
     this._btn = btn;
