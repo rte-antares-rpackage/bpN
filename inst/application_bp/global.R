@@ -482,15 +482,20 @@ Encoding(hyp_co2$scenario) <- "latin1"
 # tmp$scenario <- tmp$historique
 # tmp$scenario[1:5] <- NA
 # tmp$historique[6:8] <- NA
-# amBarplot(x = "date", y = c("historique", "scenario"), data = tmp,
+# 
+# a <- amBarplot(x = "date", y = c("historique", "scenario"), data = tmp,
 #                     stack_type = "regular", legend = TRUE,
 #                     main = "Évolution des émissions de CO2 en France",
 #                     zoom = TRUE, show_values = TRUE,
 #                     ylab = "Millions de tonnes (Mt)", horiz = FALSE,
 #                     labelRotation = 45, theme = "pattern", creditsPosition = "top-right") %>%
 #   setExport(enabled = TRUE, menu = ramcharts_menu_obj)
-#   
-
+# 
+# a@graphs <- lapply(a@graphs, function(x){
+#   x$fillColors <- NULL
+#   x$legendColor <- NULL
+#   x
+# })
 
 ramcharts_menu_obj <- list(list(class = "export-main",
                                 menu = list(

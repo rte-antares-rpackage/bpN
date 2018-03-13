@@ -242,6 +242,12 @@ output$hyp_co2<- renderAmCharts({
   
   gr@legend$reversedOrder <- TRUE
   
+  gr@graphs <- lapply(gr@graphs, function(x){
+    x$fillColors <- NULL
+    x$legendColor <- NULL
+    x
+  })
+  
   gr
 })
 
