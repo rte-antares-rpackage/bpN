@@ -6,17 +6,17 @@ CO2 EMIS.;CO2;CO2;T
 BALANCE;echanges;echanges;T
 ROW BAL.;flux_fixe;flux_fixe;F
 PSP;pompage_turbinage;pompage_turbinage;F
-MISC. NDG;renouvelable_autre;renouvelable_autre;T
+MISC. NDG;renouvelable_autre;renouvelable_autre;F
 LOAD;consommation;consommation;T
 H. ROR;hydraulique_fil;hydraulique_fil;F
-WIND;eolien;eolien;T
-SOLAR;solaire;solaire;T
-NUCLEAR;nucleaire;nucleaire;T
-LIGNITE;lignite;lignite;T
-COAL;charbon;charbon;T
-GAS;gaz;gaz;T
-OIL;fioul;fioul;T
-MIX. FUEL;thermique_mixte;thermique_mixte;T
+WIND;eolien;eolien;F
+SOLAR;solaire;solaire;F
+NUCLEAR;nucleaire;nucleaire;F
+LIGNITE;lignite;lignite;F
+COAL;charbon;charbon;F
+GAS;gaz;gaz;F
+OIL;fioul;fioul;F
+MIX. FUEL;thermique_mixte;thermique_mixte;F
 MISC. DTG;effacements;thermique_autre;F
 H. STOR;hydraulique_lac;hydraulique_lac;F
 UNSP. ENRG;energie_non_distribuee;energie_non_distribuee;T

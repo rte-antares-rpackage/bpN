@@ -405,21 +405,21 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
     if(language != "en"){
       ind_to_change <- which(colnames(x$areas) %in% language_columns$en)
       if(length(ind_to_change) > 0){
-        # new_name <- language_columns[en %in% colnames(x$areas), ]
-        # v_new_name <- new_name[[language]]
-        # names(v_new_name) <- new_name[["en"]]
-        # setnames(x$areas, colnames(x$areas)[ind_to_change], unname(v_new_name[colnames(x$areas)[ind_to_change]]))
-        # 
-        # BP 2017
-        # keep subset
-        ind_to_keep <- which(colnames(x$areas) %in% language_columns$en[language_columns$keep_bp])
-        x$areas <- x$areas[, c(.idCols(x$areas), colnames(x$areas)[ind_to_keep]), with = FALSE]
-        ind_to_change <- which(colnames(x$areas) %in% language_columns$en)
-        
         new_name <- language_columns[en %in% colnames(x$areas), ]
-        v_new_name <- new_name[["bp"]]
+        v_new_name <- new_name[[language]]
         names(v_new_name) <- new_name[["en"]]
         setnames(x$areas, colnames(x$areas)[ind_to_change], unname(v_new_name[colnames(x$areas)[ind_to_change]]))
+
+        # BP 2017
+        # keep subset
+        # ind_to_keep <- which(colnames(x$areas) %in% language_columns$en[language_columns$keep_bp])
+        # x$areas <- x$areas[, c(.idCols(x$areas), colnames(x$areas)[ind_to_keep]), with = FALSE]
+        # ind_to_change <- which(colnames(x$areas) %in% language_columns$en)
+        # 
+        # new_name <- language_columns[en %in% colnames(x$areas), ]
+        # v_new_name <- new_name[["bp"]]
+        # names(v_new_name) <- new_name[["en"]]
+        # setnames(x$areas, colnames(x$areas)[ind_to_change], unname(v_new_name[colnames(x$areas)[ind_to_change]]))
       }
       
       ind_to_change <- which(colnames(syntx$areas) %in% language_columns$en)
