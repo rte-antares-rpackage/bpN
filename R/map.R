@@ -648,9 +648,6 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
         if(.initial) "By event"
         else NULL
       }, multiple = FALSE, label = .getLabelLanguage("Selection", language), .display = !"eventsH5" %in% hidden),
-      meanYearH5 = mwCheckbox(value = FALSE, 
-                              label = .getLabelLanguage("Average mcYear", language),
-                              .display = !"meanYearH5" %in% hidden & length(intersect("By mcYear", eventsH5)) > 0),
       mcYearH5 = mwSelect(choices = {
         if(eventsH5 %in% "By event"){
           bp_mcy_params_labels
@@ -662,6 +659,9 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       .display = (!"mcYearH5" %in% hidden & eventsH5 %in% "By mcYear" & !meanYearH5) | 
         (!"mcYearH5" %in% hidden & eventsH5 %in% "By event")
       ),
+      meanYearH5 = mwCheckbox(value = FALSE, 
+                              label = .getLabelLanguage("Average mcYear", language),
+                              .display = !"meanYearH5" %in% hidden & length(intersect("By mcYear", eventsH5)) > 0),
       .display = {any(unlist(lapply(x_in, .isSimOpts))) &  !"H5request" %in% hidden}
     ),
     sharerequest = mwSharedValue({
