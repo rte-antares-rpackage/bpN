@@ -605,6 +605,7 @@ prodStack <- function(x,
     # BP 2017
     format = "dd MM",
     separator = " : ",
+    weekstart = 1,
     label = .getLabelLanguage("dateRange", language), 
     .display = !"dateRange" %in% hidden
     ),

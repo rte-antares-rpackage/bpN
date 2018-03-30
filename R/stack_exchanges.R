@@ -465,6 +465,7 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
     # BP 2017
     format = "dd MM",
     separator = " : ",
+    weekstart = 1,
     .display = timeStepdataload != "annual" & !"timeSteph5" %in% hidden,
     label = .getLabelLanguage("dateRange", language)
     ),

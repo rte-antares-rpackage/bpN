@@ -773,6 +773,7 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
   # BP 2017
   format = "dd MM",
   separator = " : ",
+  weekstart = 1,
   .display = timeStepdataload != "annual" & !"dateRange" %in% hidden, 
   label = .getLabelLanguage("dateRange", language)
   ),

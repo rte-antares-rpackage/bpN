@@ -733,6 +733,7 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       # BP 2017
       format = "dd MM",
       separator = " : ",
+      weekstart = 1,
       label = .getLabelLanguage("dateRange", language), 
       .display = !"dateRange" %in% hidden
     ),
