@@ -109,9 +109,9 @@ img[alt="img"] {
     top: 0;
     z-index: 1000;
     margin-left: 0cm;
-    margin-top: 0.1cm;
+    margin-top: 0cm;
     display: block;
-    height: 57px;
+    height: 65px;
     text-decoration: none;
     overflow-x: hidden;
 }
