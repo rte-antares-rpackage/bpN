@@ -1,7 +1,7 @@
 # Define UI for bpNumerique2018 app
 navbarPage(title = HTML('<p style="margin-top: 0.05cm;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bilan prévisionnel 2017</p>'), id = "nav-id", theme = "css/custom.css", collapsible = TRUE, position = "fixed-top",
            header = div(
-             br(), br(), br(), br(), br(), a(href = "http://www.rte-france.com/fr/article/bilan-previsionnel",
+             br(), br(), br(), br(), a(href = "http://www.rte-france.com/fr/article/bilan-previsionnel",
                                        target = "_blank", img(src = "img/Logo_RTE+signCompactD_White.png", class = "ribbon")),
              singleton(tags$script(src = 'events.js')),
              singleton(tags$script(src = 'is.min.js')),
