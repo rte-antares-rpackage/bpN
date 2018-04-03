@@ -86,8 +86,8 @@ observe({
                              h5requestFiltering = list_data_all$params[ind_areas],
                              variable = "consommation",  .saveBtn = FALSE,
                              interactive = TRUE, .updateBtn = TRUE, language = "fr", elements = "fr",
-                             hidden = c("main", "highlight", "stepPlot", "legend", "drawPoints", 
-                                        "confInt", "mcYear", "aggregate", "secondAxis"), 
+                             hidden = c("main", "highlight", "stepPlot", "legend", "drawPoints", "elements",
+                                        "confInt", "mcYear", "aggregate", "secondAxis", "tables", "table"), 
                              highlight = TRUE, .showCompare = FALSE,
                              .updateBtnInit = TRUE, compare = .compare, .runApp = FALSE)
           
