@@ -1,7 +1,7 @@
 #### Production d'électricité par filière
 
-Cet écran présente le mix énergétique de l'électricité française obtenu en sortie des simulations du Bilan prévisionnel. 
+Cet écran présente **le mix énergétique de l'électricité française** obtenu en sortie des simulations du Bilan prévisionnel. 
 
-Sur ce graphique sont présentées les filières de production (nucléaire, gaz, charbon, fioul, hydraulique, éolien, solaire et autres renouvelables), d'effacements et de flexibilités. Ces informations sont complétées par le solde imports / exports avec l'étranger. 
+Sur ce graphique sont présentées les filières de production (nucléaire, gaz, charbon, fioul, hydraulique, éolien, solaire et autres renouvelables), d'effacements et de flexibilités. Ces informations sont complétées par les échanges avec l'étranger (import et export). 
 
-Vous avez la possibilité d'afficher les données correspondant aux 100 premiers tirages simulés pour l'étude sélectionée au pas horaire. 
+Vous avez la possibilité de modifier les données affichées via le bouton <img src="img/bouton_reglages.png" width="20" style="vertical-align:top"/> (plus d'informations dans la rubrique [Personnalisation de la présentation](#persoPresentation)).
