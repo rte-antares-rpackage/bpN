@@ -193,6 +193,14 @@ exchangesStack <- function(x, area = NULL, mcYear = "average",
         dt[, ROW := NULL]
       }
       
+      colnames(dt) <- gsub("^be$", "Belgique", colnames(dt))
+      colnames(dt) <- gsub("^ch$", "Suisse", colnames(dt))
+      colnames(dt) <- gsub("^de$", "Allemagne", colnames(dt))
+      colnames(dt) <- gsub("^es$", "Espagne", colnames(dt))
+      colnames(dt) <- gsub("^gb$", "Grande-Bretagne", colnames(dt))
+      colnames(dt) <- gsub("^ie$", "Irlande", colnames(dt))
+      colnames(dt) <- gsub("^it$", "Italie", colnames(dt))
+      
       # Graphical parameters
       if (is.null(main) | isTRUE(all.equal("", main))){
         main <- switch(language, 
