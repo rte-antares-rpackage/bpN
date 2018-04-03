@@ -608,7 +608,7 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
         }, 
         # value =  paramsH5$timeStepS[1],
         # BP 2017
-        value =  "daily",
+        value =  "hourly",
         label = .getLabelLanguage("timeStep", language), 
         multiple = FALSE, .display = !"timeSteph5" %in% hidden
       ),
