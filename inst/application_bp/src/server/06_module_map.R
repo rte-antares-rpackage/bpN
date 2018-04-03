@@ -52,7 +52,7 @@ observe({
             }
             
             mod_plotMap <- plotMap(list_data_all$antaresDataList[ind_map], ml, 
-                                   interactive = TRUE, .updateBtn = TRUE, 
+                                   interactive = TRUE, .updateBtn = TRUE,  .saveBtn = FALSE,
                                    .updateBtnInit = TRUE, compare = .compare,
                                    h5requestFiltering = list_data_all$params[ind_map],
                                    language = "fr", .showCompare = FALSE,

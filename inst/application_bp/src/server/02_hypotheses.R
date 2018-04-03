@@ -70,7 +70,7 @@ output$hyp_prod <- renderAmCharts({
                      ylab = ifelse(isolate(input$stack_hyp_prod) == "regular", "GW", "%"),
                      labelRotation = 45, legendPosition = "left", autoMargins = FALSE, 
                      marginLeft = 100, marginTop = 60, marginRight = 60, marginBottom = 60)  %>%
-      setExport(enabled = TRUE, menu = ramcharts_menu_obj)
+      setExport(enabled = FALSE, menu = ramcharts_menu_obj)
     
     gr@otherProperties$thousandsSeparator <- " "
     
@@ -120,7 +120,7 @@ output$hyp_conso <- renderAmCharts({
                    # horiz = ifelse(type == "Branche", TRUE, FALSE),
                    labelRotation = 45, legendPosition = "bottom", autoMargins = FALSE, 
                    marginLeft = 100, marginTop = 60, marginRight = 60, marginBottom = 60)  %>%
-    setExport(enabled = TRUE, menu = ramcharts_menu_obj)
+    setExport(enabled = FALSE, menu = ramcharts_menu_obj)
   
   gr@otherProperties$thousandsSeparator <- " "
   
@@ -181,7 +181,7 @@ output$hyp_inter_import <- renderAmCharts({
                    main = "Évolution des capacités d'import",
                    zoom = TRUE, show_values = FALSE, ylab = "GW",
                    labelRotation = 45, ylim = c(0, 35))  %>%
-    setExport(enabled = TRUE, menu = ramcharts_menu_obj)
+    setExport(enabled = FALSE, menu = ramcharts_menu_obj)
   
   gr@otherProperties$thousandsSeparator <- " "
   gr@legend$reversedOrder <- TRUE
@@ -201,7 +201,7 @@ output$hyp_inter_export <- renderAmCharts({
                    main = "Évolution des capacités d'export",
                    zoom = TRUE, show_values = FALSE, ylab = "GW",
                    labelRotation = 45, ylim = c(0, 35))  %>%
-    setExport(enabled = TRUE, menu = ramcharts_menu_obj)
+    setExport(enabled = FALSE, menu = ramcharts_menu_obj)
   
   gr@otherProperties$thousandsSeparator <- " "
   gr@legend$reversedOrder <- TRUE
@@ -238,7 +238,7 @@ output$hyp_co2<- renderAmCharts({
             zoom = TRUE, show_values = FALSE,
             ylab = "Millions de tonnes (Mt)", horiz = FALSE,
             labelRotation = 45, theme = "pattern", creditsPosition = "top-right")  %>%
-    setExport(enabled = TRUE, menu = ramcharts_menu_obj)
+    setExport(enabled = FALSE, menu = ramcharts_menu_obj)
   
   gr@legend$reversedOrder <- TRUE
   
