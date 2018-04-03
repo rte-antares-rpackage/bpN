@@ -197,6 +197,7 @@ colorsVars <- unique(rbindlist(list(colorsVars, col_bp, col_fr)))
 bp_mcy_params <- fread(input=system.file("bp_years_params.csv", package = "bpNumerique2018"))
 bp_mcy_params[, c("Label", "mcYear", "date_start", "date_end") := list(
   as.character(Label), as.character(mcYear), as.Date(date_start), as.Date(date_end))]
+Encoding(bp_mcy_params$Label) <- "UTF-8"
 
 bp_mcy_params_labels <- bp_mcy_params$mcYear
 names(bp_mcy_params_labels) <- bp_mcy_params$Label

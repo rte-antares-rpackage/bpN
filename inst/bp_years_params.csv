@@ -1,5 +1,6 @@
 Label;mcYear;date_start;date_end
+Hiver moyen;35;2029-01-08;2029-01-14
+Hiver avec vent fort;1;2029-01-29;2029-02-04
+Hiver avec vent faible;5;2029-02-26;2029-03-04
 Vague de froid;760;2029-01-08;2029-01-14
-Hiver Vent +;210;2029-01-01;2029-01-07
-Hiver Vent -;35;2029-02-05;2029-02-11
-Eté;1;2028-07-10;2028-07-16
+Eté moyen;4;2028-07-10;2028-07-16
