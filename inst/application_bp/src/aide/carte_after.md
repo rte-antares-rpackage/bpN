@@ -1,4 +1,4 @@
-#### Personnalisation de la présentation <a id="persoPresentation"></a>
+#### Personnalisation de la présentation <a id="persoPresentation_carte"></a>
 
 Vous avez la possibilité de modifier les données affichées via le bouton <img src="img/bouton_reglages.png" width="20" style="vertical-align:top"/>.
 

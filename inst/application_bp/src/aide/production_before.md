@@ -4,4 +4,4 @@ Cet écran présente **le mix énergétique de l'électricité française** obte
 
 Sur ce graphique sont présentées les filières de production (nucléaire, gaz, charbon, fioul, hydraulique, éolien, solaire et autres renouvelables), d'effacements et de flexibilités. Ces informations sont complétées par les échanges avec l'étranger (import et export). 
 
-Vous avez la possibilité de modifier les données affichées via le bouton <img src="img/bouton_reglages.png" width="20" style="vertical-align:top"/> (plus d'informations dans la rubrique [Personnalisation de la présentation](#persoPresentation)).
+Vous avez la possibilité de modifier les données affichées via le bouton <img src="img/bouton_reglages.png" width="20" style="vertical-align:top"/> (plus d'informations dans la rubrique [Personnalisation de la présentation](#persoPresentation_prod)).
