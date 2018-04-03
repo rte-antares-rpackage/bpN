@@ -98,7 +98,7 @@ tabPanel("Principaux résultats et hypothèses",
                     br(),
                     includeMarkdown("src/aide/hypotheses_bilans_after.md")
            ),
-           tabPanel("CO2", 
+           tabPanel(HTML("CO<SUB>2</SUB>"), 
                     br(),
                     includeMarkdown("src/aide/hypotheses_co2_before.md"),
                     br(),
