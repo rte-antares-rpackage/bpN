@@ -262,12 +262,14 @@ data_bilan <- reactive({
 
 output$bilan_1_1 <- renderAmCharts({
   data_bilan <- data_bilan()
-  amPie(data = data_bilan$pie_conso_2025, show_values = TRUE, 
+  a <- amPie(data = data_bilan$pie_conso_2025, show_values = TRUE, 
         creditsPosition = "bottom-left",
         innerRadius = 40, radius = 80,  legend = FALSE,
         labelText =  "[[value]]",
         labelRadius = -20, bringToFront = TRUE,
         labelColor = "white")
+  a@otherProperties$pullOutRadius <- "0%"
+  a
 })
 
 output$bilan_1_2 <- renderAmCharts({
@@ -309,12 +311,14 @@ output$info_bilan_1 <- renderUI({
 
 output$bilan_2_1 <- renderAmCharts({
   data_bilan <- data_bilan()
-  amPie(data = data_bilan$pie_conso_2030, show_values = TRUE, 
+  a <- amPie(data = data_bilan$pie_conso_2030, show_values = TRUE, 
         creditsPosition = "bottom-left",
         innerRadius = 40, radius = 80,  legend = FALSE,
         labelText =  "[[value]]",
         labelRadius = -20, bringToFront = TRUE,
         labelColor = "white")
+  a@otherProperties$pullOutRadius <- "0%"
+  a
 })
 
 output$bilan_2_2 <- renderAmCharts({
@@ -356,12 +360,14 @@ output$info_bilan_2 <- renderUI({
 
 output$bilan_3_1 <- renderAmCharts({
   data_bilan <- data_bilan()
-  amPie(data = data_bilan$pie_conso_2035, show_values = TRUE, 
+  a <- amPie(data = data_bilan$pie_conso_2035, show_values = TRUE, 
         creditsPosition = "bottom-left",
         innerRadius = 40, radius = 80,  legend = FALSE,
         labelText =  "[[value]]",
         labelRadius = -20, bringToFront = TRUE,
         labelColor = "white")
+  a@otherProperties$pullOutRadius <- "0%"
+  a
 })
 
 output$bilan_3_2 <- renderAmCharts({
