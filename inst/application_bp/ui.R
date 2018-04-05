@@ -5,7 +5,7 @@ navbarPage(title = HTML('<p style="margin-top: 0.05cm;">&nbsp;&nbsp;&nbsp;&nbsp;
                                        target = "_blank", img(src = "img/Logo_RTE+signCompactD_White.png", class = "ribbon")),
              singleton(tags$script(src = 'events.js')),
              singleton(tags$script(src = 'is.min.js')),
-             tags$script(type="text/javascript", 'if(is.ie()){ alert("Ce site n\'est pas optimisé pour Internet Explorer");};'),
+             # tags$script(type="text/javascript", 'if(is.ie()){ alert("Ce site n\'est pas optimisé pour Internet Explorer");};'),
              div(id = "import_busy", tags$img(src= "spinner_2.gif", height = 100,
                                               style = "position: fixed;top: 50%;z-index:10;left: 48%;")),
              
