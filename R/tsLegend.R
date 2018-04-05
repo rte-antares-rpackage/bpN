@@ -184,7 +184,13 @@ JS_updateLegend <- function(legendId, timeStep = "hourly", language = "en") {
   script <-"
 function(e, timestamp, data) {
   function timeToLab(x) {%s}
-  document.getElementById('date%s').innerHTML = timeToLab(timestamp);
+  
+  var tmp = document.getElementById('date%s');
+
+  if(tmp){
+    tmp.innerHTML = timeToLab(timestamp);
+  }
+  
   
   var values = {};
 
@@ -215,9 +221,17 @@ function(e, timestamp, data) {
 JS_resetLegend <- function(legendId) {
   script <- "
 function(e) {
-  document.getElementById('date%s').innerHTML = '';
+  var tmp = document.getElementById('date%s');
+
+  if(tmp){
+    tmp.innerHTML = '';
+  }
+
   var els = document.getElementsByClassName('legvalue');
-  for (var i = 0; i < els.length; ++i) {els[i].innerHTML = '';}
+  if(els){
+    for (var i = 0; i < els.length; ++i) {els[i].innerHTML = '';}
+  }
+  
 }"
   
   JS(sprintf(script, legendId))
