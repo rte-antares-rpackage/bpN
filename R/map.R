@@ -400,7 +400,7 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       
     }
     
-
+    
     # Create the interactive widget
     if(language != "en"){
       ind_to_change <- which(colnames(x$areas) %in% language_columns$en)
@@ -409,7 +409,7 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
         v_new_name <- new_name[[language]]
         names(v_new_name) <- new_name[["en"]]
         setnames(x$areas, colnames(x$areas)[ind_to_change], unname(v_new_name[colnames(x$areas)[ind_to_change]]))
-
+        
         # BP 2017
         # keep subset
         # ind_to_keep <- which(colnames(x$areas) %in% language_columns$en[language_columns$keep_bp])
@@ -428,7 +428,7 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
         v_new_name <- new_name[[language]]
         names(v_new_name) <- new_name[["en"]]
         setnames(syntx$areas, colnames(syntx$areas)[ind_to_change], unname(v_new_name[colnames(syntx$areas)[ind_to_change]]))
-
+        
         # BP 2017
         # keep subset
         # ind_to_keep <- which(colnames(syntx$areas) %in% language_columns$en[language_columns$keep_bp])
@@ -551,24 +551,24 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
           }
           
           widget <- params$x[[.id]]$plotFun(t = params$x[[.id]]$timeId,
-                                  colAreaVar = colAreaVar,
-                                  sizeAreaVars = sizeAreaVars,
-                                  popupAreaVars = popupAreaVars,
-                                  areaChartType = areaChartType,
-                                  uniqueScale = uniqueScale,
-                                  showLabels = showLabels,
-                                  labelAreaVar = labelAreaVar,
-                                  colLinkVar = colLinkVar,
-                                  sizeLinkVar = sizeLinkVar, 
-                                  popupLinkVars = popupLinkVars,
-                                  type = type,
-                                  mcYear = mcYear,
-                                  initial = .initial,
-                                  session = .session,
-                                  outputId = .output,
-                                  dateRange = dateRange,
-                                  sizeMiniPlot = sizeMiniPlot,
-                                  options = tmp_options)
+                                            colAreaVar = colAreaVar,
+                                            sizeAreaVars = sizeAreaVars,
+                                            popupAreaVars = popupAreaVars,
+                                            areaChartType = areaChartType,
+                                            uniqueScale = uniqueScale,
+                                            showLabels = showLabels,
+                                            labelAreaVar = labelAreaVar,
+                                            colLinkVar = colLinkVar,
+                                            sizeLinkVar = sizeLinkVar, 
+                                            popupLinkVars = popupLinkVars,
+                                            type = type,
+                                            mcYear = mcYear,
+                                            initial = .initial,
+                                            session = .session,
+                                            outputId = .output,
+                                            dateRange = dateRange,
+                                            sizeMiniPlot = sizeMiniPlot,
+                                            options = tmp_options)
           
           # controlWidgetSize(widget, language) # bug due to leaflet and widget
           widget
@@ -599,7 +599,9 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       timeSteph5 = mwSelect(
         {
           if(length(paramsH5) > 0){
-            choices = paramsH5$timeStepS
+            # choices = paramsH5$timeStepS
+            # BP 2017
+            choices = setdiff(paramsH5$timeStepS, "annual")
             names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
           } else {
             choices <- NULL
@@ -637,22 +639,33 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
       # ),
       # BP 2017
       eventsH5 = mwSelect(choices =  {
-        if(length(paramsH5) > 0){
-          choices = c("By mcYear", "By event")
+        if(length(timeSteph5) > 0){
+          if(timeSteph5 %in% c("hourly")){
+            choices = c("By mcYear", "By event")
+          } else {
+            choices = c("By mcYear")
+          }
           names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
           choices
         } else {
           NULL
         }
       }, value = {
-        if(.initial) "By event"
-        else NULL
+        if(timeSteph5 %in% c("hourly")){
+          "By event"
+        } else {
+          "By mcYear"
+        }
       }, multiple = FALSE, label = .getLabelLanguage("Selection", language), .display = !"eventsH5" %in% hidden),
       mcYearH5 = mwSelect(choices = {
-        if(eventsH5 %in% "By event"){
-          bp_mcy_params_labels
+        if(length(eventsH5) > 0){
+          if(eventsH5 %in% "By event"){
+            bp_mcy_params_labels
+          } else {
+            paramsH5[["mcYearS"]]
+          }
         } else {
-          paramsH5[["mcYearS"]]
+          NULL
         }
       },
       label = .getLabelLanguage("mcYears to be imported", language), 
@@ -720,22 +733,35 @@ plotMap <- function(x, mapLayout, colAreaVar = "none", sizeAreaVars = c(),
         # if(.initial) params$x[[1]]$dateRange
         # else NULL
         # BP 2017
-        if(eventsH5 %in% "By event"){
+        if(length(intersect("By event", eventsH5) > 0)){
           tmp_mcYear <- as.character(mcYear)
           c(bp_mcy_params[mcYear == tmp_mcYear, date_start], bp_mcy_params[mcYear == tmp_mcYear, date_end])
         } else if(.initial){
           c("2029-01-15", "2029-01-21")
+        } else if(attr(params$x[[1]]$x, "timeStep") %in% c("daily", "weekly", "monthly")){
+          c("2028-07-01", "2029-06-29")
         }
       },
-      min = params$x[[1]]$dateRange[1], 
-      max = params$x[[1]]$dateRange[2], 
+      min = {
+        params$x[[1]]$dateRange[1]
+        # BP 17
+        "2028-07-01"
+      }, 
+      max = {
+        # params$x[[1]]$dateRange[2]
+        
+        # BP 17
+        "2029-06-29"
+      }, 
       language = eval(parse(text = "language")),
       # BP 2017
       format = "dd MM",
       separator = " : ",
       weekstart = 1,
       label = .getLabelLanguage("dateRange", language), 
-      .display = !"dateRange" %in% hidden
+      # .display = !"dateRange" %in% hidden
+      # BP 17
+      .display = !"dateRange" %in% hidden & eventsH5 %in% "By mcYear"
     ),
     
     Areas = mwGroup(

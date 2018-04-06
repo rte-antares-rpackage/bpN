@@ -526,7 +526,9 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
     timeSteph5 = mwSelect(
       {
         if(length(paramsH5) > 0){
-          choices = paramsH5$timeStepS
+          # choices = paramsH5$timeStepS
+          # BP 2017
+          choices = setdiff(paramsH5$timeStepS, "annual")
           names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
           choices
         } else {
@@ -562,22 +564,33 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
     # ),
     # BP 2017
     eventsH5 = mwSelect(choices =  {
-      if(length(paramsH5) > 0){
-        choices = c("By mcYear", "By event")
+      if(length(timeSteph5) > 0){
+        if(timeSteph5 %in% c("hourly")){
+          choices = c("By mcYear", "By event")
+        } else {
+          choices = c("By mcYear")
+        }
         names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
         choices
       } else {
         NULL
       }
     }, value = {
-      if(.initial) "By event"
-      else NULL
+      if(timeSteph5 %in% c("hourly")){
+        "By event"
+      } else {
+        "By mcYear"
+      }
     }, multiple = FALSE, label = .getLabelLanguage("Selection", language), .display = !"eventsH5" %in% hidden),
     mcYearH5 = mwSelect(choices = {
-      if(eventsH5 %in% "By event"){
-        bp_mcy_params_labels
+      if(length(eventsH5) > 0){
+        if(eventsH5 %in% "By event"){
+          bp_mcy_params_labels
+        } else {
+          paramsH5[["mcYearS"]]
+        }
       } else {
-        paramsH5[["mcYearS"]]
+        NULL
       }
     },
     label = .getLabelLanguage("mcYears to be imported", language), 
@@ -750,31 +763,41 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
     # }else{NULL}
     
     # BP 2017
-    if(eventsH5 %in% "By event"){
+    if(length(intersect("By event", eventsH5) > 0)){
       tmp_mcYear <- as.character(mcYear)
       c(bp_mcy_params[mcYear == tmp_mcYear, date_start], bp_mcy_params[mcYear == tmp_mcYear, date_end])
     } else if(.initial){
       c("2029-01-15", "2029-01-21")
+    } else if(params$x[[1]][[1]]$timeStep %in% c("daily", "weekly", "monthly")){
+      c("2028-07-01", "2029-06-29")
     }
   }, 
   min = {      
     if(!is.null(params) & ! is.null(table)){
       R <- .dateRangeJoin(params = params, xyCompare = xyCompare, "min", tabl = table)
       if(is.infinite(R)){NULL}else{R}
+      
+      # BP 17
+      "2028-07-01"
     }
   }, 
   max = {      
-    if(!is.null(params) & ! is.null(table)){
-      R <- .dateRangeJoin(params = params, xyCompare = xyCompare, "max", tabl = table)
-      if(is.infinite(R)){NULL}else{R}
-    }
+    # if(!is.null(params) & ! is.null(table)){
+    #   R <- .dateRangeJoin(params = params, xyCompare = xyCompare, "max", tabl = table)
+    #   if(is.infinite(R)){NULL}else{R}
+    # }
+    
+    # BP 17
+    "2029-06-29"
   },
   language = eval(parse(text = "language")),
   # BP 2017
   format = "dd MM",
   separator = " : ",
   weekstart = 1,
-  .display = timeStepdataload != "annual" & !"dateRange" %in% hidden, 
+  # .display =  timeStepdataload != "annual" & !"dateRange" %in% hidden,
+  # BP 17
+  .display = timeStepdataload != "annual" & !"dateRange" %in% hidden & eventsH5 %in% "By mcYear",
   label = .getLabelLanguage("dateRange", language)
   ),
   

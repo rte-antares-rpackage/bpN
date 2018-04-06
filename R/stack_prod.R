@@ -430,7 +430,9 @@ prodStack <- function(x,
       timeSteph5 = mwSelect(
         {
           if(length(paramsH5) > 0){
-            choices = paramsH5$timeStepS
+            # choices = paramsH5$timeStepS
+            # BP 2017
+            choices = setdiff(paramsH5$timeStepS, "annual")
             names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
             choices
           } else {
@@ -468,16 +470,23 @@ prodStack <- function(x,
       # ),
       # BP 2017
       eventsH5 = mwSelect(choices =  {
-        if(length(paramsH5) > 0){
-          choices = c("By mcYear", "By event")
+        if(length(timeSteph5) > 0){
+          if(timeSteph5 %in% c("hourly")){
+            choices = c("By mcYear", "By event")
+          } else {
+            choices = c("By mcYear")
+          }
           names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
           choices
         } else {
           NULL
         }
       }, value = {
-        if(.initial) "By event"
-        else NULL
+        if(length(intersect("hourly", timeSteph5)) > 0){
+          "By event"
+        } else {
+          "By mcYear"
+        }
       }, multiple = FALSE, label = .getLabelLanguage("Selection", language), .display = !"eventsH5" %in% hidden),
       mcYearH5 = mwSelect(choices = {
         if(length(eventsH5) > 0){
@@ -564,7 +573,6 @@ prodStack <- function(x,
     }, label = .getLabelLanguage("mcYear to be displayed", language), .display = !"mcYear" %in% hidden),
     
     main = mwText(main, label = .getLabelLanguage("title", language), .display = !"main" %in% hidden),
-    
     dateRange = mwDateRange(value = {
       # if(.initial){
       #   res <- NULL
@@ -584,22 +592,45 @@ prodStack <- function(x,
       # }else{NULL}
       
       # BP 2017
-      if(eventsH5 %in% "By event"){
+      if(length(intersect("By event", eventsH5) > 0)){
         tmp_mcYear <- as.character(mcYear)
         c(bp_mcy_params[mcYear == tmp_mcYear, date_start], bp_mcy_params[mcYear == tmp_mcYear, date_end])
       } else if(.initial){
         c("2029-01-15", "2029-01-21")
+      } else if(params$x[[1]]$timeStep %in% c("daily", "weekly", "monthly")){
+        c("2028-07-01", "2029-06-29")
       }
     }, 
     min = {      
+      # no comment to enable update.... (mw bug ?)
       if(!is.null(params)){
         .dateRangeJoin(params = params, xyCompare = xyCompare, "min", tabl = table)
       }
+      
+      # BP 17
+      "2028-07-01"
     }, 
     max = {      
-      if(!is.null(params)){
-        .dateRangeJoin(params = params, xyCompare = xyCompare, "max", tabl = table)
-      }
+      # if(!is.null(params)){
+      #   tmp <- .dateRangeJoin(params = params, xyCompare = xyCompare, "max", tabl = table)
+      #   if(params$x[[1]]$timeStep == "weekly"){
+      #     ctrl_month <- month(tmp)
+      #     tmp <- tmp + 6
+      #     while(month(tmp) != ctrl_month){
+      #       tmp <- tmp - 1
+      #     }
+      #   } else if(params$x[[1]]$timeStep == "monthly"){
+      #     ctrl_month <- month(tmp)
+      #     tmp <- tmp + 30
+      #     while(month(tmp) != ctrl_month){
+      #       tmp <- tmp - 1
+      #     }
+      #   }
+      #   tmp
+      # }
+      
+      # BP 17
+      "2029-06-29"
     }, 
     language = eval(parse(text = "language")),
     # BP 2017
@@ -607,7 +638,9 @@ prodStack <- function(x,
     separator = " : ",
     weekstart = 1,
     label = .getLabelLanguage("dateRange", language), 
-    .display = !"dateRange" %in% hidden
+    # .display = !"dateRange" %in% hidden
+    # BP 17
+    .display = !"dateRange" %in% hidden & eventsH5 %in% "By mcYear"
     ),
     # stack = mwSelect(names(pkgEnv$prodStackAliases), stack, 
     #                  label = .getLabelLanguage("stack", language), .display = !"stack" %in% hidden),
