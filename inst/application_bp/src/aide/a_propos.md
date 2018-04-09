@@ -1,4 +1,4 @@
-#### Le bilan prévisionnel
+#### Le Bilan prévisionnel
 
 RTE élabore et publie chaque année le **Bilan prévisionnel de l'équilibre entre l'offre et la demande d'électricité**, conformément à sa mission confiée par la loi.
 
@@ -9,7 +9,7 @@ Plus d'informations sur la page <a href="http://www.rte-france.com/fr/article/bi
 
 Le modèle **Antares** est utilisé depuis 2012 pour les études du Bilan prévisionnel. Il s’agit d’un logiciel développé par **RTE** pour simuler l’équilibre entre l’offre et la demande électrique dans un système interconnecté.
 
-**Antares** permet de décrire les nombreux aléas qui affectent la consommation et la production électrique (renouvelable et thermique). Dans le cas du bilan prévisionnel, 1000 années futures possibles sont construites pour chaque scénario afin de tester la robustesse de ces derniers aux intermittences climatiques et aux indisponibilités temporaires du parc de production.
+**Antares** permet de décrire les nombreux aléas qui affectent la consommation et la production électrique (renouvelable et thermique). Dans le cas du Bilan prévisionnel, 1000 années futures possibles sont construites pour chaque scénario afin de tester la robustesse de ces derniers aux intermittences climatiques et aux indisponibilités temporaires du parc de production.
 Pour chaque combinaison d’aléas, et pour chaque heure, Antares simule le fonctionnement des moyens de production de manière à ce qu’ils satisfassent la demande en électricité au moindre coût tout en prenant en compte les contraintes techniques liées à la production et les échanges possibles avec les pays voisins.
 
 
