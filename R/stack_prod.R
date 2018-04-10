@@ -427,21 +427,35 @@ prodStack <- function(x,
     }),
     H5request = mwGroup(
       label = .getLabelLanguage("H5request", language),
+      # BP 2017
+      eventsH5 = mwSelect(choices =  {
+          choix = c("By event", "By mcYear")
+          names(choix) <- sapply(choix, function(tmp) .getLabelLanguage(tmp, language))
+          choix
+      }, value = "By event",
+      multiple = FALSE, label = .getLabelLanguage("Selection", language), .display = !"eventsH5" %in% hidden),
       timeSteph5 = mwSelect(
         {
-          if(length(paramsH5) > 0){
+          if(length(paramsH5) > 0 & length(eventsH5) > 0){
             # choices = paramsH5$timeStepS
             # BP 2017
-            choices = setdiff(paramsH5$timeStepS, "annual")
+            if(eventsH5 %in% "By event"){
+              choices = c("hourly")
+            } else {
+              choices = setdiff(paramsH5$timeStepS, "annual")
+            }
+            
             names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
             choices
           } else {
             NULL
           }
         }, 
-        value =  if(.initial) {paramsH5$timeStepS[1]}else{NULL},
+        value =  if(.initial) {
+          paramsH5$timeStepS[1]
+        }else{NULL},
         label = .getLabelLanguage("timeStep", language), 
-        multiple = FALSE, .display = !"timeSteph5" %in% hidden
+        multiple = FALSE, .display = !"timeSteph5" %in% hidden & length(intersect("By mcYear", eventsH5)) > 0
       ),
       tables = mwSelect(
         {
@@ -468,26 +482,6 @@ prodStack <- function(x,
       #                      label = .getLabelLanguage("mcYears to be imported", language), 
       #                      multiple = TRUE, .display = !"mcYearH5" %in% hidden
       # ),
-      # BP 2017
-      eventsH5 = mwSelect(choices =  {
-        if(length(timeSteph5) > 0){
-          if(timeSteph5 %in% c("hourly")){
-            choices = c("By mcYear", "By event")
-          } else {
-            choices = c("By mcYear")
-          }
-          names(choices) <- sapply(choices, function(x) .getLabelLanguage(x, language))
-          choices
-        } else {
-          NULL
-        }
-      }, value = {
-        if(length(intersect("hourly", timeSteph5)) > 0){
-          "By event"
-        } else {
-          "By mcYear"
-        }
-      }, multiple = FALSE, label = .getLabelLanguage("Selection", language), .display = !"eventsH5" %in% hidden),
       mcYearH5 = mwSelect(choices = {
         if(length(eventsH5) > 0){
           if(eventsH5 %in% "By event"){
@@ -499,9 +493,10 @@ prodStack <- function(x,
           NULL
         }
       },
+      value = "35",
       label = .getLabelLanguage("mcYears to be imported", language), 
-      .display = (!"mcYearH5" %in% hidden & eventsH5 %in% "By mcYear" & !meanYearH5) | 
-        (!"mcYearH5" %in% hidden & eventsH5 %in% "By event")
+      .display = (!"mcYearH5" %in% hidden & length(intersect("By mcYear", eventsH5)) > 0 & !meanYearH5) | 
+        (!"mcYearH5" %in% hidden & length(intersect("By event", eventsH5)) > 0)
       ),
       meanYearH5 = mwCheckbox(value = FALSE, 
                               label = .getLabelLanguage("Average mcYear", language),
@@ -640,7 +635,7 @@ prodStack <- function(x,
     label = .getLabelLanguage("dateRange", language), 
     # .display = !"dateRange" %in% hidden
     # BP 17
-    .display = !"dateRange" %in% hidden & eventsH5 %in% "By mcYear"
+    .display = !"dateRange" %in% hidden & length(intersect("By mcYear", eventsH5)) > 0
     ),
     # stack = mwSelect(names(pkgEnv$prodStackAliases), stack, 
     #                  label = .getLabelLanguage("stack", language), .display = !"stack" %in% hidden),
