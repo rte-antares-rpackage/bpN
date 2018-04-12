@@ -693,11 +693,7 @@ tsPlot <- function(x, table = NULL, variable = NULL, elements = NULL,
           variable
         }
       } else {
-        # NULL
-        # BP 2017
-        as.character(.compareOperation(lapply(params$x, function(vv){
-          unique(vv[[table]]$valueCols)
-        }), xyCompare))[1]
+        NULL
       }
     }, multiple = TRUE, 
     label = .getLabelLanguage("variable", language),
