@@ -1,6 +1,6 @@
-#### Echanges commerciaux aux frontières
+#### Échanges commerciaux aux frontières
 
-Cet écran présente **le solde des programmes d'échanges commerciaux d'électricité** entre les pays modélisés dans le Bilan Prévisionnel. 
+Cet écran présente **le solde des programmes d'échanges commerciaux d'électricité** entre les pays modélisés dans le Bilan prévisionnel. 
 
 Les données affichées correspondent aux échanges entre la France et les pays auxquels elle est interconnectée (Angleterre, Belgique, Allemagne, Suisse, Italie et Espagne).
 

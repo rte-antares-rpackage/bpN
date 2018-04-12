@@ -231,10 +231,11 @@ output$hyp_co2<- renderAmCharts({
   tmp$scenario[1:5] <- NA
   tmp$historique[-c(1:5)] <- NA
 
-  gr <- amBarplot(x = "date", y = c("scenario", "historique"), data = tmp,
+  colnames(tmp)[3] <- "scénario"
+  gr <- amBarplot(x = "date", y = c("scénario", "historique"), data = tmp,
             stack_type = "regular", legend = TRUE,
             # main = paste0("Évolution des émissions de CO2 en France (scénario ", input$hyp_scenario, ")"),
-            main = "Évolution des émissions de CO2 en France",
+            main = "Évolution des émissions de CO2 du système électrique en France",
             zoom = TRUE, show_values = FALSE,
             ylab = "Millions de tonnes (Mt)", horiz = FALSE,
             labelRotation = 45, theme = "pattern", creditsPosition = "top-right")  %>%

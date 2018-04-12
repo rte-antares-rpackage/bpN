@@ -7,7 +7,7 @@ tabPanel("Principaux résultats et hypothèses",
          tabsetPanel(
            tabPanel("Généralités", 
                     br(),
-                    div(class="text-justify", uiOutput("md_gen"))
+                    div(class="text-justify", style = "margin-right: 1cm;", uiOutput("md_gen"))
            ),
            tabPanel("Variantes", 
                     br(),

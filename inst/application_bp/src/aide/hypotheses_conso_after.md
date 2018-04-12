@@ -6,7 +6,7 @@ Cette rubrique correspond à la consommation des véhicules électriques (VE) ou
 
 **Produits gris et bruns résidentiels**
 
-Les produits gris regroupent les équipements informatiques (ordinateurs et périphériques, téléphonie.) et les produits bruns regroupent l'ensemble des appareils audiovisuels. 
+Les produits gris regroupent les équipements informatiques (ordinateurs et périphériques, téléphonie) et les produits bruns regroupent l'ensemble des appareils audiovisuels. 
 
 **Lavage**
 
@@ -23,3 +23,8 @@ Cette rubrique correspond aux consommations des secteurs industriel, de l'énerg
 **Pertes**
 
 Cette rubrique correspond aux pertes sur les réseaux de transport et de distribution.
+
+
+#### A propos des données
+
+Les données présentées sont téléchargeables sur la plateforme [Open Data Réseaux Energies](https://opendata.reseaux-energies.fr/pages/accueil/).
