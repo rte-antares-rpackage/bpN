@@ -1,11 +1,11 @@
-#### Le Bilan prévisionnel
+#### <img src="img/bp_2017.jpg" height="45" style="align:middle;margin-right:4.8px;margin-left:7px"/> Le Bilan prévisionnel 
 
 RTE élabore et publie chaque année le **Bilan prévisionnel de l'équilibre entre l'offre et la demande d'électricité**, conformément à sa mission confiée par la loi.
 
 Plus d'informations sur la page <a href="http://www.rte-france.com/fr/article/bilan-previsionnel" target="_blank">www.rte-france.com/fr/article/bilan-previsionnel</a>.
 
 
-#### Le logiciel Antares
+#### <img src="img/antares.png" height="45" style="align:middle"/> Le logiciel Antares  
 
 Le modèle **Antares** est utilisé depuis 2012 pour les études du Bilan prévisionnel. Il s’agit d’un logiciel développé par **RTE** pour simuler l’équilibre entre l’offre et la demande électrique dans un système interconnecté.
 
@@ -17,6 +17,8 @@ L’utilisation du logiciel **Antares** dépasse les frontières de **RTE**. Il 
 Plusieurs gestionnaires de réseau européens y ont également recours pour leurs études d’adéquation entre l’offre et la demande ou pour éclairer le débat sur la transition énergétique de leur pays. On peut citer en particulier <a href="http://www.elia.be/~/media/files/Elia/About-Elia/Studies/20171114_ELIA_4584_AdequacyScenario.pdf" target="_blank">l’étude à 2050</a> du gestionnaire de réseau belge Elia.
 
 Les  graphiques dynamiques proposés sur ce site illustrent les possibilités de visualisation du logiciel **Antares**.
+
+<hr>
 
 #### Mentions légales
 
